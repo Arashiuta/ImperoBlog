@@ -1,0 +1,221 @@
+<template>
+    <div class="articleRight">
+        <div class="randomArticle">
+            <div class="randomArticleTitle">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-suiji"></use>
+                </svg>
+                <div>随机文章</div>
+            </div>
+            <div class="randomArticleContent">
+                <RandomArticle v-for="item in listArr" :key="item.id" :article="item" class="randomArticlerrr">
+                </RandomArticle>
+            </div>
+        </div>
+        <div class="tags">
+            <div class="tagsTitle">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-24gl-tags3"></use>
+                </svg>
+                <div>所有标签</div>
+            </div>
+            <div class="allTags">
+                <span class="labelTag no-choose" @click="quickTag(tag)" v-for="tag in allTags" :key="tag.id">{{
+                tag.content
+                }}</span>
+            </div>
+        </div>
+        <div class="message">
+            <div class="messageTitle">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-liuyan"></use>
+                </svg>
+                <div>最新留言</div>
+            </div>
+            <div class="messageContent">
+                <miniMessage v-for="item in messageList" :key="item.id" :item="item"></miniMessage>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+import useAxios from "../../hooks/axios/axios";
+import RandomArticle from '@/components/randomArticle/randomArticle.vue'
+import miniMessage from '@/components/leaveMessage/miniMessage.vue'
+
+const router = useRouter()
+// //请求文章列表
+const { data: res } = await useAxios.get('/getarticle')
+const list = res.data
+let randomNunMin = list.length
+if (list.length > 5) {
+    randomNunMin = 5
+}
+//请求所有标签
+const { data: tags } = await useAxios.get('/gettags')
+const allTags = tags.data
+//随机挑选5个文章出来组成数组用来循环随即文章组件
+let listArr = new Array  //准备一个存放文章的空数组
+let randomNum = new Array  //存放随机数的数组
+while (listArr.length < randomNunMin) {
+    const getNum = Math.floor(Math.random() * list.length)
+    if (randomNum.indexOf(getNum) === -1) { //如果抽出来的数字在随机数数组里面不存在
+        randomNum.push(getNum)  //放到随机数数组里面
+        listArr.push(list[getNum])  //拿到那个随机数的对应的文章
+    } else {
+        continue
+    }
+}
+
+type Tag = {
+    _id: string
+    id: number
+    content: string
+}
+//点击标签快捷跳转到文章页面并且选中筛选这个标签
+const quickTag = (tag: Tag) => {
+    router.push({
+        path: '/article',
+        query: {
+            quickTag: tag.content
+        }
+    })
+}
+
+//请求留言列表
+const { data: message } = await useAxios.get('/getmessages')
+const messageLists = message.data
+const messageList = messageLists.reverse().slice(0, 7)  //展示七条留言
+
+
+
+</script>
+
+<style scoped lang="less">
+.articleRight {
+    width: 28rem;
+    margin-left: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    .message {
+        margin-top: 2rem;
+        width: 100%;
+        height: 40rem;
+        background-color: #fff;
+        box-shadow: 0 0 .5rem .2rem var(--gray-light-sahdow);
+        border-radius: .5rem;
+        transition: all .3s;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        box-sizing: border-box;
+        padding: 0 1rem;
+
+        &:hover {
+            box-shadow: .1rem .1rem .5rem var(--gray-sahdow);
+
+        }
+
+        .messageTitle {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            height: 5rem;
+            width: 95%;
+            border-bottom: .2rem solid var(--border-line);
+            font-size: 2rem;
+        }
+
+        .messageContent {
+            width: 100%;
+            overflow: hidden;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+    }
+
+    .tags {
+        margin-top: 2rem;
+        width: 100%;
+        height: 30rem;
+        background-color: #fff;
+        box-shadow: 0 0 .5rem .2rem var(--gray-light-sahdow);
+        border-radius: .5rem;
+        display: flex;
+        flex-direction: column;
+        transition: all .3s;
+
+        &:hover {
+            box-shadow: .1rem .1rem .5rem var(--gray-sahdow);
+
+        }
+
+        .tagsTitle {
+            display: flex;
+            width: 90%;
+            margin: 0 auto;
+            font-size: 2rem;
+            padding: 0 1rem;
+            align-items: center;
+            height: 5rem;
+            border-bottom: .2rem solid var(--border-line);
+        }
+
+        .allTags {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 1rem;
+        }
+
+    }
+}
+
+.randomArticle {
+    width: 100%;
+    border-radius: .5rem;
+    box-shadow: 0 0 .5rem .2rem var(--gray-light-sahdow);
+    transition: all .3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+
+    &:hover {
+        box-shadow: .1rem .1rem .5rem var(--gray-sahdow);
+    }
+
+    .randomArticleTitle {
+        width: 95%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        border-bottom: .2rem solid var(--border-line);
+        height: 5rem;
+        font-size: 2rem;
+    }
+
+    .randomArticleContent {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 1rem;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .articleRight {
+        display: none;
+        width: 80%;
+        margin: 0 auto;
+        margin-top: 2rem;
+
+    }
+}
+</style>

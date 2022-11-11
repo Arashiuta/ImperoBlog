@@ -1,0 +1,323 @@
+<template>
+    <div class="nav" v-show="media">
+        <div class="navList">
+            <ul>
+                <div class="logoImg" @click="clickLogo">
+                    <img src="@/imgs/logo.png" alt="Impero's Blog">
+                </div>
+                <li>
+                    <router-link to="/index">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-shouye1"></use>
+                        </svg>
+                        <span>首页</span>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/article">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-wenzhang1"></use>
+                        </svg>
+                        <span>文章</span>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/archive">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-rili"></use>
+                        </svg>
+                        <span>留言</span>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/write">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-24"></use>
+                        </svg>
+                        <span>写文</span>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/more">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-gengduo4"></use>
+                        </svg>
+                        <span>更多</span>
+                    </router-link>
+                </li>
+            </ul>
+        </div>
+        <div class="navRight">
+            <div class="login" @click="login" v-if="ifLog">登录/注册</div>
+            <NavUserInfo class="welcome" v-else :key="headImgKey"></NavUserInfo>
+        </div>
+    </div>
+
+    <!-- v-else -->
+    <div v-show="media2" class="media2">
+        <div class="moreMediaNav">
+            <p v-if="ifLog">Impero's Blog</p>
+            <NavUserInfo class="welcome" v-else :key="headImgKey"></NavUserInfo>
+            <svg class="icon" aria-hidden="true" @click="drawer = true">
+                <use xlink:href="#icon-gengduo"></use>
+            </svg>
+        </div>
+        <el-drawer v-model="drawer" title="快捷导航" direction="ttb" size="50%">
+            <div class="openDrawer">
+                <div class="drawerBox">
+                    <router-link to="/index">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-shouye"></use>
+                        </svg>
+                        <span>首页</span>
+                    </router-link>
+                </div>
+                <div class="drawerBox">
+                    <router-link to="/article">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-wenzhang"></use>
+                        </svg>
+                        <span>文章</span>
+                    </router-link>
+                </div>
+                <div class="drawerBox">
+                    <router-link to="/archive">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-rili2"></use>
+                        </svg>
+                        <span>留言</span>
+                    </router-link>
+                </div>
+                <div class="drawerBox">
+                    <router-link to="/write">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-shuxie"></use>
+                        </svg>
+                        <span>写文</span>
+                    </router-link>
+                </div>
+                <div class="drawerBox">
+                    <router-link to="/more">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-gengduo1"></use>
+                        </svg>
+                        <span>更多</span>
+                    </router-link>
+                </div>
+                <div class="drawerBox" v-if="ifLog">
+                    <router-link to="/login">
+                        <span>登录/注册</span>
+                    </router-link>
+                </div>
+                <div class="drawerBox" v-else>
+                    <router-link to="/personalcenter">
+                        <span>个人中心</span>
+                    </router-link>
+                </div>
+            </div>
+        </el-drawer>
+    </div>
+
+</template>
+
+<script setup lang="ts">
+import { ref, watchEffect, defineAsyncComponent } from 'vue'
+import { useStore } from '../../store/count'
+import { useRouter } from 'vue-router'
+const NavUserInfo = defineAsyncComponent(() => import('@/components/userInfo/navUserInfo.vue')) //要在组件里面使用useAxios要异步引入组件
+
+const router = useRouter()
+
+const pinia = useStore()
+
+const media = ref(true)
+const media2 = ref(false)
+
+//登录
+const ifLog = ref(true)  //当它是false时是已登录
+const login = () => {
+    router.push('/login')
+}
+
+watchEffect(async () => {
+    if (pinia.bodyWidth < 1050) {
+        media.value = false
+        media2.value = true
+    } else {
+        media.value = true
+        media2.value = false
+    }
+
+    //登录了!修改状态
+    if (pinia.sessionInfo) {
+        ifLog.value = false
+    } else {
+        ifLog.value = true
+    }
+})
+
+
+//是否打开抽屉
+const drawer = ref(false)
+
+//点击logo
+const clickLogo = () => {
+    router.push('/index')
+}
+
+//当上传完成头像后，更改pinia内的ifUploadHeadImg值，当监听到更改后重新渲染头像组件完成更新
+const headImgKey = ref(0)
+watchEffect(() => {
+    if (pinia.ifUploadHeadImg) {
+        headImgKey.value += 1
+    }
+})
+
+</script>
+
+<style scoped lang="less">
+.nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4.5rem;
+    z-index: 3;
+    transition: all .5s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .navList {
+        text-shadow: .1rem .1rem .2rem rgb(61, 61, 61);
+    }
+
+    .logoImg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 15rem;
+        height: 4.5rem;
+        margin-right: 2rem;
+        cursor: pointer;
+
+        img {
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+
+    ul {
+        display: flex;
+        align-items: center;
+        padding-left: 14rem;
+
+        &:last-child {
+            border-right: 0.1rem solid rgba(255, 255, 255, .1);
+        }
+
+        li {
+            cursor: pointer;
+            padding: .7rem 0;
+            border-left: 0.1rem solid rgba(255, 255, 255, .1);
+
+
+            &:hover {
+                background-color: rgba(245, 245, 245, 0.1);
+                transition: all .2s;
+            }
+
+            a {
+                color: #fff;
+                font-size: 1.2rem;
+                padding: .4rem 2rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                :nth-child(1) {
+                    font-size: 1.6rem;
+                    color: rgb(255, 255, 255);
+                    margin-right: .5rem;
+                }
+
+                :nth-child(2) {
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                }
+
+                &:hover {
+                    color: var(--box-shadow);
+                }
+            }
+        }
+    }
+
+    .login {
+        color: rgb(224, 224, 224);
+        margin-right: 2rem;
+        text-shadow: .1rem .1rem var(--gray-sahdow);
+
+        &:hover {
+            cursor: pointer;
+            color: var(--special-font-color);
+        }
+    }
+
+    .welcome {
+        margin-right: 3rem;
+    }
+}
+
+
+
+
+.media2 {
+    :deep(.el-drawer__header) {
+        margin-bottom: 0;
+    }
+
+    .moreMediaNav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        overflow-x: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 1.2rem;
+        z-index: 3;
+        transition: all .5s;
+        font-size: 3rem;
+        color: var(--white-font-color);
+        background-color: var(--nav-background-color);
+    }
+
+
+    .openDrawer {
+        border-top: .1rem solid var(--gray-sahdow);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .drawerBox {
+
+            border-bottom: .2rem dashed var(--special-font-color);
+            padding: 0 1rem;
+            height: 5rem;
+            font-size: 2rem;
+
+            a {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: flex-end;
+                color: var(--black-font-color);
+            }
+        }
+    }
+}
+</style>
