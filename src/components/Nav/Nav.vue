@@ -49,7 +49,7 @@
         </div>
         <div class="navRight">
             <div class="login" @click="login" v-if="ifLog">登录/注册</div>
-            <NavUserInfo class="welcome" v-else :key="headImgKey"></NavUserInfo>
+            <NavUserInfo class="welcome" v-else></NavUserInfo>
         </div>
     </div>
 
@@ -57,7 +57,7 @@
     <div v-show="media2" class="media2">
         <div class="moreMediaNav">
             <p v-if="ifLog">Impero's Blog</p>
-            <NavUserInfo class="welcome" v-else :key="headImgKey"></NavUserInfo>
+            <NavUserInfo class="welcome" v-else></NavUserInfo>
             <svg class="icon" aria-hidden="true" @click="drawer = true">
                 <use xlink:href="#icon-gengduo"></use>
             </svg>
@@ -165,13 +165,6 @@ const clickLogo = () => {
     router.push('/index')
 }
 
-//当上传完成头像后，更改pinia内的ifUploadHeadImg值，当监听到更改后重新渲染头像组件完成更新
-const headImgKey = ref(0)
-watchEffect(() => {
-    if (pinia.ifUploadHeadImg) {
-        headImgKey.value += 1
-    }
-})
 
 </script>
 

@@ -24,6 +24,9 @@
   /* 浅灰色阴影 */
   --gray-light-sahdow:rgb(182, 182, 182);
   /* 半透明背景 */
-  --backgeound-color:rgba(255,255,255,0.7)
+  --backgeound-color:rgba(255,255,255,0.7);
+  /* 非常浅色的边框 */
+  --gray-light-border:rgb(224, 224, 224);
+
 }
 

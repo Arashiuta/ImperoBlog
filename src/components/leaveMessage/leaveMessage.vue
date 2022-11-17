@@ -145,7 +145,6 @@ const goToPersonalCenter = () => {
                 }
             })
         }
-
     } else {    //未登录，直接跳转到别人的个人中心
         router.push({
             path: '/otherspersonalcenter',
@@ -154,7 +153,6 @@ const goToPersonalCenter = () => {
             }
         })
     }
-
 }
 
 </script>

@@ -56,8 +56,6 @@ const handleAvatarSuccess: UploadProps['onSuccess'] = (
         })
         if (res.status === 0) {
             alert('修改成功')
-            //当上传完成头像后，更改pinia内的ifUploadHeadImg值，当监听到更改后重新渲染头像组件完成更新
-            pinia.ifUploadHeadImg += 1
             const successUp = false
             emit('uploadHeadSuccess', successUp)
 

@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineAsyncComponent, watchEffect } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useStore } from "../../store/count";
 import useAxios from "../../hooks/axios/axios";
 import { useRouter } from "vue-router";

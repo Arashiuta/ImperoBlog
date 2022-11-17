@@ -15,12 +15,12 @@
                 </div>
             </div>
             <div class="focusList">
-                <div class="focus">
-                    <p>{{ userInfo.focus.length ? userInfo.focus.length : 0 }}</p>
+                <div class="focus" @click="focusList(userInfo.account, 'other')">
+                    <p>{{ userInfo.focus ? userInfo.focus.length : 0 }}</p>
                     <span>关注的人</span>
                 </div>
-                <div class="focus">
-                    <p>{{ userInfo.whoFocusMe.length ? userInfo.whoFocusMe.length : 0 }}</p>
+                <div class="focus" @click="fansList(userInfo.account, 'other')">
+                    <p>{{ userInfo.fans ? userInfo.fans.length : 0 }}</p>
                     <span>粉丝</span>
                 </div>
             </div>
@@ -85,8 +85,10 @@ import useAxios from '../../hooks/axios/axios';
 import { useStore } from "../../store/count";
 import { reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
+import { useRouter } from "vue-router";
 
 const pinia = useStore()
+const router = useRouter()
 
 type Props = {
     account: any
@@ -123,8 +125,6 @@ if (logToken) {  //如果登录了验证是否已经关注目标用户
         }
     })
 }
-
-
 
 const ifFocus = ref(false)  //是否关注了
 const focusDialogVisible = ref(false)
@@ -178,6 +178,52 @@ const delFocus = async () => {
     }
 }
 
+//查看关注列表
+const focusList = (account: string, from: string) => {
+    if (from === 'other') {
+        router.push({
+            path: "/userfocus/allfocus",
+            query: {
+                account: account,
+                tag: 0,
+                from: 'other'
+            }
+        })
+    } else {
+        //点击跳转到关注列表页面，并且传递参数，要看谁的关注列表
+        router.push({
+            path: "/userfocus/allfocus",
+            query: {
+                account: account,
+                tag: 0
+            }
+        })
+    }
+
+}
+
+const fansList = (account: string, from: string) => {
+    if (from === 'other') {
+        router.push({
+            path: "/userfocus/fans",
+            query: {
+                account: account,
+                tag: 1,
+                from: 'other'
+            }
+        })
+    } else {
+        //点击跳转到粉丝列表页面，并且传递参数，要看谁的粉丝列表
+        router.push({
+            path: "/userfocus/fans",
+            query: {
+                account: account,
+                tag: 1
+            }
+        })
+    }
+
+}
 
 </script>
 

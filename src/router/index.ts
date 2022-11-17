@@ -76,7 +76,27 @@ const routes = [
         meta: {
             title: '个人中心'
         }
+    }, {
+        path: '/userfocus',
+        name: 'userfocus',
+        component: () => import('@/utils/UserFocus.vue'),
+        meta: {
+            title: '关注列表'
+        },
+        children: [
+            {
+                path: "allfocus",
+                name: 'allfocus',
+                component: () => import('@/components/userfocus/userfocusShow.vue')
+            },
+            {
+                path: "fans",
+                name: 'fans',
+                component: () => import('@/components/userfocus/userfocusShow.vue')
+            }
+        ]
     }
+
 ]
 
 const router = createRouter({

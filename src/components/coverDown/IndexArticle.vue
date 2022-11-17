@@ -12,19 +12,50 @@
             </div>
             <div class="articleBoxes">
                 <!-- 文章盒子 -->
-                <articleBox v-for="item in showList" :key="item.id" :info="item" class="itemBox">
-                </articleBox>
+                <!-- 旧版本的加载文章盒子 -->
+                <!-- <ArticleBox v-for="item in showList" :key="item.id" :info="item" class="itemBox">
+                </ArticleBox> -->
+
+                <!-- 使用了异步加载并且加上了加载动画的文章盒子 -->
+                <Suspense v-for="item in showList" :key="item.id">
+                    <template #default>
+                        <ArticleBox :info="item" class="itemBox"></ArticleBox>
+                    </template>
+
+                    <!-- 加载完成前的载入动画 -->
+                    <template #fallback>
+                        <div class="window">
+                            <Loading class="winLoad"></Loading>
+                        </div>
+                    </template>
+                </Suspense>
             </div>
         </div>
-        <ArticleRight></ArticleRight>
+
+        <Suspense>
+            <template #default>
+                <ArticleRight></ArticleRight>
+            </template>
+
+            <!-- 加载完成前的载入动画 -->
+            <template #fallback>
+                <div class="window">
+                    <Loading class="winLoad"></Loading>
+                </div>
+            </template>
+        </Suspense>
+
     </div>
 </template>
 
 <script setup lang="ts">
-import ArticleRight from "@/components/coverDown/ArticleRight.vue";
+import { defineAsyncComponent } from "vue";
 import useAxios from "../../hooks/axios/axios";
 import { useRouter } from "vue-router";
-import articleBox from '@/components/articleBox/articleBox.vue'
+import Loading from "@/components/loading/loading2.vue";
+const ArticleBox = defineAsyncComponent(() => import('@/components/articleBox/articleBox.vue'))
+const ArticleRight = defineAsyncComponent(() => import('@/components/coverDown/ArticleRight.vue'))
+
 const router = useRouter()
 
 //请求文章列表

@@ -21,26 +21,38 @@
                     </leaveMessage>
                 </template>
                 <template #callback>
-                    <loading2></loading2>
+                    <div class="window">
+                        <Loading class="winLoad"></Loading>
+                    </div>
                 </template>
             </Suspense>
         </div>
-        <Right class="right"></Right>
+        <Suspense>
+            <template #default>
+                <Right class="right"></Right>
+            </template>
+            <template #callback>
+                <div class="window">
+                    <Loading class="winLoad"></Loading>
+                </div>
+            </template>
+        </Suspense>
     </div>
 
 </template>
 
 <script setup lang="ts">
 import { ref, defineAsyncComponent, watchEffect } from 'vue'
-import Right from '@/components/coverDown/ArticleRight.vue'
 import useAxios from "../../hooks/axios/axios";
 import { useStore } from '../../store/count'
 import { ElMessage } from 'element-plus'
+import Loading from "@/components/loading/loading2.vue";
+const leaveMessage = defineAsyncComponent(() => import('@/components/leaveMessage/leaveMessage.vue'))
+const Right = defineAsyncComponent(() => import('@/components/coverDown/ArticleRight.vue'))
 
 const writeMessage = ref('')  //写下的留言
 const pinia = useStore()
-const leaveMessage = defineAsyncComponent(() => import('@/components/leaveMessage/leaveMessage.vue'))
-const loading2 = defineAsyncComponent(() => import('@/components/loading/loading2.vue'))
+
 
 let messageHeadImg = ref()
 //检查是否登录

@@ -37,11 +37,19 @@ axios.get(`${pinia.apiRoot}/api/getcover`).then((res) => {
 </script>
 
 <style lang="less">
+@font-face {
+  font-family: "思源黑体 Normal";
+  font-weight: 350;
+  src: url("@/font-family/YkF40zSSGGwEVPSKgCFB7.woff2") format("woff2"),
+    url("@/font-family/YkF40zSSGGwEVPSKgCFB7.woff") format("woff");
+  font-display: swap;
+}
+
 body,
 html,
 #app {
   font-size: 14px;
-  font-family: 'SimHei';
+  font-family: '思源黑体 Normal';
   background-color: var(--html-background-color);
   background-size: cover;
   background-attachment: fixed;

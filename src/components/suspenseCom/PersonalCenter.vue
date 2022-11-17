@@ -9,9 +9,16 @@
                 <el-tab-pane label="我的收藏" name="first" class="list" :lazy="true">
                     <div class="ifHave">
                         <div class="boxex">
-                            <ArticleBox v-for="item in showArticles.showArticle" :key="item.id" :info="item"
-                                class="comBoxex">
-                            </ArticleBox>
+                            <Suspense v-for="item in showArticles.showArticle" :key="item.id">
+                                <template #default>
+                                    <ArticleBox :info="item" class="comBoxex">
+                                    </ArticleBox>
+                                </template>
+
+                                <template #fallback>
+                                    <Loading></Loading>
+                                </template>
+                            </Suspense>
                         </div>
                         <div class="pageInfo">
                             <div class="allPage">共有{{ collectionArray.length }}条数据</div>
@@ -23,9 +30,16 @@
                 <el-tab-pane label=" 我发布的" name="second" class="list" :lazy="true">
                     <div class="ifHave">
                         <div class="boxex">
-                            <ArticleBox v-for="item in showPush.showArticle" :key="item.id" :info="item"
-                                class="comBoxex">
-                            </ArticleBox>
+                            <Suspense v-for="item in showPush.showArticle" :key="item.id">
+                                <template #default>
+                                    <ArticleBox :info="item" class="comBoxex">
+                                    </ArticleBox>
+                                </template>
+
+                                <template #fallback>
+                                    <Loading></Loading>
+                                </template>
+                            </Suspense>
                         </div>
                         <div class="pageInfo">
                             <div class="allPage">共有{{ pushArticleNum.length }}条数据</div>
@@ -42,9 +56,10 @@
 <script setup lang="ts">
 import useAxios from '../../hooks/axios/axios';
 import { useStore } from "../../store/count";
-import { ref, watchEffect, reactive } from 'vue'
-import ArticleBox from '../articleBox/articleBox.vue';
+import { ref, watchEffect, reactive, defineAsyncComponent } from 'vue'
 import userInfoCom from '../personalCenter/userInfo.vue';
+import Loading from "@/components/loading/loading2.vue";
+const ArticleBox = defineAsyncComponent(() => import('../articleBox/articleBox.vue'))
 
 const pinia = useStore()
 //请求用户信息

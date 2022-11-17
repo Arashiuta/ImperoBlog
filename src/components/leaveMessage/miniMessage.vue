@@ -113,6 +113,7 @@ const goToPersonalCenter = () => {
         padding: .5rem;
         overflow: hidden;
         white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
 }

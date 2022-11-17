@@ -27,12 +27,12 @@
                 </div>
             </div>
             <div class="focusList">
-                <div class="focus">
-                    <p>{{ userInfo.focus.length ? userInfo.focus.length : 0 }}</p>
+                <div class="focus" @click="focusList(userInfo.account, 'myself')">
+                    <p>{{ userInfo.focus ? userInfo.focus.length : 0 }}</p>
                     <span>关注的人</span>
                 </div>
-                <div class="focus">
-                    <p>{{ userInfo.whoFocusMe.length ? userInfo.whoFocusMe.length : 0 }}</p>
+                <div class="focus" @click="fansList(userInfo.account, 'myself')">
+                    <p>{{ userInfo.fans ? userInfo.fans.length : 0 }}</p>
                     <span>粉丝</span>
                 </div>
             </div>
@@ -81,10 +81,8 @@
                     <el-input v-model="userInfo.introduce" :autosize="{ minRows: 2 }" type="textarea"
                         placeholder="这个人很懒，什么也没有留下..." v-if="ifChangePersonalDate" resize="none" class="personalIpt"
                         :maxlength="100" />
-                    <p v-else class=" personalIptSpan">{{ userInfo.introduce ? userInfo.introduce :
-                            "这个人很懒，什么也没有留下..."
-                    }}
-                    </p>
+                    <p v-else class=" personalIptSpan">{{ userInfo.introduce ? userInfo.introduce : "这个人很懒，什么也没有留下..."
+                    }} </p>
                 </div>
                 <div class="titleBottomBtn">
                     <!-- 修改密码 -->
@@ -141,7 +139,7 @@
 import useAxios from '../../hooks/axios/axios';
 import { useStore } from "../../store/count";
 import { ElMessage } from 'element-plus'
-import { ref, reactive, defineAsyncComponent } from 'vue'
+import { ref, reactive, defineAsyncComponent, watchEffect } from 'vue'
 import { useRouter } from 'vue-router';
 const uploadHeadImg = defineAsyncComponent(() => import('@/components/userInfo/uploadHead.vue'))
 
@@ -165,9 +163,12 @@ const changePersonalIntroduce = async () => {
         sex: userInfo.sex,
         eMail: userInfo.eMail ? userInfo.eMail : '',
         personalWeb: userInfo.personalWeb ? userInfo.personalWeb : '',
-        introduce: userInfo.introduce ? userInfo.introduce : '',
+        introduce: userInfo.introduce,
     }
 
+    if (!newIntroduce.introduce) {
+        newIntroduce.introduce = "这个人很懒，什么也没有留下..."
+    }
     //获取用户账号
     const token = JSON.parse(window.atob(localStorage.getItem('userAccount')!))
 
@@ -289,9 +290,61 @@ const sendNewHeadImg = () => {
 //更换完成,关闭弹窗
 const uploadHeadSuccess = (val: boolean) => {
     ifUploadHead.value = val
+    // 再发送一次请求，请求新的头像
+    useAxios.get('/userinfo', {
+        params: {
+            account: tokenInfo.account
+        }
+    }).then((res) => {
+        userInfo.headImg = res.data.data[0].headImg
+    })
 }
 
+//查看关注列表
+const focusList = (account: string, from: string) => {
+    if (from === 'other') {
+        router.push({
+            path: "/userfocus/allfocus",
+            query: {
+                account: account,
+                tag: 0,
+                from: 'other'
+            }
+        })
+    } else {
+        //点击跳转到关注列表页面，并且传递参数，要看谁的关注列表
+        router.push({
+            path: "/userfocus/allfocus",
+            query: {
+                account: account,
+                tag: 0
+            }
+        })
+    }
+}
 
+const fansList = (account: string, from: string) => {
+    if (from === 'other') {
+        router.push({
+            path: "/userfocus/allfocus",
+            query: {
+                account: account,
+                tag: 1,
+                from: 'other'
+            }
+        })
+    } else {
+        //点击跳转到粉丝列表页面，并且传递参数，要看谁的粉丝列表
+        router.push({
+            path: "/userfocus/fans",
+            query: {
+                account: account,
+                tag: 1
+            }
+        })
+    }
+
+}
 </script>
 
 <style scoped lang="less">

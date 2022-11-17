@@ -16,7 +16,7 @@
                     <div class="funnel-info-maring">
                         <span class="labelTag no-choose" @click="chooseTag(tag.content)" v-for="tag in tags"
                             :key="tag.id">{{
-                            tag.content
+                                    tag.content
                             }}</span>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                     <div class="funnel-info-maring">
                         <el-tag class="mx-1" closable :disable-transitions="false" @close="handleClose(tag)"
                             type="success" v-for="tag in filterTags.filterTag" :key="tag">{{
-                            tag
+                                    tag
                             }}
                         </el-tag>
                     </div>
@@ -33,11 +33,27 @@
             </div>
         </div>
         <div class="list" :key="pages.nowPage">
-            <ArticleBox v-for="item in showArticles.showArticle" :key="item.id" class="articleBox" :info="item">
-            </ArticleBox>
+            <!-- 旧版本的加载文章盒子 -->
+            <!-- <ArticleBox v-for="item in showArticles.showArticle" :key="item.id" class="articleBox" :info="item">
+            </ArticleBox> -->
+
+            <!-- 使用了异步加载并且加上了加载动画的文章盒子 -->
+            <Suspense v-for="item in showArticles.showArticle" :key="item.id">
+                <template #default>
+                    <ArticleBox :info="item" class="articleBox"></ArticleBox>
+                </template>
+
+                <!-- 加载完成前的载入动画 -->
+                <template #fallback>
+                    <div class="window">
+                        <Loading class="winLoad"></Loading>
+                    </div>
+                </template>
+            </Suspense>
+
         </div>
         <div class="page">
-            <div class="allPage">共有{{showArticle.length}}条数据</div>
+            <div class="allPage">共有{{ showArticle.length }}条数据</div>
             <el-pagination background layout="prev, pager, next" :page-count="pages.page.length"
                 :current-page="pages.nowPage" @update:current-page="updataPage" />
         </div>
@@ -46,16 +62,15 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, watchEffect } from "vue";
+import { reactive, watchEffect, defineAsyncComponent } from "vue";
 import useAxios from "../../hooks/axios/axios";
 import { useRoute } from 'vue-router'
-import { useStore } from "../../store/count";
-import ArticleBox from '@/components/articleBox/articleBox.vue'
+import Loading from "@/components/loading/loading2.vue";
+const ArticleBox = defineAsyncComponent(() => import('@/components/articleBox/articleBox.vue'))
 
-const pinia = useStore()
 const route = useRoute()
 //文章列表
-const { data: res } = await useAxios.get('./getarticle')
+const { data: res } = await useAxios.get('/getarticle')
 const articles = res.data
 
 const showArticle = articles.reverse()

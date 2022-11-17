@@ -30,16 +30,26 @@
                 <p>不会有人真的喜欢填报表吧，我的评价是不如写bug</p>
             </div>
         </div>
-        <Right class="right"></Right>
+        <Suspense>
+            <template #default>
+                <Right></Right>
+            </template>
+            <template #fallback>
+                <div class="window">
+                    <Loading class="winLoad"></Loading>
+                </div>
+            </template>
+        </Suspense>
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, defineAsyncComponent } from 'vue';
 import gsap from 'gsap'
-import Right from '@/components/coverDown/ArticleRight.vue'
 import useAxios from '../../hooks/axios/axios'
 import { useStore } from '../../store/count'
+import Loading from "@/components/loading/loading2.vue";
+const Right = defineAsyncComponent(() => import('@/components/coverDown/ArticleRight.vue'))
 
 const pinia = useStore()
 

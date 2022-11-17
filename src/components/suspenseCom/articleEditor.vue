@@ -20,28 +20,24 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, toRaw } from 'vue'
+import { reactive, toRaw } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import MdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import useAxios from '../../hooks/axios/axios'
 import { useStore } from '../../store/count'
 import qs from "qs";
-
 const pinia = useStore()
 const route = useRoute()
 const router = useRouter()
 //传过来的文章id
 const contentId = route.query.id
-
 //更新后的文章
 const theEditor = reactive({
     mdContent: '',
     oneSentence: ''
 })
-
 //请求过来要修改的文章
-
 const { data: res } = await useAxios.get('/getidarticle', {
     params: {
         id: contentId
@@ -49,7 +45,6 @@ const { data: res } = await useAxios.get('/getidarticle', {
 })
 theEditor.mdContent = res.data.content
 theEditor.oneSentence = res.data.oneSentence
-
 //md上传图片
 const onUploadImg = async (files: any, callback: any) => {
     const res = await Promise.all(
@@ -57,7 +52,6 @@ const onUploadImg = async (files: any, callback: any) => {
             return new Promise((rev, rej) => {
                 const form = new FormData();
                 form.append('file', file);
-
                 useAxios
                     .post(pinia.apiRoot + '/api/uploadmdimg', form, {
                         headers: {
@@ -69,12 +63,8 @@ const onUploadImg = async (files: any, callback: any) => {
             });
         })
     );
-
     callback(res.map((item) => pinia.apiRoot + item.data.url));
 };
-
-
-
 //发送修改的文章内容
 const sendEditor = async () => {
     const sendEditro = toRaw(theEditor)
@@ -93,10 +83,7 @@ const sendEditor = async () => {
     } else {
         alert('修改失败')
     }
-
 }
-
-
 </script>
 
 <style scoped lang="less">

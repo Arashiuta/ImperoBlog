@@ -150,7 +150,7 @@ const login = async () => {
         localStorage.setItem('userAccount', window.btoa(JSON.stringify(accountInfo)))
         pinia.sessionInfo = window.btoa(JSON.stringify(accountInfo))
         alert('登录成功')
-        router.go(-1)
+        router.replace('/index')
     } else {
         alert('密码错误')
     }

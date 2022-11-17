@@ -50,6 +50,12 @@
                 <!-- 如果没有封面 -->
                 <div class="noCover" v-if="!ifCover">
                     <div class="title">{{ browseArticle.title }}</div>
+                    <div class="author" @click="goToPersonalCenter">
+                        <div class="head">
+                            <img :src="pinia.apiRoot + authorInfo.headImg" alt="head">
+                        </div>
+                        <div class="nickName">{{ authorInfo.nickName }}</div>
+                    </div>
                     <div class="time">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-rili"></use>
@@ -282,7 +288,7 @@ const goToPersonalCenter = () => {
 }
 
 .coverImg {
-    margin-top: 4.5rem;
+    margin-top: 5rem;
     display: flex;
     justify-content: center;
     height: 40rem;
@@ -369,7 +375,7 @@ const goToPersonalCenter = () => {
 .articleMd {
     display: flex;
     width: 70%;
-    margin: 1rem auto;
+    margin: 0 auto;
 
     .contaier {
         min-height: 100rem;
@@ -392,6 +398,32 @@ const goToPersonalCenter = () => {
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
+
+                .author {
+                    display: flex;
+                    align-items: center;
+                    font-size: 1.5rem;
+                    padding: 1rem 0;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+
+
+                    .head {
+                        width: 3.5rem;
+                        height: 3.5rem;
+                        border-radius: 50%;
+                        overflow: hidden;
+                        margin-right: 1rem;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+                    }
+                }
 
                 .title {
                     font-size: 3rem;
@@ -505,10 +537,11 @@ const goToPersonalCenter = () => {
     }
 
     .catalog {
+        margin-top: 6rem;
         flex: 1;
 
         .cataSide {
-            // width: 100%;
+            max-width: 20rem;
             position: sticky;
             top: 1rem;
 
