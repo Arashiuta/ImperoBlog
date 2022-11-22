@@ -70,7 +70,10 @@ a {
   text-decoration: none;
 }
 
-
+button {
+  border: none;
+  outline: none;
+}
 
 
 //标签tag的通用样式

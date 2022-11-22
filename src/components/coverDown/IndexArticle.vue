@@ -8,14 +8,10 @@
                     </svg>
                     <div>最近更新</div>
                 </div>
-                <div @click="goArticle" class="watchMore">查看更多</div>
+                <!-- <div @click="goArticle" class="watchMore">查看更多</div> -->
+                <BtnLearnMore class="watchMore" @click="goArticle"></BtnLearnMore>
             </div>
             <div class="articleBoxes">
-                <!-- 文章盒子 -->
-                <!-- 旧版本的加载文章盒子 -->
-                <!-- <ArticleBox v-for="item in showList" :key="item.id" :info="item" class="itemBox">
-                </ArticleBox> -->
-
                 <!-- 使用了异步加载并且加上了加载动画的文章盒子 -->
                 <Suspense v-for="item in showList" :key="item.id">
                     <template #default>
@@ -53,6 +49,7 @@ import { defineAsyncComponent } from "vue";
 import useAxios from "../../hooks/axios/axios";
 import { useRouter } from "vue-router";
 import Loading from "@/components/loading/loading2.vue";
+import BtnLearnMore from "@/components/UIVerse/btn-learnMore.vue";
 const ArticleBox = defineAsyncComponent(() => import('@/components/articleBox/articleBox.vue'))
 const ArticleRight = defineAsyncComponent(() => import('@/components/coverDown/ArticleRight.vue'))
 
@@ -113,18 +110,19 @@ const goArticle = () => {
             }
 
             .watchMore {
-                border: .2rem solid rgb(47, 196, 255);
-                padding: .6rem 1.4rem;
-                border-radius: 5rem;
-                font-size: 1.3rem;
-                transition: all .2s;
+                font-size: 1.1rem;
+                // border: .2rem solid rgb(47, 196, 255);
+                // padding: .6rem 1.4rem;
+                // border-radius: 5rem;
+                // font-size: 1.3rem;
+                // transition: all .2s;
 
-                &:hover {
-                    cursor: pointer;
-                    background-color: rgb(54, 181, 255);
-                    font-weight: 500;
-                    color: #fff;
-                }
+                // &:hover {
+                //     cursor: pointer;
+                //     background-color: rgb(54, 181, 255);
+                //     font-weight: 500;
+                //     color: #fff;
+                // }
             }
         }
 

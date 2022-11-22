@@ -9,7 +9,7 @@
         <div class="coverBottom">
             <div class="title">{{ info.title }}</div>
             <div class="content">
-                {{ info.oneSentence + info.content }}
+                {{ info.oneSentence }}
             </div>
             <div class="authorInfo">
                 <div class="head">

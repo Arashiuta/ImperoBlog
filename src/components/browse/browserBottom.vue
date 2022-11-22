@@ -66,8 +66,6 @@ watchEffect(async () => {
 
 <style scoped lang="less">
 .browserBottom {
-    width: 70%;
-    margin: 0 auto;
     border-radius: 0.5rem;
     padding: 1.4rem;
     box-shadow: .1rem .1rem .5rem var(--gray-sahdow);

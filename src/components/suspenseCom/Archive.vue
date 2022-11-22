@@ -60,7 +60,8 @@ const session = localStorage.getItem('userAccount')  //获取session
 
 if (!session) {   //如果没有登录选择默认头像展示
     const { data: res } = await useAxios.get('/getdefaulthead')
-    messageHeadImg = res.data
+    messageHeadImg.value = res.data
+
 } else {   //登录了展示用户自己的头像
     const userAccount = JSON.parse(window.atob(session))
     const { data: res } = await useAxios.get('/userinfo', {
@@ -68,7 +69,7 @@ if (!session) {   //如果没有登录选择默认头像展示
             account: userAccount.account
         }
     })
-    messageHeadImg = res.data[0].headImg
+    messageHeadImg.value = res.data[0].headImg
 }
 
 //请求留言列表

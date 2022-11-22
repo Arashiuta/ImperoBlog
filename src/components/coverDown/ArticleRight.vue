@@ -2,10 +2,13 @@
     <div class="articleRight">
         <div class="randomArticle">
             <div class="randomArticleTitle">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-suiji"></use>
-                </svg>
-                <div>随机文章</div>
+                <div class="title">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-suiji"></use>
+                    </svg>
+                    <div>随机文章</div>
+                </div>
+                <span></span>
             </div>
             <div class="randomArticleContent">
                 <RandomArticle v-for="item in listArr" :key="item.id" :article="item" class="randomArticlerrr">
@@ -14,23 +17,29 @@
         </div>
         <div class="tags">
             <div class="tagsTitle">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-24gl-tags3"></use>
-                </svg>
-                <div>所有标签</div>
+                <div class="title">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-24gl-tags3"></use>
+                    </svg>
+                    <div>所有标签</div>
+                </div>
+                <span></span>
             </div>
             <div class="allTags">
                 <span class="labelTag no-choose" @click="quickTag(tag)" v-for="tag in allTags" :key="tag.id">{{
-                tag.content
+                        tag.content
                 }}</span>
             </div>
         </div>
         <div class="message">
             <div class="messageTitle">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-liuyan"></use>
-                </svg>
-                <div>最新留言</div>
+                <div class="title">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-liuyan"></use>
+                    </svg>
+                    <div>最新留言</div>
+                </div>
+                <span></span>
             </div>
             <div class="messageContent">
                 <miniMessage v-for="item in messageList" :key="item.id" :item="item"></miniMessage>
@@ -95,7 +104,7 @@ const messageList = messageLists.reverse().slice(0, 7)  //展示七条留言
 
 <style scoped lang="less">
 .articleRight {
-    width: 28rem;
+    width: 25rem;
     margin-left: 1%;
     display: flex;
     flex-direction: column;
@@ -124,12 +133,29 @@ const messageList = messageLists.reverse().slice(0, 7)  //展示七条留言
 
         .messageTitle {
             display: flex;
-            justify-content: flex-start;
-            align-items: center;
+            flex-direction: column;
+            justify-content: flex-end;
             height: 5rem;
-            width: 95%;
-            border-bottom: .2rem solid var(--border-line);
-            font-size: 2rem;
+            width: 100%;
+            font-size: 1.8rem;
+
+            .title {
+                display: flex;
+                align-items: center;
+                margin-bottom: .5rem;
+
+                div {
+                    margin-left: .5rem;
+                }
+            }
+
+            span {
+                display: block;
+                width: 100%;
+                height: .5rem;
+                background-image: linear-gradient(to left, var(--gradient-start-one), var(--gradient-end-one));
+                border-radius: 1rem;
+            }
         }
 
         .messageContent {
@@ -160,13 +186,31 @@ const messageList = messageLists.reverse().slice(0, 7)  //展示七条留言
 
         .tagsTitle {
             display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
             width: 90%;
-            margin: 0 auto;
-            font-size: 2rem;
-            padding: 0 1rem;
-            align-items: center;
+            margin-left: 1rem;
+            font-size: 1.8rem;
             height: 5rem;
-            border-bottom: .2rem solid var(--border-line);
+
+            .title {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                margin-bottom: .5rem;
+
+                div {
+                    margin-left: .5rem;
+                }
+            }
+
+            span {
+                display: block;
+                width: 100%;
+                height: .5rem;
+                background-image: linear-gradient(to left, var(--gradient-start-one), var(--gradient-end-one));
+                border-radius: 1rem;
+            }
         }
 
         .allTags {
@@ -195,11 +239,29 @@ const messageList = messageLists.reverse().slice(0, 7)  //展示七条留言
     .randomArticleTitle {
         width: 95%;
         display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        border-bottom: .2rem solid var(--border-line);
+        flex-direction: column;
+        justify-content: flex-end;
         height: 5rem;
-        font-size: 2rem;
+        font-size: 1.8rem;
+
+        .title {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: .5rem;
+
+            div {
+                margin-left: .5rem;
+            }
+        }
+
+        span {
+            display: block;
+            width: 100%;
+            height: .5rem;
+            background-image: linear-gradient(to left, var(--gradient-start-one), var(--gradient-end-one));
+            border-radius: 1rem;
+        }
     }
 
     .randomArticleContent {

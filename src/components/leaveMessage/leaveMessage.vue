@@ -166,7 +166,7 @@ const goToPersonalCenter = () => {
     margin-top: 1rem;
     background-color: #fff;
     border-radius: 1rem;
-    padding: 1rem;
+    padding: 0 1rem;
     box-sizing: border-box;
 
     .delMessage {

@@ -210,6 +210,9 @@ const successUpCover = (res: Status) => {
         })).then((res) => {
             alert('文章上传成功')
             router.replace('/article')
+        }).catch(err => {
+            alert('出现错误:' + err)
+            ifUpload.value = true
         })
     }, 0)
 }
@@ -261,6 +264,9 @@ const uploadArticle = (articleWrite: ArticleWrite) => {
                 } else {
                     alert('文章上传失败')
                 }
+            }).catch(err => {
+                alert('出现错误:' + err)
+                ifUpload.value = true
             })
         }
     }

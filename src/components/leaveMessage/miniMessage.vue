@@ -83,7 +83,7 @@ const goToPersonalCenter = () => {
         .mesageHead {
             width: 3.5rem;
             height: 3.5rem;
-            background-color: aquamarine;
+            background-color: rgb(214, 214, 214);
             border-radius: 50%;
             margin-right: 1rem;
             overflow: hidden;
