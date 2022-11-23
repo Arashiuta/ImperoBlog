@@ -85,7 +85,7 @@
             <!-- 评论区组件 -->
             <Suspense>
                 <template #default>
-                    <browserComment :articleId="articleId" :comments="browseArticle.comments"></browserComment>
+                    <browserComment :articleId="articleId"></browserComment>
                 </template>
 
                 <template #fallback>
@@ -104,7 +104,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineAsyncComponent, provide, reactive, watchEffect } from 'vue';
+import { ref, onMounted, defineAsyncComponent, provide } from 'vue';
 import MdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import { useRoute, useRouter } from "vue-router";

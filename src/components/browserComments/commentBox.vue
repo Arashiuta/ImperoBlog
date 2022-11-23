@@ -1,22 +1,46 @@
 <template>
-    <div>
-        123
+    <div class="commentBox-container">
         <!-- 头像 -->
-        <div></div>
+        <div class="headimg">
+            <img :src="pinia.apiRoot + userInfo.headImg" alt="head">
+        </div>
         <!-- 内容 -->
-        <div>
+        <div class="contentBox">
             <!-- 昵称 -->
-            <div></div>
+            <div class="nickname">{{ userInfo.nickName }}</div>
             <!-- 内容 -->
-            <div></div>
+            <div class="commentCox">{{ commentInfo.content }}</div>
             <!-- 时间 -->
-            <div></div>
+            <div class="commentTime">
+                <p>{{ commentInfo.time }}</p>
+                <span style="color:var(--special-font-color) ;">回复</span>
+                <span class="delBtn" @click="delComment">删除</span>
+                <Teleport to="body">
+                    <el-dialog v-model="dialogVisible" title="Tips" width="30%">
+                        <span>确定要删除吗</span>
+                        <template #footer>
+                            <span class="dialog-footer">
+                                <el-button @click="dialogVisible = false">取消</el-button>
+                                <el-button type="primary" @click="sendDelComment"> 确定</el-button>
+                            </span>
+                        </template>
+                    </el-dialog>
+                </Teleport>
+
+            </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+import useAxios from '../../hooks/axios/axios';
+import { useStore } from "../../store/count";
+import { ElMessage } from 'element-plus'
+import router from "../../router";
 
+const pinia = useStore()
+const dialogVisible = ref(false)  //是否弹出确认删除的弹窗
 type Comments = {
     id: number,
     account: string,
@@ -24,14 +48,118 @@ type Comments = {
     content: string
 }
 type Props = {
-    item: Comments
+    item: Comments,
+    articleId: string
 }
 const props = defineProps<Props>()
-console.log(props.item);
+const commentInfo = props.item  //传过来的props(评论信息)
 
+//请求对应用户的头像和昵称信息
+const { data: res } = await useAxios.get('/userinfo', {
+    params: {
+        account: commentInfo.account
+    }
+})
+const userInfo = res.data[0]   //用户信息
+
+const delComment = () => {
+    const token = localStorage.getItem('userAccount')
+    if (token) {
+        const tokenInfo = JSON.parse(window.atob(token))
+        if (tokenInfo.account === userInfo.account) {
+            dialogVisible.value = true
+        } else {
+            if (tokenInfo.root === true) {
+                dialogVisible.value = true
+                return
+            }
+            ElMessage.error('不能删除他人的回复')
+        }
+    } else {
+        ElMessage.error('未登录')
+    }
+}
+
+const sendDelComment = async () => {
+    dialogVisible.value = false
+    const { data: res } = await useAxios.get('/articledelcomment', {
+        params: {
+            articleId: props.articleId,
+            commentId: commentInfo.id
+        }
+    })
+    if (res.status === 0) {
+        ElMessage({
+            message: '删除成功',
+            type: 'success',
+        })
+        router.go(0)
+    } else {
+        ElMessage.error('操作失败')
+    }
+}
 
 </script>
 
 <style scoped lang="less">
+.commentBox-container {
+    padding: 1rem;
+    display: flex;
 
+    .headimg {
+        width: 5rem;
+
+        img {
+            width: 3.5rem;
+            height: 3.5rem;
+            background-color: rgb(204, 204, 204);
+            border-radius: 50%;
+            overflow: hidden;
+            object-fit: cover;
+        }
+    }
+
+    .contentBox {
+        flex: 1;
+        min-width: 10rem;
+        padding-bottom: 1rem;
+        border-bottom: .1rem solid var(--gray-light-border);
+
+        &:hover {
+            .commentTime {
+                .delBtn {
+                    display: block;
+                }
+            }
+        }
+
+        .nickname {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--font-gray-color-dark);
+        }
+
+        .commentCox {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: .5rem 0;
+        }
+
+        .commentTime {
+            color: var(--font-gray-color);
+            display: flex;
+            justify-content: flex-start;
+
+            span {
+                margin-left: 1rem;
+            }
+
+            .delBtn {
+                display: none;
+                color: rgb(255, 88, 88);
+                cursor: pointer;
+            }
+        }
+    }
+}
 </style>
