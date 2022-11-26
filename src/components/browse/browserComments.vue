@@ -187,7 +187,7 @@ const addComment = async () => {
         justify-content: flex-end;
 
         .btnSend {
-            width: 10rem;
+            // width: 10rem;
             height: 3rem;
             display: flex;
             justify-content: center;
@@ -195,6 +195,5 @@ const addComment = async () => {
             cursor: pointer;
         }
     }
-
 }
 </style>

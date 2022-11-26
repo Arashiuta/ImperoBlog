@@ -70,8 +70,11 @@
                     </div>
                     <!--  -->
                     <div class="oneSentence">
-                        <span>引言:</span>
-                        <span>{{ browseArticle.oneSentence }}</span>
+                        <div class="introduction">
+                            <p>引言:</p>
+                            <span>{{ browseArticle.oneSentence }}</span>
+                        </div>
+                        <div class="border"></div>
                     </div>
                 </div>
                 <div class="articleIndex">
@@ -310,7 +313,7 @@ const goToPersonalCenter = () => {
 }
 
 .coverImg {
-    margin-top: 5rem;
+    margin-top: 4.6rem;
     display: flex;
     justify-content: center;
     height: 40rem;
@@ -411,8 +414,6 @@ const goToPersonalCenter = () => {
             .info {
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
-                align-items: center;
 
                 .noCover {
                     font-size: 1.6rem;
@@ -523,25 +524,34 @@ const goToPersonalCenter = () => {
 
                 .oneSentence {
                     width: 100%;
-                    display: flex;
-                    align-items: flex-end;
                     font-size: 1.4rem;
                     padding: 2rem 0;
-                    border-bottom: .3rem solid var(--border-line);
 
-                    span {
-                        padding: 0;
+                    .introduction {
+                        display: flex;
+                        margin-bottom: 2rem;
+
+                        p {
+                            width: 5rem;
+                            padding: 0;
+                            color: var(--special-font-color);
+                            font-size: 1.8rem;
+                            font-weight: 600;
+                        }
+
+                        span {
+                            flex: 1;
+                            padding: 0;
+                            margin-left: 1rem;
+                            font-size: 1.6rem;
+                        }
                     }
 
-                    :nth-child(1) {
-                        color: var(--special-font-color);
-                        font-size: 1.8rem;
-                        font-weight: 600;
-                    }
-
-                    :nth-child(2) {
-                        margin-left: 1rem;
-                        font-size: 1.6rem;
+                    .border {
+                        width: 100%;
+                        height: .5rem;
+                        border-radius: 10rem;
+                        background-image: linear-gradient(to left, var(--gradient-start-one), var(--gradient-end-one));
                     }
                 }
             }
@@ -549,8 +559,7 @@ const goToPersonalCenter = () => {
 
 
         .articleIndex {
-            margin: 2rem 0;
-            min-height: 80rem;
+            min-height: 40rem;
 
             .mdText {
                 background-color: transparent;
@@ -602,13 +611,37 @@ const goToPersonalCenter = () => {
 }
 
 
+@media screen and (max-width: 1200px) {
 
+    .articleMd {
+        margin: 0;
+        width: 100%;
+    }
+}
 
 
 @media screen and (max-width: 800px) {
-    .contaier {
+
+    .articleMd {
+        margin: 0;
         width: 100%;
-        border: none;
+
+
+        .catalog {
+            display: none;
+        }
+
+        .contaier {
+            width: 100%;
+
+            .mdTextTop {
+                width: 100%;
+            }
+
+            .editor {
+                margin-right: 3rem;
+            }
+        }
     }
 }
 </style>

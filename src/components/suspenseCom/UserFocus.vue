@@ -189,4 +189,12 @@ const pushRoute = (tag: number) => {
         flex: 1;
     }
 }
+
+@media screen and (max-width: 800px) {
+
+    .userfocus-container {
+        width: 100%;
+        margin-top: 8rem;
+    }
+}
 </style>

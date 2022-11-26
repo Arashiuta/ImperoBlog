@@ -15,8 +15,10 @@
                 <div class="head">
                     <img :src="pinia.apiRoot + authorInfo.headImg" alt="head">
                 </div>
-                <div class="nickName">{{ authorInfo.nickName }}</div>
-                <div class="time">发布于:{{ info.time }}</div>
+                <div class="headRight">
+                    <div class="nickName">{{ authorInfo.nickName }}</div>
+                    <div class="time">发布于:{{ info.time }}</div>
+                </div>
             </div>
             <div class="interaction">
                 <div class="praise">
@@ -160,15 +162,13 @@ const goBrowse = (id: number) => {
 
         .authorInfo {
             width: 100%;
-            height: 2.5rem;
             display: flex;
             align-items: center;
-            font-size: 1.3rem;
 
             .head {
-                width: 2.5rem;
-                height: 2.5rem;
-                background-color: rgb(156, 202, 255);
+                width: 3.5rem;
+                height: 3.5rem;
+                background-color: rgb(214, 214, 214);
                 border-radius: 50%;
                 overflow: hidden;
 
@@ -179,14 +179,21 @@ const goBrowse = (id: number) => {
                 }
             }
 
-            .nickName {
+            .headRight {
+                flex: 1;
                 margin-left: 1rem;
-                margin-right: 1.5rem;
+
+                .nickName {
+                    margin-right: 1.5rem;
+                    font-size: 1.4rem;
+                }
+
+                .time {
+                    color: var(--font-gray-color);
+                }
             }
 
-            .time {
-                color: var(--font-gray-color);
-            }
+
         }
 
         .interaction {

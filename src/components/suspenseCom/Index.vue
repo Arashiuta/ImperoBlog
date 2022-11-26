@@ -1,21 +1,18 @@
 <template>
     <!-- 大封面 -->
-    <keep-alive>
-        <div class="cover">
-            <div class="font">
-                <div class="welcome">
-                    <span>愿终有一日，能与你最爱的人萍水相逢</span>
-                </div>
+    <div class="cover">
+        <div class="font">
+            <div class="welcome">
+                <span>愿终有一日，能与你最爱的人萍水相逢</span>
+            </div>
 
-
-                <div class="more" @click="goMore">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-xiangxia"></use>
-                    </svg>
-                </div>
+            <div class="more" @click="goMore">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-xiangxia"></use>
+                </svg>
             </div>
         </div>
-    </keep-alive>
+    </div>
     <Suspense>
         <template #default>
             <!-- 下面的其他内容 -->

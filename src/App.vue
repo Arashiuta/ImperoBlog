@@ -42,14 +42,14 @@ axios.get(`${pinia.apiRoot}/api/getcover`).then((res) => {
   font-weight: 350;
   src: url("@/font-family/YkF40zSSGGwEVPSKgCFB7.woff2") format("woff2"),
     url("@/font-family/YkF40zSSGGwEVPSKgCFB7.woff") format("woff");
-  font-display: swap;
+  font-display: auto;
 }
 
 body,
 html,
 #app {
   font-size: 14px;
-  font-family: '思源黑体 Normal';
+  font-family: 'Microsoft YaHei', '黑体';
   background-color: var(--html-background-color);
   background-size: cover;
   background-attachment: fixed;
@@ -130,12 +130,12 @@ button {
 
 ::-webkit-scrollbar-thumb {
   border-radius: 0;
-  background-color: rgba(73, 90, 156);
+  background-color: rgb(218, 218, 218);
   transition: all .2s;
   border-radius: .5rem;
 
   &:hover {
-    background-color: rgba(104, 164, 255, 0.7);
+    background-color: rgb(172, 172, 172);
   }
 }
 </style>

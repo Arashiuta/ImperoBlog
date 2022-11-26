@@ -138,14 +138,5 @@ const myInfo = res.data[0]
         width: 100%;
         border: none;
     }
-
-}
-
-@media only screen and (max-width: 800px) {
-    .container-more {
-        width: 100%;
-        border: none;
-    }
-
 }
 </style>

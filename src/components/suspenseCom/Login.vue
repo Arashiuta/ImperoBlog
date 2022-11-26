@@ -96,6 +96,7 @@ import { useStore } from '../../store/count'
 import { useRouter } from 'vue-router'
 import useAxios from "../../hooks/axios/axios";
 import qs from "qs";
+import { ElNotification } from 'element-plus'
 
 const pinia = useStore()
 const router = useRouter()
@@ -149,7 +150,11 @@ const login = async () => {
         // sessionStorage
         localStorage.setItem('userAccount', window.btoa(JSON.stringify(accountInfo)))
         pinia.sessionInfo = window.btoa(JSON.stringify(accountInfo))
-        alert('登录成功')
+        ElNotification({
+            title: 'Success',
+            message: '登录成功',
+            type: 'success',
+        })
         router.replace('/index')
     } else {
         alert('密码错误')

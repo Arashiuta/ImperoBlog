@@ -279,9 +279,9 @@ const clickLogo = () => {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
+        width: 104%;
         box-sizing: border-box;
-        padding: 1.2rem;
+        padding: 1rem;
         z-index: 3;
         transition: all .5s;
         font-size: 3rem;

@@ -44,6 +44,10 @@ const ifHaveComments = ref(true)   //是否有评论
 const ifHaveMoreComments = ref(false)   //是否还有未加载的评论
 const commentsInject: Inject = inject('comments')!  //拿到祖组件依赖注入传过来的数据(文章id和评论列表)
 let commentsList = commentsInject.comments    //把传过来的完整的评论列表拿出来
+if (!commentsList) {   //如果没有评论
+    ifHaveComments.value = false
+}
+
 
 const comments = reactive({   //一个响应式的对象性，包含一个要展示的评论列表和当前页码数
     comment: new Array,
@@ -51,30 +55,27 @@ const comments = reactive({   //一个响应式的对象性，包含一个要展
 })
 
 const loadComments = () => {  //当滚动到底部时展示多三个数据
-
     if (comments.comment.length === commentsList.length) {
         ifHaveMoreComments.value = true
         return
     }
-
     comments.nowShowPage += 1   //页码 + 1
     comments.comment = commentsList.slice(0, comments.nowShowPage * 3)  //取0到 页码数 * 3 的位置的评论
 }
 
 
 
-if (commentsList.length === 0) {   //如果没有评论
-    ifHaveComments.value = false
-}
 
 watchEffect(() => {
     if (pinia.articleCommentsAdd) {  //如果评论更新了就重新请求评论列表
+        ifHaveComments.value = true
         useAxios.get('/getidarticle', {
             params: {
                 id: commentsInject.id
             }
         }).then(res => {
             commentsList = res.data.data.comments
+            comments.comment = res.data.data.comments
         })
     }
 })
@@ -86,6 +87,7 @@ watchEffect(() => {
         display: flex;
         justify-content: center;
         font-size: 1.2rem;
+        color: var(--font-gray-color);
     }
 }
 
