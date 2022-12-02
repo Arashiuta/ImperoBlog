@@ -68,4 +68,16 @@
     }
 
 }
+
+@media screen and (max-width: 800px) {
+    .record {
+        box-sizing: border-box;
+        padding: 1rem;
+
+        .gongAn {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
 </style>

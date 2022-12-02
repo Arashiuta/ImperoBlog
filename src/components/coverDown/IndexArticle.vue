@@ -146,7 +146,7 @@ const goArticle = () => {
 
 @media screen and (max-width: 1200px) {
     .middle {
-        width: 100%;
+        width: 90%;
 
         .leftFace {
             margin-right: 2rem;

@@ -532,5 +532,30 @@ const fansList = (account: string, from: string) => {
     .userInfo {
         flex-direction: column;
     }
+
+    .moreInfo {
+        box-sizing: border-box;
+        padding: 5vw;
+    }
+}
+
+
+@media screen and (max-width: 500px) {
+    .userInfo {
+        .moreInfo {
+            .title {
+                padding-left: 1.5rem;
+            }
+
+            .titleBottom {
+                .titleBottomDiv {
+                    font-size: 1.5rem;
+                    padding: 1.5rem;
+                }
+            }
+
+        }
+    }
+
 }
 </style>

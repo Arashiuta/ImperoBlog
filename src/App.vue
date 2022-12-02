@@ -49,7 +49,7 @@ body,
 html,
 #app {
   font-size: 14px;
-  font-family: 'Microsoft YaHei', '黑体';
+  font-family: '思源黑体 Normal', 'Microsoft YaHei', '黑体';
   background-color: var(--html-background-color);
   background-size: cover;
   background-attachment: fixed;

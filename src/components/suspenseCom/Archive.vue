@@ -222,6 +222,10 @@ watchEffect(async () => {
         display: none;
     }
 
+    .container {
+        margin-top: 7rem;
+    }
+
 }
 
 @media only screen and (max-width: 800px) {

@@ -313,4 +313,12 @@ const clickLogo = () => {
         }
     }
 }
+
+@media screen and (max-width: 1200px) {
+    .moreMediaNav {
+        .icon {
+            margin-right: 8vw;
+        }
+    }
+}
 </style>
