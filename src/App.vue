@@ -3,7 +3,6 @@
   <Nav></Nav>
   <router-view></router-view>
   <Foot></Foot>
-
 </template>
 
 
@@ -73,6 +72,13 @@ a {
 button {
   border: none;
   outline: none;
+}
+
+.default-theme {
+
+  img {
+    width: 20rem;
+  }
 }
 
 

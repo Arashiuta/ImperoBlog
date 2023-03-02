@@ -6,12 +6,12 @@
                     <a target="_blank" class="webRecord"
                         href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13068202000183">
                         <img src="@/imgs/备案图标.png" />
-                        <p>冀公网安备 13068202000183号</p>
+                        <p>冀公网安备</p>
                     </a>
                 </div>
                 <p class="line"></p>
                 <div class="ICP">
-                    ICP证：<a href="https://beian.miit.gov.cn" target="_blank">冀ICP备2022005412号-1</a>
+                    ICP证：<a href="https://beian.miit.gov.cn" target="_blank">冀ICP备2023004936号</a>
                 </div>
             </div>
             <div>
