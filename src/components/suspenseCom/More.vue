@@ -17,17 +17,18 @@
                 <p>太丑了😭</p>
                 <h2>关于网站</h2>
                 <p>学完vue3做的练习网站，打算维护一段时间试试看，服务器买了不用做什么😋</p>
-                <p>服务器使用的阿里云新人打折的那个服务器，小水管<span style="text-decoration: line-through">勉强够用</span>不够用啦</p>
-                <p>前端使用vue3 + ts + pinia，打包工具使用vite</p>
-                <p>后端使用node + express编写的接口，使用了MongoDB数据库，上传使用formidable插件</p>
-                <p>尝试使用了一些库，除了element-plus，试着使用了gasp动画库，md-editor-v3富文本编辑器</p>
+                <!-- <p>服务器使用的阿里云新人打折的那个服务器，小水管<span style="text-decoration: line-through">勉强够用</span>不够用啦</p> -->
+                <p>前端使用vue3 + ts + pinia，打包工具使用了vite</p>
+                <p>后端使用node + express编写的服务器接口，刚开始使用json存数据，太难用了，尝试使用了MongoDB数据库，上传功能使用formidable插件，有点难，总之功能成功实现了</p>
+                <p>Java在学，想用Java重写后端服务器代码，但是时间来不及啦</p>
+                <p>尝试使用了一些库，比如element-plus，gasp动画库，md-editor-v3富文本编辑器</p>
                 <p>代码放在了github的仓库中 <a href="https://github.com/1209058433/imperoBlog" target="_blank">前端代码仓库</a> <a
                         href="https://github.com/1209058433/ImperoBlog_Api" target="_blank">后端代码仓库</a></p>
                 <p>这也是第一次做响应式的页面，css这东西不简单的🤔，写的比较乱</p>
                 <h2>关于我</h2>
-                <p>我喜欢猫猫!没有猫猫的世界是不完美的,🤗想在页面上放一只猫猫宠物，有时间看看有没有类似的库</p>
-                <p>大三财务狗一枚</p>
-                <p>不会有人真的喜欢填报表吧，我的评价是不如写bug</p>
+                <p>我喜欢猫猫!没有猫猫的世界是不完美的,🤗想在页面上放一只猫猫宠物，有时间看看有没有相关的库</p>
+                <p>财务狗一枚，非科班真的难，现在形势不好，要失业力😭😭😭</p>
+                <p>不会有人真的喜欢填报表吧，我的评价是不如写bug有意思</p>
             </div>
         </div>
         <Suspense>

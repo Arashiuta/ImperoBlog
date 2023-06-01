@@ -47,7 +47,7 @@ axios.get(`${pinia.apiRoot}/api/getcover`).then((res) => {
 body,
 html,
 #app {
-  font-size: 14px;
+  font-size: 13px;
   font-family: '思源黑体 Normal', 'Microsoft YaHei', '黑体';
   background-color: var(--html-background-color);
   background-size: cover;

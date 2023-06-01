@@ -83,7 +83,7 @@ const goBrowse = (id: number) => {
     width: 50rem;
     height: 40rem;
     background-color: rgb(170, 229, 247);
-    border-radius: 2rem;
+    border-radius: 1rem;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -94,12 +94,7 @@ const goBrowse = (id: number) => {
 
     &:hover {
         cursor: pointer;
-        box-shadow: 0 0 1rem .1rem var(--special-font-color);
-        transform: translateY(-0.4rem);
-
-        .cover {
-            transform: scale(1.1);
-        }
+        transform: translateY(-0.3rem);
     }
 
     .cover {

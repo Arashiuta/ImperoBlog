@@ -51,7 +51,6 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script setup lang="ts">
@@ -192,7 +191,7 @@ const sendNewNickName = async () => {
         right: -10%;
         border: .1rem solid var(--gray-sahdow);
         box-shadow: .1rem .1rem .2rem var(--gray-sahdow);
-        width: 12rem;
+        width: 10rem;
         background-color: rgb(255, 255, 255);
         transform: translateZ(-1rem);
         border-radius: .5rem;

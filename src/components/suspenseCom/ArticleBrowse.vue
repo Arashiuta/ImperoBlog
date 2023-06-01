@@ -31,6 +31,7 @@
                         <div class="moreEditor" v-if="ifEditor">
                             <div class="moreEditor2"></div>
                             <ul>
+                                <li @click="topArticle">置顶</li>
                                 <li @click="openEditor">编辑</li>
                                 <li @click="openDel">删除</li>
                             </ul>
@@ -119,6 +120,7 @@ import { ElMessage } from 'element-plus'
 import BrowserSide from '../browse/browserSide.vue';
 import BrowserBottom from '../browse/browserBottom.vue';
 import Loading2 from "@/components/loading/loading2.vue";
+import axios from 'axios';
 const browserComment = defineAsyncComponent(() => import('@/components/browse/browserComments.vue'))
 
 const pinia = useStore()
@@ -296,6 +298,35 @@ const goToPersonalCenter = () => {
                 account: authorInfo.account
             }
         })
+    }
+}
+
+
+//置顶文章按钮点击事件
+const topArticle = async () => {
+    const token = localStorage.getItem('userAccount')
+    if (token) {
+        const tokenInfo = JSON.parse(window.atob(token))
+        if (tokenInfo.root === true) {  //有权限
+            let { data: res } = await useAxios.get("/toparticle", {
+                params: {
+                    id: articleId
+                }
+            })
+            if (res.status === 0) {
+                ElMessage({
+                    message: '置顶成功',
+                    type: 'success',
+                })
+                ifEditor.value = !ifEditor
+            } else {
+                ElMessage.error('网络错误！')
+            }
+        } else {
+            ElMessage.error('没有操作权限')
+        }
+    } else {
+        ElMessage.error('没有登录')
     }
 }
 
@@ -480,7 +511,6 @@ const goToPersonalCenter = () => {
                         top: 3rem;
                         left: -1rem;
                         width: 4.5rem;
-                        height: 5rem;
                         background-color: rgb(231, 235, 238);
                         border-radius: .5rem;
                         animation: ifEditor .3s;

@@ -27,7 +27,7 @@
             </div>
             <div class="allTags">
                 <span class="labelTag no-choose" @click="quickTag(tag)" v-for="tag in allTags" :key="tag.id">{{
-                        tag.content
+                    tag.content
                 }}</span>
             </div>
         </div>
@@ -59,8 +59,8 @@ const router = useRouter()
 const { data: res } = await useAxios.get('/getarticle')
 const list = res.data
 let randomNunMin = list.length
-if (list.length > 5) {
-    randomNunMin = 5
+if (list.length > 4) {
+    randomNunMin = 4
 }
 //请求所有标签
 const { data: tags } = await useAxios.get('/gettags')

@@ -4,9 +4,9 @@
             <div class="gongAn">
                 <div>
                     <a target="_blank" class="webRecord"
-                        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13068202000183">
+                        href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=13068202000222">
                         <img src="@/imgs/备案图标.png" />
-                        <p>冀公网安备</p>
+                        <p>冀公网安备13068202000222号</p>
                     </a>
                 </div>
                 <p class="line"></p>
@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div>
-                本网站仅供个人学习用途，不存在任何商业行为
+                本网站仅供个人学习用途
             </div>
         </div>
     </div>

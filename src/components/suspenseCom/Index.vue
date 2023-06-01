@@ -1,9 +1,9 @@
 <template>
     <!-- 大封面 -->
-    <div class="cover">
+    <div class="cover" @click="goMore">
         <div class="font">
             <div class="welcome">
-                <span>愿终有一日，能与你最爱的人萍水相逢</span>
+                <span>大切な人と、いつかまた巡り会えますように</span>
             </div>
 
             <div class="more" @click="goMore">
@@ -26,9 +26,6 @@
             </div>
         </template>
     </Suspense>
-
-
-
 </template>
 
 <script setup lang="ts">
