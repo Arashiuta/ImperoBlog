@@ -11,8 +11,8 @@
         </div>
         <div class="title">
             <label for="title">标题:</label>
-            <el-input maxlength="30" v-model="articleWrite.articleTitle" placeholder="输入文章标题" show-word-limit
-                type="text" name="title" />
+            <el-input maxlength="30" v-model="articleWrite.articleTitle" placeholder="输入文章标题" show-word-limit type="text"
+                name="title" />
         </div>
         <div class="title">
             <label for="title">引言:</label>
@@ -23,7 +23,7 @@
             <p>选择标签:</p>
             <div>
                 <span class="labelTag no-choose" @click="chooseTag(tag.content)" v-for="tag in allTags" :key="tag.id">{{
-                        tag.content
+                    tag.content
                 }}</span>
             </div>
         </div>
@@ -42,13 +42,13 @@
             </div>
         </div>
         <div class="section">
-            <p>版块：(计划中)</p>
+            <p>版块：(计划中)</p>2
         </div>
         <div class="uploadimg">
             <p>上传封面:</p>
             <div>
-                <el-upload class="upload-demo" :drag="true" :action="pinia.apiRoot + '/api/uploadarticlecover'"
-                    :limit="1" :auto-upload="false" list-type="picture" ref="uploadCover" :on-success="successUpCover"
+                <el-upload class="upload-demo" :drag="true" :action="pinia.apiRoot + '/api/uploadarticlecover'" :limit="1"
+                    :auto-upload="false" list-type="picture" ref="uploadCover" :on-success="successUpCover"
                     :on-error="errorUpCover" :on-change="onChangeCover" :on-remove="onRemove" multiple
                     :on-exceed="onExceed">
                     <el-icon class="el-icon--upload">
@@ -62,8 +62,8 @@
             </div>
         </div>
         <div class="article">
-            <md-editor v-model="articleWrite.articleText" style="height:60rem" @onUploadImg="onUploadImg"
-                :preview="false" :showCodeRowNumber="true" placeholder="在这里输入...">
+            <md-editor v-model="articleWrite.articleText" style="height:60rem" @onUploadImg="onUploadImg" :preview="false"
+                :showCodeRowNumber="true" placeholder="在这里输入...">
             </md-editor>
         </div>
         <div class="uploadArticle">

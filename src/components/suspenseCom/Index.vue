@@ -1,9 +1,13 @@
 <template>
     <!-- 大封面 -->
-    <div class="cover" @click="goMore">
+    <div class="cover">
         <div class="font">
             <div class="welcome">
-                <span>大切な人と、いつかまた巡り会えますように</span>
+                <!-- <span>大切な人と、いつかまた巡り会えますように</span> -->
+                <div class="textInfo">
+                    <span>{{ res.hitokoto }}</span>
+                    <span>——{{ res.from }}</span>
+                </div>
             </div>
 
             <div class="more" @click="goMore">
@@ -33,6 +37,7 @@ import { defineAsyncComponent } from "vue";
 import Loading from "@/components/loading/loading.vue";
 import { onMounted } from "vue";
 import { gsap } from "gsap";
+import useAxios from "../../hooks/axios/axios";
 
 //Suspense要异步引入组件
 const IndexArticle = defineAsyncComponent(() => import('@/components/coverDown/IndexArticle.vue'))
@@ -55,6 +60,10 @@ const goMore = () => {
         behavior: "smooth"
     })
 }
+
+//加载时请求一言句子的内容
+const { data: res } = await useAxios.get("https://v1.hitokoto.cn/")
+
 </script>
 
 <style scoped lang="less">
@@ -79,12 +88,30 @@ const goMore = () => {
 
 
         .welcome {
-            margin-top: 28rem;
-            font-size: 3rem;
+            width: 70%;
+            min-height: 5rem;
+            margin-top: 24rem;
             padding: 1rem 3rem;
             border-radius: 1.5rem;
             color: @fontColor;
             text-shadow: .1rem .1rem .1rem rgb(105, 105, 105);
+
+            .textInfo {
+                max-width: 100%;
+                overflow-wrap: break-word;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+
+                :nth-child(1) {
+                    font-size: 2.4rem;
+                }
+
+                :nth-child(2) {
+                    font-size: 1.8rem;
+                    align-self: flex-end;
+                }
+            }
         }
 
 
