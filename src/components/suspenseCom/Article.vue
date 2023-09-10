@@ -165,13 +165,8 @@ const chooseTag = (tagName: string) => {
 const searchInfo = ref('')  //搜索框内容
 watchEffect(() => {
     showArticles.showArticle = showArticle.filter((item: Article) => {  //筛选标签
-        return filterTags.filterTag.every(val => item.tag.includes(val))
+        return filterTags.filterTag.every(val => item.tag.includes(val)) && item.title.includes(searchInfo.value)
     })
-    if (searchInfo.value !== '') {
-        showArticles.showArticle = showArticle.filter((item: Article) => {  //筛选搜索框
-            return item.title.includes(searchInfo.value)
-        })
-    }
     reFreshPage()
 })
 //筛选标签被删掉
