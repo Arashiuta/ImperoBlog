@@ -294,6 +294,7 @@ const handleClose = (tagName: string) => {
         .articleBox {
             width: 100%;
             margin: 1rem;
+            height: 38rem;
         }
     }
 

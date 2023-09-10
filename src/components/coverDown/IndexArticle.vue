@@ -156,6 +156,7 @@ const topArticleInfo = topRes.info[0]
 
             .itemBox {
                 width: 100%;
+                height: 40rem;
             }
         }
 
