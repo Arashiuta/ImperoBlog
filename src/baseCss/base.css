@@ -28,7 +28,6 @@
   /* 非常浅色的边框 */
   --gray-light-border: rgb(224, 224, 224);
   /* 渐变色组合1 */
-  /* 开始 */
   --gradient-start-one: #EF33B1;
   --gradient-end-one: #F6E6BC;
 }

@@ -19,8 +19,6 @@
             </div>
         </div>
     </div>
-
-
 </template>
 
 <script setup lang="ts">
@@ -30,7 +28,6 @@
 .record {
     padding: 1rem 0;
     margin: 0 auto;
-    margin-top: 2rem;
     width: 92%;
     border-radius: .5rem;
     background-color: #fff;

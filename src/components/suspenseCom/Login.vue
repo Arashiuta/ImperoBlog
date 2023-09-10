@@ -31,7 +31,6 @@
             </div>
             <div class="message">
                 <div>登录后可在留言板块发布留言</div>
-                <div>点击背景可进行互动(功能开发中)</div>
                 <img src="@/imgs/logo.png" alt="logo">
             </div>
         </div>
@@ -46,7 +45,7 @@
                     <div class="box">
                         <div class="iptUser">
                             <label for="registerUsername">用户名</label>
-                            <el-input v-model.trim="registerInfo.username" maxlength="16" placeholder="输入注册账号"
+                            <el-input v-model.trim="registerInfo.username" maxlength="16" placeholder="输入注册账号(这不是昵称)"
                                 show-word-limit type="text" name="registerUsername"
                                 onkeyup="this.value=this.value.replace(/[^a-z0-9]/g,'');" />
                         </div>

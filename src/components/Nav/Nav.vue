@@ -47,6 +47,11 @@
                 </li>
             </ul>
         </div>
+        <SearchInput :clearIpt="true">
+            <template #submitBtn>
+                <p style="font-size: 1.2rem; font-weight: 700; padding: .5rem;">></p>
+            </template>
+        </SearchInput>
         <div class="navRight">
             <div class="login" @click="login" v-if="ifLog">登录/注册</div>
             <NavUserInfo class="welcome" v-else></NavUserInfo>
@@ -117,20 +122,18 @@
             </div>
         </el-drawer>
     </div>
-
 </template>
 
 <script setup lang="ts">
 import { ref, watchEffect, defineAsyncComponent } from 'vue'
 import { useStore } from '../../store/count'
 import { useRouter } from 'vue-router'
+import SearchInput from '@/components/searchCom/searchInput.vue'
 const NavUserInfo = defineAsyncComponent(() => import('@/components/userInfo/navUserInfo.vue')) //要在组件里面使用useAxios要异步引入组件
-
 const router = useRouter()
-
 const pinia = useStore()
 
-const media = ref(true)
+const media = ref(true)  //根据页面响应使用哪个样式的标题栏
 const media2 = ref(false)
 
 //登录
@@ -165,7 +168,6 @@ const clickLogo = () => {
     router.push('/index')
 }
 
-
 </script>
 
 <style scoped lang="less">
@@ -183,78 +185,85 @@ const clickLogo = () => {
 
     .navList {
         text-shadow: .1rem .1rem .2rem rgb(61, 61, 61);
-    }
+        margin-left: 15rem;
 
-    .logoImg {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 15rem;
-        height: 4.5rem;
-        margin-right: 2rem;
-        cursor: pointer;
+        ul {
+            display: flex;
+            align-items: center;
+            // padding-left: 14rem;
 
-        img {
-            width: 100%;
-            object-fit: cover;
-        }
-    }
-
-
-    ul {
-        display: flex;
-        align-items: center;
-        padding-left: 14rem;
-
-        &:last-child {
-            border-right: 0.1rem solid rgba(255, 255, 255, .1);
-        }
-
-        li {
-            cursor: pointer;
-            padding: .7rem 0;
-            border-left: 0.1rem solid rgba(255, 255, 255, .1);
-
-
-            &:hover {
-                background-color: rgba(245, 245, 245, 0.1);
-                transition: all .2s;
-            }
-
-            a {
-                color: #fff;
-                font-size: 1.2rem;
-                padding: .4rem 2rem;
+            .logoImg {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                width: 15rem;
+                height: 4.5rem;
+                margin-right: 2rem;
+                cursor: pointer;
 
-                :nth-child(1) {
-                    font-size: 1.6rem;
-                    color: rgb(255, 255, 255);
-                    margin-right: .5rem;
+                img {
+                    width: 100%;
+                    object-fit: cover;
                 }
+            }
 
-                :nth-child(2) {
-                    font-size: 1.2rem;
-                    font-weight: 700;
-                }
+            // &:last-child {
+            //     border-right: 0.1rem solid rgba(255, 255, 255, .1);
+            // }
+
+            li {
+                cursor: pointer;
+                padding: .7rem 0;
+                border-left: 0.1rem solid rgba(255, 255, 255, .1);
+
 
                 &:hover {
-                    color: var(--box-shadow);
+                    background-color: rgba(245, 245, 245, 0.1);
+                    transition: all .2s;
+                }
+
+                a {
+                    color: #fff;
+                    font-size: 1.2rem;
+                    padding: .4rem 2rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    :nth-child(1) {
+                        font-size: 1.6rem;
+                        color: rgb(255, 255, 255);
+                        margin-right: .5rem;
+                    }
+
+                    :nth-child(2) {
+                        font-size: 1.2rem;
+                        font-weight: 700;
+                    }
+
+                    &:hover {
+                        color: var(--box-shadow);
+                    }
                 }
             }
         }
+
     }
 
-    .login {
-        color: rgb(224, 224, 224);
-        margin-right: 2rem;
-        text-shadow: .1rem .1rem var(--gray-sahdow);
+    .navRight {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-        &:hover {
-            cursor: pointer;
-            color: var(--special-font-color);
+        .login {
+            color: rgb(224, 224, 224);
+            margin-right: 2rem;
+            text-shadow: .1rem .1rem var(--gray-sahdow);
+
+            &:hover {
+                cursor: pointer;
+                color: var(--special-font-color);
+            }
         }
     }
 

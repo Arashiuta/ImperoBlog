@@ -26,9 +26,7 @@
                         href="https://github.com/1209058433/ImperoBlog_Api" target="_blank">后端代码仓库</a></p>
                 <p>这也是第一次做响应式的页面，css这东西不简单的🤔，写的比较乱</p>
                 <h2>关于我</h2>
-                <p>我喜欢猫猫!没有猫猫的世界是不完美的,🤗想在页面上放一只猫猫宠物，有时间看看有没有相关的库</p>
-                <p>财务狗一枚，非科班真的难，现在形势不好，要失业力😭😭😭</p>
-                <p>不会有人真的喜欢填报表吧，我的评价是不如写bug有意思</p>
+                <p>喜欢猫猫!没有猫猫的世界是不完整的🤗</p>
             </div>
         </div>
         <Suspense>
@@ -74,7 +72,8 @@ const myInfo = res.data[0]
 <style scoped lang="less">
 .container-more {
     width: 70%;
-    margin: 5rem auto;
+    margin: 1rem auto;
+    margin-top: 5rem;
     display: flex;
 
     .middle {

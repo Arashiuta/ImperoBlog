@@ -38,7 +38,6 @@
             </template>
         </Suspense>
     </div>
-
 </template>
 
 <script setup lang="ts">
@@ -128,7 +127,8 @@ watchEffect(async () => {
 <style scoped lang="less">
 .container {
     width: 70%;
-    margin: 5rem auto;
+    margin: 0 auto;
+    margin-top: 5rem;
     display: flex;
     box-sizing: border-box;
 

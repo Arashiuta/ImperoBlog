@@ -2,12 +2,20 @@
     <div class="contaier">
         <div class="filter">
             <div class="title">
-                <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-16"></use>
-                </svg>
-                <div class="titleChild">
-                    <span>文章列表</span>
-                    <span>ARTICLE LIST</span>
+                <div class="left">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-16"></use>
+                    </svg>
+                    <div class="titleChild">
+                        <span>文章列表</span>
+                        <span>ARTICLE LIST</span>
+                    </div>
+                </div>
+                <div class="right">
+                    <input type="text" placeholder="搜索文章" class="searchIpt" v-model="searchInfo">
+                    <button class="btn">
+                        <p>搜索</p>
+                    </button>
                 </div>
             </div>
             <div class="funnel">
@@ -16,16 +24,16 @@
                     <div class="funnel-info-maring">
                         <span class="labelTag no-choose" @click="chooseTag(tag.content)" v-for="tag in tags"
                             :key="tag.id">{{
-                                    tag.content
+                                tag.content
                             }}</span>
                     </div>
                 </div>
                 <div>
                     <div>已选 CHOOSE </div>
                     <div class="funnel-info-maring">
-                        <el-tag class="mx-1" closable :disable-transitions="false" @close="handleClose(tag)"
-                            type="success" v-for="tag in filterTags.filterTag" :key="tag">{{
-                                    tag
+                        <el-tag class="mx-1" closable :disable-transitions="false" @close="handleClose(tag)" type="success"
+                            v-for="tag in filterTags.filterTag" :key="tag">{{
+                                tag
                             }}
                         </el-tag>
                     </div>
@@ -33,9 +41,12 @@
             </div>
         </div>
         <div class="list" :key="pages.nowPage">
-            <!-- 旧版本的加载文章盒子 -->
-            <!-- <ArticleBox v-for="item in showArticles.showArticle" :key="item.id" class="articleBox" :info="item">
-            </ArticleBox> -->
+
+            <!--
+            旧版本的加载文章盒子
+            <ArticleBox v-for="item in showArticles.showArticle" :key="item.id" class="articleBox" :info="item">
+            </ArticleBox>
+            -->
 
             <!-- 使用了异步加载并且加上了加载动画的文章盒子 -->
             <Suspense v-for="item in showArticles.showArticle" :key="item.id">
@@ -53,30 +64,29 @@
 
         </div>
         <div class="page">
-            <div class="allPage">共有{{ showArticle.length }}条数据</div>
+            <div class="allPage">共有{{ showArticles.showArticle.length }}条数据</div>
             <el-pagination background layout="prev, pager, next" :page-count="pages.page.length"
                 :current-page="pages.nowPage" @update:current-page="updataPage" />
         </div>
     </div>
-
 </template>
 
 <script setup lang="ts">
-import { reactive, watchEffect, defineAsyncComponent } from "vue";
+import { reactive, watchEffect, defineAsyncComponent, ref } from "vue";
 import useAxios from "../../hooks/axios/axios";
 import { useRoute } from 'vue-router'
 import Loading from "@/components/loading/loading2.vue";
+// import { useStore } from "../../store/count";
+// const pinia = useStore()
 const ArticleBox = defineAsyncComponent(() => import('@/components/articleBox/articleBox.vue'))
 
 const route = useRoute()
 //文章列表
 const { data: res } = await useAxios.get('/getarticle')
 const articles = res.data
-
 const showArticle = articles.reverse()
-
-
 //应该有的页数
+const countForPage = 9 //每一页展示多少个
 type Page = {
     page: Array<number>
     pageNums: number
@@ -87,21 +97,20 @@ let pages = reactive<Page>({
     pageNums: articles.length,
     nowPage: 1
 })
-
 // 当前展示页
 //不能使用let来定义reactive，这样在重新赋值的时候内存地址会变，无法实现响应式
 const showArticles = reactive({
-    showArticle: showArticle.slice(12 * (pages.nowPage - 1), 12 * (pages.nowPage - 1) + 12)
+    showArticle: showArticle.slice(countForPage * (pages.nowPage - 1), countForPage * (pages.nowPage - 1) + countForPage)
 })
 watchEffect(() => {
     //先清空一下数组，再计算页数
     pages.page = []
-    if (pages.pageNums % 12 === 0) {
-        for (let i = 0; i < Math.floor(pages.pageNums / 12); i++) {
+    if (pages.pageNums % countForPage === 0) {
+        for (let i = 0; i < Math.floor(pages.pageNums / countForPage); i++) {
             pages.page.push(i + 1)
         }
     } else {
-        for (let i = 0; i < Math.floor(pages.pageNums / 12) + 1; i++) {
+        for (let i = 0; i < Math.floor(pages.pageNums / countForPage) + 1; i++) {
             pages.page.push(i + 1)
         }
     }
@@ -110,7 +119,6 @@ watchEffect(() => {
 const updataPage = (val: number) => {
     pages.nowPage = val
 }
-
 
 type Article = {
     id: number
@@ -122,13 +130,10 @@ type Article = {
     oneSentence: string
     content: string
 }
-
 //所有的tag
 //请求所有标签
 const { data: allTag } = await useAxios.get('/gettags')
 const tags = allTag.data
-
-
 //选中的筛选条件tags
 type Tag = {
     filterTag: Array<string>
@@ -137,29 +142,16 @@ type Tag = {
 const filterTags = reactive<Tag>({
     filterTag: []
 })
-
 //如果是从首页选择标签快速跳转进来，接收一个选择的筛选标签添加到筛选列表中
 const quickTag = route.query.quickTag?.toString()
 //如果传参了，就加进去，没穿就不用管
 if (quickTag) {
     filterTags.filterTag.push(quickTag)
 }
-
-//选中筛选标签有变化就要重新过滤文章，展示符合条件的
-watchEffect(() => {
-    showArticles.showArticle = showArticle.filter((item: Article) => {
-        return filterTags.filterTag.every(val => item.tag.includes(val))
-    })
+const reFreshPage = () => {  //刷新页码
     pages.pageNums = showArticles.showArticle.length
-    showArticles.showArticle = showArticles.showArticle.slice(12 * (pages.nowPage - 1), 12 * (pages.nowPage - 1) + 12)
-})
-
-
-//筛选标签被删掉
-const handleClose = (tagName: string) => {
-    filterTags.filterTag.splice(filterTags.filterTag.indexOf(tagName), 1)
+    showArticles.showArticle = showArticles.showArticle.slice(countForPage * (pages.nowPage - 1), countForPage * (pages.nowPage - 1) + countForPage)
 }
-
 //选中筛选tag
 const chooseTag = (tagName: string) => {
     //如果已经选中了则不要重复选中
@@ -169,7 +161,23 @@ const chooseTag = (tagName: string) => {
         filterTags.filterTag.push(tagName)
     }
 }
-
+//选中筛选标签有变化就要重新过滤文章，展示符合条件的
+const searchInfo = ref('')  //搜索框内容
+watchEffect(() => {
+    showArticles.showArticle = showArticle.filter((item: Article) => {  //筛选标签
+        return filterTags.filterTag.every(val => item.tag.includes(val))
+    })
+    if (searchInfo.value !== '') {
+        showArticles.showArticle = showArticle.filter((item: Article) => {  //筛选搜索框
+            return item.title.includes(searchInfo.value)
+        })
+    }
+    reFreshPage()
+})
+//筛选标签被删掉
+const handleClose = (tagName: string) => {
+    filterTags.filterTag.splice(filterTags.filterTag.indexOf(tagName), 1)
+}
 </script>
 
 <style scoped lang="less">
@@ -212,24 +220,55 @@ const chooseTag = (tagName: string) => {
 
         .title {
             display: flex;
-            justify-content: flex-start;
+            justify-content: space-between;
             align-items: center;
             font-size: 4rem;
             padding: 2rem;
             background-color: #fff;
             border-radius: 1rem;
 
-            .titleChild {
-                margin-left: 1rem;
-                font-size: 1.5rem;
+            .left {
                 display: flex;
-                flex-direction: column;
-                align-items: flex-start;
+
+                .titleChild {
+                    margin-left: 1rem;
+                    font-size: 1.5rem;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
+            }
+
+            .right {
+                display: flex;
+
+                .searchIpt {
+                    box-sizing: border-box;
+                    padding: .5rem;
+                    border: 2px solid #000;
+                    outline: none;
+                    border-radius: 1rem;
+                    font-size: 1.2rem;
+                }
+
+                .btn {
+                    box-sizing: border-box;
+                    padding: 0 1rem;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 1.2rem;
+                    color: #fff;
+                    border-radius: 1rem;
+                    margin-left: .5rem;
+                    background-color: var(--special-font-color);
+                    cursor: pointer;
+                }
             }
         }
 
         .funnel {
-            font-size: 2rem;
+            font-size: 1.7rem;
             margin-top: 2rem;
             background-color: #fff;
             border-radius: 1rem;

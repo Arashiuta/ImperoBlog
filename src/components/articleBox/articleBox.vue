@@ -80,8 +80,6 @@ const goBrowse = (id: number) => {
 
 <style scoped lang="less">
 .articleBox {
-    width: 50rem;
-    height: 40rem;
     background-color: rgb(170, 229, 247);
     border-radius: 1rem;
     overflow: hidden;

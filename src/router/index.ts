@@ -95,6 +95,13 @@ const routes = [
                 component: () => import('@/components/userfocus/userfocusShow.vue')
             }
         ]
+    }, {
+        path: '/search',
+        name: 'search',
+        component: () => import('@/utils/Search.vue'),
+        meta: {
+            title: '搜索'
+        }
     }
 
 ]

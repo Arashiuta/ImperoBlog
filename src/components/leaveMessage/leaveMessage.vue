@@ -29,7 +29,6 @@
             </template>
         </el-dialog>
     </div>
-
 </template>
 
 <script setup lang="ts">
@@ -37,7 +36,7 @@ import { ref } from 'vue'
 import useAxios from '../../hooks/axios/axios';
 import { useStore } from '../../store/count'
 import { ElMessage } from 'element-plus'
-import router from '../../router';
+import { goToPersonalCenterHook } from '../../hooks/goToPersonalCenter/goToPersonalCenter'
 
 const pinia = useStore()
 const root = ref(false)
@@ -131,6 +130,7 @@ const delMessageY = async (id: number) => {
     }
 }
 
+/*
 const goToPersonalCenter = () => {
     const token = localStorage.getItem('userAccount')
     if (token) {
@@ -153,6 +153,11 @@ const goToPersonalCenter = () => {
             }
         })
     }
+}
+*/
+
+const goToPersonalCenter = () => {
+    goToPersonalCenterHook(props.item.account)
 }
 
 </script>

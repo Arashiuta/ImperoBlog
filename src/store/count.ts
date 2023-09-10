@@ -11,6 +11,7 @@ export const useStore = defineStore('piniaStore', {
             pariseOrCollection: 0,  //点赞或者收藏更新数据
             nickNameLength: 16, //昵称的最大字符数
             articleCommentsAdd: 0,  //文章评论更新后更新dom
+            refreshSearchRes: 0,  //搜索页面重新搜索刷新搜索结果
         }
     },
     getters: {
