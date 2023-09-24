@@ -344,11 +344,14 @@ const topArticle = async () => {
 }
 
 .coverImg {
-    margin-top: 4.6rem;
+    width: 80%;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     height: 40rem;
     position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
 
     .el-image {
         width: 100%;
@@ -430,7 +433,7 @@ const topArticle = async () => {
 
 .articleMd {
     display: flex;
-    width: 70%;
+    width: 80%;
     margin: 0 auto;
 
     .contaier {

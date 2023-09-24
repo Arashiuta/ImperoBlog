@@ -107,10 +107,8 @@ watchEffect(() => {
 <style scoped lang="less">
 .search-container {
     margin: 0 auto;
-    margin-top: 5rem;
     width: 75%;
     min-height: 55rem;
-    background-color: var(--backgeound-color);
     overflow: auto;
     box-sizing: border-box;
     padding: 1rem;

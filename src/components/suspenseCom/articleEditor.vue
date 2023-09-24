@@ -90,7 +90,6 @@ const sendEditor = async () => {
 .container {
     width: 65%;
     margin: 0 auto;
-    margin-top: 5rem;
     border: .1rem solid var(--gray-sahdow);
     border-radius: .5rem;
     background-color: var(--backgeound-color);

@@ -169,6 +169,7 @@ const sendNewNickName = async () => {
     position: relative;
     transform-style: preserve-3d;
     border: .2rem solid #fff;
+    z-index: 2;
 
     .headBox {
         width: 100%;

@@ -172,16 +172,17 @@ const clickLogo = () => {
 
 <style scoped lang="less">
 .nav {
-    position: absolute;
-    top: 0;
-    left: 0;
+    // position: absolute;
+    // top: 0;
+    // left: 0;
     width: 100%;
     height: 4.5rem;
-    z-index: 3;
+    margin-bottom: 1rem;
     transition: all .5s;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    // background-color: var(--nav-background-color);
 
     .navList {
         text-shadow: .1rem .1rem .2rem rgb(61, 61, 61);
@@ -212,38 +213,35 @@ const clickLogo = () => {
             // }
 
             li {
-                cursor: pointer;
-                padding: .7rem 0;
-                border-left: 0.1rem solid rgba(255, 255, 255, .1);
-
-
                 &:hover {
+                    cursor: pointer;
                     background-color: rgba(245, 245, 245, 0.1);
+                    border-radius: .7rem;
                     transition: all .2s;
                 }
 
                 a {
                     color: #fff;
-                    font-size: 1.2rem;
-                    padding: .4rem 2rem;
+                    // font-size: 1.2rem;
+                    padding: .4rem 1rem;
                     display: flex;
                     justify-content: center;
                     align-items: center;
 
                     :nth-child(1) {
-                        font-size: 1.6rem;
+                        font-size: 1.1rem;
                         color: rgb(255, 255, 255);
                         margin-right: .5rem;
                     }
 
                     :nth-child(2) {
-                        font-size: 1.2rem;
+                        font-size: 1.1rem;
                         font-weight: 700;
                     }
 
-                    &:hover {
-                        color: var(--box-shadow);
-                    }
+                    // &:hover {
+                    //     color: var(--box-shadow);
+                    // }
                 }
             }
         }

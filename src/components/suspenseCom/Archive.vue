@@ -126,9 +126,8 @@ watchEffect(async () => {
 
 <style scoped lang="less">
 .container {
-    width: 70%;
+    width: 75%;
     margin: 0 auto;
-    margin-top: 5rem;
     display: flex;
     box-sizing: border-box;
 
@@ -136,14 +135,12 @@ watchEffect(async () => {
         box-sizing: border-box;
         min-height: 90rem;
         flex: 1;
-        padding: 0 2rem;
-        background-color: var(--backgeound-color);
-        border: .1rem solid var(--gray-sahdow);
+        padding: 1rem 2rem;
+        background-color: var(--white-background-color);
         border-radius: .4rem;
 
         .title {
             height: 8rem;
-            background-color: #fff;
             margin-top: 1rem;
             border-radius: 1rem;
             display: flex;
@@ -210,10 +207,10 @@ watchEffect(async () => {
 
     .right {
         margin-left: .5rem;
-        padding: 2rem;
-        background-color: var(--backgeound-color);
-        border: .1rem solid var(--gray-sahdow);
-        border-radius: .5rem;
+        // padding: 2rem;
+        // background-color: var(--backgeound-color);
+        // border: .1rem solid var(--gray-sahdow);
+        // border-radius: .5rem;
     }
 }
 

@@ -153,7 +153,6 @@ const pushRoute = (tag: number) => {
         height: 15rem;
         background-color: #fff;
         margin: .5rem auto;
-        margin-top: 5rem;
         border-radius: .5rem;
         position: relative;
         overflow: hidden;

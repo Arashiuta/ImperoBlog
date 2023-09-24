@@ -87,7 +87,7 @@ const goBrowse = (id: number) => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: .5rem .5rem 1rem var(--gray-light-sahdow);
+    box-shadow: .2rem .2rem .2rem var(--gray-light-sahdow);
     transition: all 0.2s;
 
     &:hover {

@@ -11,7 +11,6 @@ import { ref, onMounted } from 'vue'
 import Nav from "@/components/Nav/Nav.vue";
 import { useStore } from './store/count'
 import Foot from '@/components/foot/foot.vue'
-import axios from 'axios';
 const pinia = useStore()
 
 onMounted(() => {
@@ -26,13 +25,13 @@ onMounted(() => {
   }
 })
 
-
+//随机图片背景（已弃用）
 //这个时候使用封装过的useAxios会报错pinia未安装，所以使用未封装的axios发送请求
 // 不过可以使用pinia的baseurl，并没有多出一个步骤来，没有不良影响
-axios.get(`${pinia.apiRoot}/api/getcover`).then((res) => {
-  const body = document.querySelector('body') as HTMLElement
-  body.style.backgroundImage = `url(${pinia.apiRoot + res.data.coverUrl})`
-})
+// axios.get(`${pinia.apiRoot}/api/getcover`).then((res) => {
+//   const body = document.querySelector('body') as HTMLElement
+//   body.style.backgroundImage = `url(${pinia.apiRoot + res.data.coverUrl})`
+// })
 
 //网页彩蛋
 const easterKey = ['w', 'z', 'f'];  //彩蛋秘籍
@@ -69,11 +68,14 @@ html,
 #app {
   font-size: 13px;
   font-family: '思源黑体 Normal', 'Microsoft YaHei', '黑体';
-  background-color: var(--html-background-color);
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
+  // background-color: var(--html-background-color);
+  // background-size: cover;
+  // background-attachment: fixed;
+  // background-position: center;
+  // background-repeat: no-repeat;
+  // background-image: linear-gradient(-225deg, #231557 0%, #44107A 29%, #FF1361 67%, #ffee03 100%);
+  background-image: linear-gradient(to top, #FFE6FA 65%, #2580B3 100%);
+  // background-image: linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%);
 }
 
 * {
@@ -105,12 +107,12 @@ button {
 //标签tag的通用样式
 .labelTag {
   display: inline-block;
-  font-size: 1.3rem;
-  background-color: rgb(0, 162, 184);
-  color: #fff;
+  font-size: 1.2rem;
+  background-color: var(--light-gray-blue);
+  color: #000;
   margin: .2rem;
   padding: .3rem 1rem;
-  border-radius: .5rem;
+  border-radius: .7rem;
   cursor: pointer;
 }
 

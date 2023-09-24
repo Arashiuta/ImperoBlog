@@ -169,7 +169,7 @@ const goToPersonalCenter = () => {
     align-items: center;
     box-sizing: border-box;
     margin-top: 1rem;
-    background-color: #fff;
+    background-color: var(--light-gray-blue);
     border-radius: 1rem;
     padding: 0 1rem;
     box-sizing: border-box;

@@ -204,7 +204,7 @@ const updataPushPage = (val: number) => {
 
 .personalCenrer {
     width: 70%;
-    margin: 4.8rem auto;
+    margin: 0 auto;
     border-radius: 1rem;
     overflow: hidden;
     background-color: var(--white-background-color);

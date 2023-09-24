@@ -27,8 +27,7 @@
 <style scoped lang="less">
 .record {
     padding: 1rem 0;
-    margin: 0 auto;
-    width: 92%;
+    margin-top: 1rem;
     border-radius: .5rem;
     background-color: #fff;
     font-size: 1.2rem;

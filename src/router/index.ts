@@ -11,7 +11,7 @@ const routes = [
         name: 'index',
         component: () => import('@/utils/Index.vue'),
         meta: {
-            title: '首页 - impero\'s blog'
+            title: '首页'
         }
     }, {
         path: '/articlebrowse',
@@ -106,16 +106,13 @@ const routes = [
 
 ]
 
-const router = createRouter({
-    history: createWebHistory(),
-    routes
-})
+const router = createRouter({ history: createWebHistory(), routes })
 
 router.beforeEach((to, from, next) => {
-    const pinia = useStore()
     //判断是否是登录状态
     const sessionAccount = localStorage.getItem('userAccount')
     if (sessionAccount) {
+        const pinia = useStore()
         pinia.sessionInfo = sessionAccount
     }
 
@@ -129,25 +126,24 @@ router.beforeEach((to, from, next) => {
 
     window.document.title = to.meta.title as string
     //到新页面要把页面滚动到最顶
-    window.scrollTo({
-        top: 0,
-    })
-
+    // window.scrollTo({
+    //     top: 0,
+    // })
     next()
 })
 
-router.afterEach((to, from) => {
-    const nav = document.querySelector('.nav') as HTMLElement
-    const navMedia = document.querySelector('.moreMediaNav') as HTMLElement
-    //判断进入的地址，如果不是index则添加nav的底色
-    if (to.path === '/index') {
-        nav.style.backgroundColor = ''
-        navMedia.style.backgroundColor = ''
-    } else {
-        nav.style.backgroundColor = 'var(--nav-background-color)'
-        navMedia.style.backgroundColor = 'var(--nav-background-color)'
-    }
-})
+// router.afterEach((to, from) => {
+//     const nav = document.querySelector('.nav') as HTMLElement
+//     const navMedia = document.querySelector('.moreMediaNav') as HTMLElement
+//     //判断进入的地址，如果不是index则添加nav的底色
+//     if (to.path === '/index') {
+//         nav.style.backgroundColor = ''
+//         navMedia.style.backgroundColor = ''
+//     } else {
+//         nav.style.backgroundColor = 'var(--nav-background-color)'
+//         navMedia.style.backgroundColor = 'var(--nav-background-color)'
+//     }
+// })
 
 
 export default router

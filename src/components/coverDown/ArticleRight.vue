@@ -26,8 +26,8 @@
                 <span></span>
             </div>
             <div class="allTags">
-                <span class="labelTag no-choose" @click="quickTag(tag)" v-for="tag in allTags" :key="tag.id">{{
-                    tag.content
+                <span class="labelTag" @click="quickTag(tag)" v-for="tag in allTags" :key="tag.id">{{
+                    "#" + tag.content
                 }}</span>
             </div>
         </div>
@@ -105,7 +105,7 @@ const messageList = messageLists.reverse().slice(0, 7)  //展示七条留言
 <style scoped lang="less">
 .articleRight {
     width: 25rem;
-    margin-left: 1%;
+    // margin-left: 1%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -116,7 +116,7 @@ const messageList = messageLists.reverse().slice(0, 7)  //展示七条留言
         width: 100%;
         height: 40rem;
         background-color: #fff;
-        box-shadow: 0 0 .5rem .2rem var(--gray-light-sahdow);
+        // box-shadow: 0 0 .5rem .2rem var(--gray-light-sahdow);
         border-radius: .5rem;
         transition: all .3s;
         display: flex;
@@ -126,10 +126,10 @@ const messageList = messageLists.reverse().slice(0, 7)  //展示七条留言
         box-sizing: border-box;
         padding: 0 1rem;
 
-        &:hover {
-            box-shadow: .1rem .1rem .5rem var(--gray-sahdow);
+        // &:hover {
+        //     box-shadow: .1rem .1rem .5rem var(--gray-sahdow);
 
-        }
+        // }
 
         .messageTitle {
             display: flex;
@@ -173,16 +173,16 @@ const messageList = messageLists.reverse().slice(0, 7)  //展示七条留言
         width: 100%;
         height: 30rem;
         background-color: #fff;
-        box-shadow: 0 0 .5rem .2rem var(--gray-light-sahdow);
+        // box-shadow: 0 0 .5rem .2rem var(--gray-light-sahdow);
         border-radius: .5rem;
         display: flex;
         flex-direction: column;
         transition: all .3s;
 
-        &:hover {
-            box-shadow: .1rem .1rem .5rem var(--gray-sahdow);
+        // &:hover {
+        //     box-shadow: .1rem .1rem .5rem var(--gray-sahdow);
 
-        }
+        // }
 
         .tagsTitle {
             display: flex;
@@ -225,16 +225,16 @@ const messageList = messageLists.reverse().slice(0, 7)  //展示七条留言
 .randomArticle {
     width: 100%;
     border-radius: .5rem;
-    box-shadow: 0 0 .5rem .2rem var(--gray-light-sahdow);
+    // box-shadow: 0 0 .5rem .2rem var(--gray-light-sahdow);
     transition: all .3s;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: #fff;
 
-    &:hover {
-        box-shadow: .1rem .1rem .5rem var(--gray-sahdow);
-    }
+    // &:hover {
+    //     box-shadow: .1rem .1rem .5rem var(--gray-sahdow);
+    // }
 
     .randomArticleTitle {
         width: 95%;

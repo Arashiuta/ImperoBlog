@@ -73,7 +73,6 @@ const myInfo = res.data[0]
 .container-more {
     width: 70%;
     margin: 1rem auto;
-    margin-top: 5rem;
     display: flex;
 
     .middle {
@@ -83,6 +82,7 @@ const myInfo = res.data[0]
         border-radius: .6rem;
         background-color: #fff;
         border-radius: 1rem;
+        margin-right: 1rem;
 
         .head {
             width: 100%;

@@ -144,7 +144,7 @@ const goBrowse = (id: number) => {
     .rightSide {
         box-sizing: border-box;
         flex: 4;
-        padding: 1rem;
+        padding: 2rem;
         background-color: #ffffff;
         display: flex;
         flex-direction: column;

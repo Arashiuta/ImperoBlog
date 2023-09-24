@@ -1,16 +1,15 @@
 <template>
     <div class="middle">
         <div class="leftFace">
-            <div class="title">
+            <!-- <div class="title">
                 <div class="recently">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-zuijin"></use>
                     </svg>
                     <div>最近更新</div>
                 </div>
-                <!-- <div @click="goArticle" class="watchMore">查看更多</div> -->
                 <BtnLearnMore class="watchMore" @click="goArticle"></BtnLearnMore>
-            </div>
+            </div> -->
             <!-- 置顶文章盒子 -->
             <div>
                 <Suspense>
@@ -65,7 +64,7 @@ import { defineAsyncComponent } from "vue";
 import useAxios from "../../hooks/axios/axios";
 import { useRouter } from "vue-router";
 import Loading from "@/components/loading/loading2.vue";
-import BtnLearnMore from "@/components/UIVerse/btn-learnMore.vue";
+// import BtnLearnMore from "@/components/UIVerse/btn-learnMore.vue";
 const ArticleBox = defineAsyncComponent(() => import('@/components/articleBox/articleBox.vue'))
 const ArticleRight = defineAsyncComponent(() => import('@/components/coverDown/ArticleRight.vue'))
 const topArticleBox = defineAsyncComponent(() => import('@/components/articleBox/topArticleBox.vue'))
@@ -81,9 +80,9 @@ const reverseList = list.reverse()
 const showList = reverseList.slice(0, 4) //限制主页显示的文章个数
 
 //查看更多文章
-const goArticle = () => {
-    router.push('/article')
-}
+// const goArticle = () => {
+//     router.push('/article')
+// }
 
 //请求置顶文章信息
 const { data: topRes } = await useAxios.get("/gettoparticle")
@@ -94,12 +93,11 @@ const topArticleInfo = topRes.info[0]
 
 <style scoped lang="less">
 .middle {
-    margin: 1% auto;
+    margin: 0 auto;
     width: 80%;
-    padding: 2%;
     border-radius: .5rem;
     display: flex;
-    background-color: var(--backgeound-color);
+    // background-color: var(--backgeound-color);
 
     .leftFace {
         flex: 1;
@@ -123,6 +121,7 @@ const topArticleInfo = topRes.info[0]
                 display: flex;
                 justify-self: center;
                 align-items: center;
+                // color: #fff;
 
                 .icon {
                     font-size: 2.2rem;

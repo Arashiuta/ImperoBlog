@@ -7,7 +7,7 @@
   --nav-background-color: rgb(68, 68, 68);
   /* 特殊蓝色字体蓝色 */
   --special-font-color: rgb(91, 180, 253);
-  /* 纯白背景颜色 */
+  /* 泛用纯白背景颜色 */
   --white-background-color: #ffffff;
   /* 深色背景 */
   --black-background-color: rgb(44, 44, 44);
@@ -24,10 +24,12 @@
   /* 浅灰色阴影 */
   --gray-light-sahdow: rgb(182, 182, 182);
   /* 半透明背景 */
-  --backgeound-color: rgba(255, 255, 255, 0.7);
+  --backgeound-color: rgba(172, 172, 172, 0.2);
   /* 非常浅色的边框 */
   --gray-light-border: rgb(224, 224, 224);
-  /* 渐变色组合1 */
+  /* 浅灰蓝色背景(主页标签，留言背景使用中) */
+  --light-gray-blue: #dfe9f3;
+  /* 标题分离框渐变色组合 */
   --gradient-start-one: #EF33B1;
   --gradient-end-one: #F6E6BC;
 }

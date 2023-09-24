@@ -231,14 +231,10 @@ const updateNickName = async () => {
 
 <style scoped lang="less">
 .container {
-    overflow-x: hidden;
     width: 100vw;
     height: 100vh;
-    background-color: var(--white-background-color);
 
     .loginImgBox {
-        width: 100%;
-        height: 100%;
         transform-style: preserve-3d;
         perspective: 1000px;
         display: flex;
@@ -246,8 +242,6 @@ const updateNickName = async () => {
         align-items: center;
 
         .loginImg {
-            margin-top: 4.5rem;
-
             img {
                 border-radius: 2rem;
             }

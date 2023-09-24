@@ -88,7 +88,6 @@ const goToPersonalCenter = () => {
         .mesageHead {
             width: 3.5rem;
             height: 3.5rem;
-            background-color: rgb(214, 214, 214);
             border-radius: 50%;
             margin-right: 1rem;
             overflow: hidden;
@@ -112,7 +111,7 @@ const goToPersonalCenter = () => {
         padding: .5rem 0;
         font-size: 1.5rem;
         font-weight: 500;
-        background-color: rgb(233, 233, 233);
+        background-color: var(--light-gray-blue);
         box-sizing: border-box;
         border-radius: .5rem;
         padding: .5rem;

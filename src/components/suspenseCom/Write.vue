@@ -41,9 +41,6 @@
                 </el-button>
             </div>
         </div>
-        <div class="section">
-            <p>版块：(计划中)</p>2
-        </div>
         <div class="uploadimg">
             <p>上传封面:</p>
             <div>
@@ -277,9 +274,8 @@ const uploadArticle = (articleWrite: ArticleWrite) => {
 <style scoped lang="less">
 .contaier {
     margin: 0 auto;
-    margin-top: 4.6rem;
-    border: .1rem solid black;
-    box-shadow: .1rem .1rem .5rem var(--gray-sahdow);
+    // border: .1rem solid black;
+    // box-shadow: .1rem .1rem .5rem var(--gray-sahdow);
     border-radius: .5rem;
     width: 65%;
     display: flex;

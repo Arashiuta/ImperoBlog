@@ -42,12 +42,6 @@
         </div>
         <div class="list" :key="pages.nowPage">
 
-            <!--
-            旧版本的加载文章盒子
-            <ArticleBox v-for="item in showArticles.showArticle" :key="item.id" class="articleBox" :info="item">
-            </ArticleBox>
-            -->
-
             <!-- 使用了异步加载并且加上了加载动画的文章盒子 -->
             <Suspense v-for="item in showArticles.showArticle" :key="item.id">
                 <template #default>
@@ -200,19 +194,16 @@ const handleClose = (tagName: string) => {
 
 .contaier {
     width: 80%;
-    box-sizing: border-box;
+    // box-sizing: border-box;
     margin: 0 auto;
-    margin-top: 4.6rem;
-    border: .1rem solid black;
-    box-shadow: .1rem .1rem .5rem var(--gray-sahdow);
-    border-radius: .5rem;
-    padding: 1.5rem;
-    padding-top: 3rem;
-    background-color: var(--backgeound-color);
+    // border: .1rem solid black;
+    // box-shadow: .1rem .1rem .5rem var(--gray-sahdow);
+    // border-radius: .5rem;
+    // padding: 1.5rem;
+    // padding-top: 3rem;
+    // background-color: var(--backgeound-color);
 
     .filter {
-        padding-bottom: 2rem;
-
         .title {
             display: flex;
             justify-content: space-between;
@@ -263,14 +254,15 @@ const handleClose = (tagName: string) => {
         }
 
         .funnel {
+            box-sizing: border-box;
+            padding: 2rem;
             font-size: 1.7rem;
-            margin-top: 2rem;
+            margin-top: 1rem;
             background-color: #fff;
             border-radius: 1rem;
-            padding: 1rem 2rem;
 
             >div {
-                padding: 1rem 0;
+                padding: .7rem 0;
                 display: flex;
                 align-items: center;
             }
