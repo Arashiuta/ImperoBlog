@@ -14,4 +14,5 @@ import './iconfont/iconfont.js'
 //加载basecss
 import './baseCss/base.css'
 
+
 createApp(App).use(createPinia()).use(router).use(ElementPlus, { locale: zhCn }).mount('#app')

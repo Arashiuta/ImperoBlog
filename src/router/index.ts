@@ -103,7 +103,6 @@ const routes = [
             title: '搜索'
         }
     }
-
 ]
 
 const router = createRouter({ history: createWebHistory(), routes })
@@ -132,18 +131,25 @@ router.beforeEach((to, from, next) => {
     next()
 })
 
-// router.afterEach((to, from) => {
-//     const nav = document.querySelector('.nav') as HTMLElement
-//     const navMedia = document.querySelector('.moreMediaNav') as HTMLElement
-//     //判断进入的地址，如果不是index则添加nav的底色
-//     if (to.path === '/index') {
-//         nav.style.backgroundColor = ''
-//         navMedia.style.backgroundColor = ''
-//     } else {
-//         nav.style.backgroundColor = 'var(--nav-background-color)'
-//         navMedia.style.backgroundColor = 'var(--nav-background-color)'
-//     }
-// })
+router.afterEach((to, from) => {
+    /*
+        const nav = document.querySelector('.nav') as HTMLElement
+        const navMedia = document.querySelector('.moreMediaNav') as HTMLElement
+        //判断进入的地址，如果不是index则添加nav的底色
+        if (to.path === '/index') {
+            nav.style.backgroundColor = ''
+            navMedia.style.backgroundColor = ''
+        } else {
+            nav.style.backgroundColor = 'var(--nav-background-color)'
+            navMedia.style.backgroundColor = 'var(--nav-background-color)'
+        }
+    */
+
+    //从login跳转到index时候要刷新一下页面，连接socket
+    if (from.path === '/login' && to.path === '/index') {
+        router.go(0)
+    }
+})
 
 
 export default router

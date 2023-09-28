@@ -94,7 +94,7 @@ const topArticleInfo = topRes.info[0]
 <style scoped lang="less">
 .middle {
     margin: 0 auto;
-    width: 80%;
+    width: 75%;
     border-radius: .5rem;
     display: flex;
     // background-color: var(--backgeound-color);

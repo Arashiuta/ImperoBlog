@@ -11,7 +11,6 @@
             </div>
         </template>
     </Suspense>
-
 </template>
 
 <script setup lang="ts">

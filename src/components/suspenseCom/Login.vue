@@ -96,6 +96,7 @@ import { useRouter } from 'vue-router'
 import useAxios from "../../hooks/axios/axios";
 import qs from "qs";
 import { ElNotification } from 'element-plus'
+import { socket } from '../../hooks/socket/socket'
 
 const pinia = useStore()
 const router = useRouter()

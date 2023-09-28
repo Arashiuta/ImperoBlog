@@ -3,6 +3,7 @@ import { useStore } from '../../store/count'
 
 const pinia = useStore()
 
+
 const useAxios = axios.create({
     baseURL: `${pinia.apiRoot}/api`,
 })

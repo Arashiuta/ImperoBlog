@@ -2,6 +2,9 @@
   <!-- 导航栏 -->
   <Nav></Nav>
   <router-view></router-view>
+  <MiniBox @click="loadChatClient"></MiniBox>
+  <div class="chatMask" v-if="openChat"></div>
+  <Chatclient v-if="openChat"></Chatclient>
   <Foot></Foot>
 </template>
 
@@ -11,7 +14,16 @@ import { ref, onMounted } from 'vue'
 import Nav from "@/components/Nav/Nav.vue";
 import { useStore } from './store/count'
 import Foot from '@/components/foot/foot.vue'
+import MiniBox from '@/components/chatClient/miniBox.vue'
+import Chatclient from '@/components/chatClient/chatclient.vue'
+import { socket } from './hooks/socket/socket'
 const pinia = useStore()
+
+const userStorage = localStorage.getItem('userAccount')
+if (userStorage) {  //如果用户是登录状态
+  socket.connect()  //连接socket服务器,登陆者账号也被发送到后端
+}
+
 
 onMounted(() => {
   const bodyWidth = ref(document.querySelector('body')?.clientWidth)
@@ -24,6 +36,12 @@ onMounted(() => {
     })()
   }
 })
+
+//弹出聊天室
+let openChat = ref(false)
+const loadChatClient = () => {
+  openChat.value = !openChat.value
+}
 
 //随机图片背景（已弃用）
 //这个时候使用封装过的useAxios会报错pinia未安装，所以使用未封装的axios发送请求
@@ -103,6 +121,15 @@ button {
   }
 }
 
+.chatMask {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(61, 61, 61, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
+}
 
 //标签tag的通用样式
 .labelTag {
