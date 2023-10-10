@@ -38,6 +38,14 @@
                     </router-link>
                 </li>
                 <li>
+                    <router-link to="/chat/默认房间">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-liaotian"></use>
+                        </svg>
+                        <span>聊天室</span>
+                    </router-link>
+                </li>
+                <li>
                     <router-link to="/more">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-gengduo4"></use>

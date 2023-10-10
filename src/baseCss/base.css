@@ -32,4 +32,6 @@
   /* 标题分离框渐变色组合 */
   --gradient-start-one: #EF33B1;
   --gradient-end-one: #F6E6BC;
+  /* 聊天室用浅灰色底色 */
+  --chat-gray-back: #505050;
 }

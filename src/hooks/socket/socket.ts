@@ -24,9 +24,6 @@ socket.io.on("reconnect", (attempt) => {
     })
 });
 
-socket.on('loginUsers', (data) => {
-    console.log(data);
-})
 
 export {
     socket

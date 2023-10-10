@@ -102,6 +102,13 @@ const routes = [
         meta: {
             title: '搜索'
         }
+    }, {
+        path: '/chat/:roomName',
+        name: 'chat',
+        component: () => import('@/utils/Chat.vue'),
+        meta: {
+            title: '聊天室'
+        }
     }
 ]
 
@@ -125,9 +132,9 @@ router.beforeEach((to, from, next) => {
 
     window.document.title = to.meta.title as string
     //到新页面要把页面滚动到最顶
-    // window.scrollTo({
-    //     top: 0,
-    // })
+    window.scrollTo({
+        top: 0,
+    })
     next()
 })
 

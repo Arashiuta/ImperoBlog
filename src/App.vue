@@ -1,11 +1,13 @@
 <template>
-  <!-- 导航栏 -->
-  <Nav></Nav>
-  <router-view></router-view>
-  <MiniBox @click="loadChatClient"></MiniBox>
-  <div class="chatMask" v-if="openChat"></div>
-  <Chatclient v-if="openChat"></Chatclient>
-  <Foot></Foot>
+  <div>
+    <!-- 导航栏 -->
+    <Nav></Nav>
+    <router-view></router-view>
+    <!-- <BtnBox @click="loadChatClient"></BtnBox>
+    <div class="chatMask" v-if="openChat"></div>
+    <Chatclient v-if="openChat"></Chatclient> -->
+    <Foot></Foot>
+  </div>
 </template>
 
 
@@ -14,15 +16,10 @@ import { ref, onMounted } from 'vue'
 import Nav from "@/components/Nav/Nav.vue";
 import { useStore } from './store/count'
 import Foot from '@/components/foot/foot.vue'
-import MiniBox from '@/components/chatClient/miniBox.vue'
-import Chatclient from '@/components/chatClient/chatclient.vue'
-import { socket } from './hooks/socket/socket'
+
+
 const pinia = useStore()
 
-const userStorage = localStorage.getItem('userAccount')
-if (userStorage) {  //如果用户是登录状态
-  socket.connect()  //连接socket服务器,登陆者账号也被发送到后端
-}
 
 
 onMounted(() => {
@@ -95,6 +92,7 @@ html,
   background-image: linear-gradient(to top, #FFE6FA 65%, #2580B3 100%);
   // background-image: linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%);
 }
+
 
 * {
   margin: 0;
