@@ -160,6 +160,9 @@ const sendChatLog = async () => {
 
 //键盘enter发送消息
 const sendKeyDown = (e: any) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+    }
     if (e.key === 'Enter' && !e.shiftKey) {
         sendChatLog()
     }
