@@ -6,7 +6,8 @@
             <!-- 消息盒子 -->
             <div class="chatLogBox" v-for="item in chatLogBox.logInfo" :key="item.id">
                 <!-- 头像 -->
-                <img :src="pinia.apiRoot + item.head" alt="">
+                <img style="cursor: pointer;" :src="pinia.apiRoot + item.head" alt=""
+                    @click="goPersonalCenter(item.account)">
                 <!-- 右侧 -->
                 <div class="right">
                     <!-- 昵称和时间 -->
@@ -15,7 +16,7 @@
                         <span>{{ item.time }}</span>
                     </div>
                     <!-- 内容 -->
-                    <div class="chatContent">
+                    <div class="chatContent" style="white-space: pre-line;">
                         {{ item.content }}
                     </div>
                 </div>
@@ -44,6 +45,9 @@ import qs from 'qs'
 import { ChatLog, ChatLogBox } from '../../hooks/Types/types'
 import { useStore } from '../../store/count'
 import { socket } from '../../hooks/socket/socket'
+import { goToPersonalCenterHook } from "../../hooks/goToPersonalCenter/goToPersonalCenter";
+import { useRoute } from 'vue-router'
+const route = useRoute()
 const pinia = useStore()
 
 type Props = {
@@ -104,8 +108,7 @@ const clearChatLog = () => {
 
 //从url获取当前房间名字
 const herfRoomName = () => {
-    const herfArr = decodeURI(window.location.href).split('/')
-    const roomName = herfArr[herfArr.length - 1]  //房间名字
+    const roomName = route.query.name  //房间名字
     return roomName
 }
 
@@ -160,6 +163,10 @@ const sendKeyDown = (e: any) => {
     if (e.key === 'Enter' && !e.shiftKey) {
         sendChatLog()
     }
+}
+
+const goPersonalCenter = (account: any) => {
+    goToPersonalCenterHook(account)
 }
 
 </script>

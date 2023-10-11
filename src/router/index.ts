@@ -103,12 +103,12 @@ const routes = [
             title: '搜索'
         }
     }, {
-        path: '/chat/:roomName',
+        path: '/chat',
         name: 'chat',
         component: () => import('@/utils/Chat.vue'),
         meta: {
             title: '聊天室'
-        }
+        },
     }
 ]
 
@@ -129,7 +129,7 @@ router.beforeEach((to, from, next) => {
             router.push('/login')
         }
     }
-
+    
     window.document.title = to.meta.title as string
     //到新页面要把页面滚动到最顶
     window.scrollTo({
@@ -153,9 +153,9 @@ router.afterEach((to, from) => {
     */
 
     //从login跳转到index时候要刷新一下页面，连接socket
-    if (from.path === '/login' && to.path === '/index') {
-        router.go(0)
-    }
+    // if (from.path === '/login' && to.path === '/index') {
+    //     router.go(0)
+    // }
 })
 
 

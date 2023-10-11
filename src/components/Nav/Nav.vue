@@ -38,7 +38,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/chat/默认房间">
+                    <router-link :to="{ path: '/chat', query: { name: '默认房间' } }">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-liaotian"></use>
                         </svg>

@@ -17,10 +17,7 @@ import Nav from "@/components/Nav/Nav.vue";
 import { useStore } from './store/count'
 import Foot from '@/components/foot/foot.vue'
 
-
 const pinia = useStore()
-
-
 
 onMounted(() => {
   const bodyWidth = ref(document.querySelector('body')?.clientWidth)

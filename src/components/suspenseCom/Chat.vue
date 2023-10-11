@@ -11,7 +11,7 @@
                         </svg>
                     </button>
                 </div>
-                <div>
+                <div style="white-space: pre-line;">
                     <p>
                         {{ squareTip }}
                     </p>
@@ -19,10 +19,13 @@
             </div>
             <!-- 修改公告的盒子 -->
             <div v-if="squareTipShow">
-                <el-input v-model="squareTip" :rows="6" type="textarea" placeholder="这里是公告栏..." />
-                <button style="box-sizing: border-box;padding: .2rem .5rem; margin: .5rem;cursor: pointer;">取消</button>
+                <el-input v-model="squareTip" resize="none" :rows="6" type="textarea" placeholder="这里是公告栏..." />
                 <button
-                    style="box-sizing: border-box;padding: .2rem .5rem; margin: .5rem;cursor: pointer;background-color: #2486d6;color: #fff;">确定</button>
+                    style="box-sizing: border-box;padding: .2rem .5rem; margin: .5rem;cursor: pointer;border-radius: .5rem;"
+                    @click="cancelSquareIpt">取消</button>
+                <button
+                    style="box-sizing: border-box;padding: .2rem .5rem; margin: .5rem;cursor: pointer;background-color: #2486d6;color: #fff;border-radius: .5rem;"
+                    @click="setNewTip">确定</button>
             </div>
             <!-- 分割线 -->
             <span class="borderSpan"></span>
@@ -45,8 +48,9 @@
                 </div>
                 <!-- 房间列表 -->
                 <div class="roomsList">
-                    <router-link active-class="routerLinkActive" class="roomsItem" v-for="item in allRooms" :key="item.id"
-                        :to="`/chat/${item.name}`" @click="clickRoomLog(item.name)">
+                    <router-link :class="`roomsItem ${route.query.name === item.name ? 'routerLinkActive' : ''}`"
+                        v-for="item in allRooms" :key="item.id" :to="{ path: '/chat', query: { name: item.name } }"
+                        @click="clickRoomLog(item.name)">
                         <span>{{ item.name }}</span>
                         <el-popconfirm title="确定要删除房间？" @confirm="delRoom(item.name)">
                             <template #reference>
@@ -62,24 +66,25 @@
             </div>
         </div>
         <!-- 中间聊天区域 -->
-        <div class=" main">
+        <div class="main">
             <ChatWindow :key="uploadChatWindow" :logInfo="chatLogInfo"></ChatWindow>
         </div>
         <!-- 右侧在线列表 -->
         <div class="onlineList">
             <p>在线 - {{ onlineList.length }}</p>
-            <div style="display: flex; align-items: center;" v-for="item in onlineList" :key="item.id">
+            <div class="userList" v-for="item in onlineList" :key="item.id" @click="goPersonalCenter(item)">
                 <img style="width: 3.5rem;border-radius: 50%;margin: .2rem;margin-right: .5rem;"
                     :src="pinia.apiRoot + item.headImg" alt="">
                 <span style="font-size: 1.2rem;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">{{
-                    item.nickName }}</span>
+                    item.nickName }} <span v-if="item.root" style="color: red;">*</span>
+                </span>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onBeforeUnmount } from 'vue'
 import { socket } from '../../hooks/socket/socket';
 import { useStore } from '../../store/count';
 import useAxios from '../../hooks/axios/axios';
@@ -87,7 +92,11 @@ import { ElMessage } from 'element-plus'
 import ChatWindow from '@/components/chatClient/chatWindow.vue'
 import { ChatLog } from '../../hooks/Types/types'
 import qs from 'qs'
+import { goToPersonalCenterHook } from "../../hooks/goToPersonalCenter/goToPersonalCenter";
+import { useRoute, useRouter } from 'vue-router';
 const pinia = useStore()
+const router = useRouter()
+const route = useRoute()
 
 let allRooms = ref();
 let onlineList = ref<any>([]) //在线列表
@@ -95,10 +104,27 @@ const inputNewRoom = ref('')  //添加的新房间的名字
 const addNewRoom = ref(false)  //添加房间
 const uploadChatWindow = ref(0)  //刷新子组件
 let chatLogInfo = ref(new Array<ChatLog>); //消息记录，传给子组件
-const squareTip = ref('开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...开发中页面...')
+const squareTip = ref('')  //公告内容
 const squareTipShow = ref(false)
 
+
+const userAccount = localStorage.getItem('userAccount')
+if (userAccount === null) {
+    alert('还没有登录,去登录吧')
+    router.replace('/login')
+}
+
 socket.connect()  //连接socket服务器,登陆者账号也被发送到后端
+
+//组件销毁要退出连接
+onBeforeUnmount(() => {
+    socket.disconnect()
+})
+
+//进入页面获取公告
+const { data: res } = await useAxios.get('/getchatsquaretip')
+const resTip = res.data[0]
+squareTip.value = resTip.tip
 
 //进入页面主动获取列表
 socket.emit('getUsers', 'getOnlineList', (res: any) => {
@@ -209,6 +235,33 @@ const iptSquareTip = () => {
         ElMessage.error('只有管理员可以修改公告')
     }
 
+}
+
+//取消修改公告
+const cancelSquareIpt = () => {
+    squareTipShow.value = false
+}
+
+//点击头像去个人空间
+const goPersonalCenter = (item: any) => {
+    goToPersonalCenterHook(item.account)
+}
+
+//确定修改公告
+const setNewTip = async () => {
+    const { data: res } = await useAxios.post('/setchatsquaretip', qs.stringify({
+        id: resTip._id,
+        tip: squareTip.value
+    }))
+    if (res.status === 0) {
+        ElMessage({
+            message: '修改成功',
+            type: 'success',
+        })
+        cancelSquareIpt()
+    } else {
+        ElMessage.error('出错啦')
+    }
 }
 
 </script>
@@ -325,6 +378,17 @@ const iptSquareTip = () => {
         box-sizing: border-box;
         padding: .5rem;
         border-left: 1px solid var(--chat-gray-back);
+
+        .userList {
+            display: flex;
+            align-items: center;
+            transition: all .3s;
+
+            &:hover {
+                cursor: pointer;
+                color: var(--special-font-color);
+            }
+        }
     }
 }
 
