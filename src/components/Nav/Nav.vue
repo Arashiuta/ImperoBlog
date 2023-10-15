@@ -55,7 +55,7 @@
                 </li>
             </ul>
         </div>
-        <SearchInput :clearIpt="true">
+        <SearchInput fontSize="1" :clearIpt="true">
             <template #submitBtn>
                 <p style="font-size: 1.2rem; font-weight: 700; padding: .5rem;">></p>
             </template>

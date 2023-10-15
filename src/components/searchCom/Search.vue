@@ -2,7 +2,7 @@
     <div class="search-container">
         <!-- 上半部分搜索栏 -->
         <div class="searchCom">
-            <SearchInput fontSize="1.5" style="padding: .5rem 0;" :searchInfoProps="route.query.info">
+            <SearchInput fontSize="1.5" style="padding: .5rem 0;" :searchInfoProps="(route.query.info as string)">
                 <template #beforeIcon>
                     <svg class="icon" aria-hidden="true" style="font-size: 1.3rem; margin: 0 1rem; margin-right: 0;">
                         <use xlink:href="#icon-a-tubiaosousuo"></use>

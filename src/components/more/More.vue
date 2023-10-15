@@ -11,22 +11,23 @@
                 </div>
             </div>
             <div class="info">
-                <p class="p">首先!关于我的审美，有一说一，太垃圾了</p>
-                <p>设计对于我来说实在是太难了，网站的ui设计来来回回缝合了几个其他网站，<span
-                        style="text-decoration: line-through">算是勉强能看,</span>总算是做到了取其糟粕去其精华</p>
-                <p>太丑了😭</p>
-                <h2>关于网站</h2>
-                <p>学完vue3做的练习网站，打算维护一段时间试试看，服务器买了不用做什么😋</p>
-                <!-- <p>服务器使用的阿里云新人打折的那个服务器，小水管<span style="text-decoration: line-through">勉强够用</span>不够用啦</p> -->
-                <p>前端使用vue3 + ts + pinia，打包工具使用了vite</p>
-                <p>后端使用node + express编写的服务器接口，刚开始使用json存数据，太难用了，尝试使用了MongoDB数据库，上传功能使用formidable插件，有点难，总之功能成功实现了</p>
-                <p>Java在学，想用Java重写后端服务器代码，但是时间来不及啦</p>
-                <p>尝试使用了一些库，比如element-plus，gasp动画库，md-editor-v3富文本编辑器</p>
-                <p>代码放在了github的仓库中 <a href="https://github.com/1209058433/imperoBlog" target="_blank">前端代码仓库</a> <a
-                        href="https://github.com/1209058433/ImperoBlog_Api" target="_blank">后端代码仓库</a></p>
-                <p>这也是第一次做响应式的页面，css这东西不简单的🤔，写的比较乱</p>
-                <h2>关于我</h2>
-                <p>喜欢猫猫!没有猫猫的世界是不完整的🤗</p>
+                <!-- 随便写什么 -->
+                <p>相邀一个 黄昏晚风</p>
+                <p>弄堂青葱 正落幕中</p>
+                <p>鸽过芦丛 划破天空</p>
+                <p>岁月峥嵘 四季鱼虫</p>
+                <p>褪去懵懂 走过朦胧</p>
+                <p>繁华怂恿 去看星空</p>
+                <p>看鹊桥中 情有独钟</p>
+                <p>誓言庄重 刹那心动</p>
+                <p>划舟过洲 戏水小童</p>
+                <p>涟漪淙淙 云淡意浓</p>
+                <p>山水一重 星子坠梦</p>
+                <p>点点花灯 合手祈愿</p>
+                <p>愿君颜悦 常健常见</p>
+                <p>共赏婵娟 放灯岸边</p>
+                <p>戏水涓涓 也如初见</p>
+                <p>笑闹间 谁正相恋相枕藉 正待明天</p>
             </div>
         </div>
         <Suspense>
@@ -105,21 +106,6 @@ const myInfo = res.data[0]
 
             h2 {
                 font-size: 3rem;
-            }
-        }
-
-        .info {
-            padding: 1rem;
-
-            h2 {
-                font-size: 2rem;
-                padding: .8rem 0;
-                border-bottom: .2rem solid var(--border-line);
-            }
-
-            p {
-                font-size: 1.4rem;
-                padding: .6rem 0;
             }
         }
     }
