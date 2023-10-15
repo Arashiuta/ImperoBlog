@@ -22,7 +22,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/archive">
+                    <router-link to="/leavemsg">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-rili"></use>
                         </svg>
@@ -94,7 +94,7 @@
                     </router-link>
                 </div>
                 <div class="drawerBox">
-                    <router-link to="/archive">
+                    <router-link to="/leavemsg">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-rili2"></use>
                         </svg>
@@ -134,10 +134,10 @@
 
 <script setup lang="ts">
 import { ref, watchEffect, defineAsyncComponent } from 'vue'
-import { useStore } from '../../store/count'
+import { useStore } from '@/store/count'
 import { useRouter } from 'vue-router'
 import SearchInput from '@/components/searchCom/searchInput.vue'
-const NavUserInfo = defineAsyncComponent(() => import('@/components/userInfo/navUserInfo.vue')) //要在组件里面使用useAxios要异步引入组件
+const NavUserInfo = defineAsyncComponent(() => import('@/components/Nav/navUserInfo.vue')) //要在组件里面使用useAxios要异步引入组件
 const router = useRouter()
 const pinia = useStore()
 

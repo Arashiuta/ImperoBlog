@@ -12,7 +12,7 @@
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
-import { useStore } from '../../store/count'
+import { useStore } from '@/store/count'
 const router = useRouter()
 const pinia = useStore()
 

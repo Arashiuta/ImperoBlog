@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from '../../store/count';
-import { goToPersonalCenterHook } from '../../hooks/goToPersonalCenter/goToPersonalCenter'
+import { useStore } from '@/store/count';
+import { goToPersonalCenterHook } from '@/hooks/goToPersonalCenter/goToPersonalCenter'
 const pinia = useStore()
 
 type Props = {

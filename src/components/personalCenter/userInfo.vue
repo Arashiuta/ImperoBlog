@@ -72,8 +72,8 @@
                     <el-input v-model="userInfo.personalWeb" placeholder="要加上http://或者https://前缀"
                         v-if="ifChangePersonalDate" @blur="webIptBlur(userInfo.personalWeb)" />
                     <a v-else target="_blank" :href="userInfo.personalWeb ? userInfo.personalWeb : 'javascript;'">{{
-                            userInfo.personalWeb ?
-                                userInfo.personalWeb : ""
+                        userInfo.personalWeb ?
+                        userInfo.personalWeb : ""
                     }}</a>
                 </div>
                 <div class="titleBottomDiv personalIntroduce">
@@ -99,8 +99,8 @@
                                 <label for="newPassword">新密码：</label>
                                 <el-input v-model.trim="passwordChange.newPassword" maxlength="16" placeholder="输入新密码"
                                     show-word-limit type="text" class="passwordInput" name="newPassword" />
-                                <el-input v-model.trim="passwordChange.newPasswordNext" maxlength="16"
-                                    placeholder="再次输入新密码" show-word-limit type="text" class="passwordInput" />
+                                <el-input v-model.trim="passwordChange.newPasswordNext" maxlength="16" placeholder="再次输入新密码"
+                                    show-word-limit type="text" class="passwordInput" />
                             </div>
 
                             <template #footer>
@@ -136,12 +136,12 @@
 </template>
 
 <script setup lang="ts">
-import useAxios from '../../hooks/axios/axios';
-import { useStore } from "../../store/count";
+import useAxios from '@/hooks/axios/axios';
+import { useStore } from "@/store/count";
 import { ElMessage } from 'element-plus'
 import { ref, reactive, defineAsyncComponent, watchEffect } from 'vue'
 import { useRouter } from 'vue-router';
-const uploadHeadImg = defineAsyncComponent(() => import('@/components/userInfo/uploadHead.vue'))
+const uploadHeadImg = defineAsyncComponent(() => import('@/components/personalCenter/uploadHead.vue'))
 
 const pinia = useStore()
 const router = useRouter()

@@ -9,77 +9,77 @@ const routes = [
     {
         path: '/index',
         name: 'index',
-        component: () => import('@/utils/Index.vue'),
+        component: () => import('@/view/Index.vue'),
         meta: {
             title: '首页'
         }
     }, {
         path: '/articlebrowse',
         name: 'articlebrowse',
-        component: () => import('@/utils/ArticleBrowse.vue'),
+        component: () => import('@/view/ArticleBrowse.vue'),
         meta: {
             title: '浏览文章'
         }
     }, {
         path: '/article',
         name: 'article',
-        component: () => import('@/utils/Article.vue'),
+        component: () => import('@/view/Article.vue'),
         meta: {
             title: '文章列表'
         }
     }, {
         path: '/write',
         name: 'write',
-        component: () => import('@/utils/Write.vue'),
+        component: () => import('@/view/Write.vue'),
         meta: {
             title: '写作'
         }
     }, {
-        path: '/archive',
-        name: 'archive',
-        component: () => import('@/utils/Archive.vue'),
+        path: '/leavemsg',
+        name: 'leavemsg',
+        component: () => import('@/view/LeaveMsg.vue'),
         meta: {
             title: '留言板'
         }
     }, {
         path: '/login',
         name: 'login',
-        component: () => import('@/utils/Login.vue'),
+        component: () => import('@/view/Login.vue'),
         meta: {
             title: '登录'
         }
     }, {
         path: '/more',
         name: 'more',
-        component: () => import('@/utils/More.vue'),
+        component: () => import('@/view/More.vue'),
         meta: {
             title: '更多'
         }
     }, {
         path: '/articleeditor',
         name: 'articleeditor',
-        component: () => import('@/utils/Editor.vue'),
+        component: () => import('@/view/Editor.vue'),
         meta: {
             title: '编辑文章'
         }
     }, {
         path: '/personalcenter',
         name: 'personalcenter',
-        component: () => import('@/utils/PersonalCenter.vue'),
+        component: () => import('@/view/PersonalCenter.vue'),
         meta: {
             title: '个人中心'
         }
     }, {
         path: '/otherspersonalcenter',
         name: 'otherspersonalcenter',
-        component: () => import('@/utils/OthersPersonalCenter.vue'),
+        component: () => import('@/view/OthersPersonalCenter.vue'),
         meta: {
             title: '个人中心'
         }
     }, {
         path: '/userfocus',
         name: 'userfocus',
-        component: () => import('@/utils/UserFocus.vue'),
+        component: () => import('@/view/UserFocus.vue'),
         meta: {
             title: '关注列表'
         },
@@ -87,25 +87,25 @@ const routes = [
             {
                 path: "allfocus",
                 name: 'allfocus',
-                component: () => import('@/components/userfocus/userfocusShow.vue')
+                component: () => import('@/components/personalCenter/userfocus/userfocusShow.vue')
             },
             {
                 path: "fans",
                 name: 'fans',
-                component: () => import('@/components/userfocus/userfocusShow.vue')
+                component: () => import('@/components/personalCenter/userfocus/userfocusShow.vue')
             }
         ]
     }, {
         path: '/search',
         name: 'search',
-        component: () => import('@/utils/Search.vue'),
+        component: () => import('@/view/Search.vue'),
         meta: {
             title: '搜索'
         }
     }, {
         path: '/chat',
         name: 'chat',
-        component: () => import('@/utils/Chat.vue'),
+        component: () => import('@/view/Chat.vue'),
         meta: {
             title: '聊天室'
         },
@@ -129,7 +129,7 @@ router.beforeEach((to, from, next) => {
             router.push('/login')
         }
     }
-    
+
     window.document.title = to.meta.title as string
     //到新页面要把页面滚动到最顶
     window.scrollTo({

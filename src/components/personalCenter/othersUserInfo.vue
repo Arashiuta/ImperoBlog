@@ -64,14 +64,14 @@
                 <div class="titleBottomDiv">
                     <span class="iptBeforeTitle">个人网站:</span>
                     <a target="_blank" :href="userInfo.personalWeb ? userInfo.personalWeb : 'javascript;'">{{
-                            userInfo.personalWeb ?
-                                userInfo.personalWeb : ""
+                        userInfo.personalWeb ?
+                        userInfo.personalWeb : ""
                     }}</a>
                 </div>
                 <div class="titleBottomDiv personalIntroduce">
                     <span class="iptBeforeTitle">个性签名:</span>
                     <p class=" personalIptSpan">{{ userInfo.introduce ? userInfo.introduce :
-                            "这个人很懒，什么也没有留下..."
+                        "这个人很懒，什么也没有留下..."
                     }}
                     </p>
                 </div>
@@ -81,8 +81,8 @@
 </template>
 
 <script setup lang="ts">
-import useAxios from '../../hooks/axios/axios';
-import { useStore } from "../../store/count";
+import useAxios from '@/hooks/axios/axios';
+import { useStore } from "@/store/count";
 import { reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useRouter } from "vue-router";

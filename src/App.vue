@@ -109,11 +109,15 @@ button {
   outline: none;
 }
 
-.default-theme {
-
-  img {
-    width: 20rem;
-  }
+.default-theme p .figure img {
+  // p .figure {
+  //   padding: 0;
+  //   border: none;
+  // }
+  display: inline-block;
+  width: 20rem;
+  margin: 0;
+  border: none;
 }
 
 .chatMask {

@@ -39,13 +39,13 @@
 
 <script setup lang="ts">
 import { ref, toRaw, reactive, onMounted } from 'vue'
-import useAxios from '../../hooks/axios/axios'
+import useAxios from '@/hooks/axios/axios'
 import { ElMessage } from 'element-plus'
 import qs from 'qs'
-import { ChatLog, ChatLogBox } from '../../hooks/Types/types'
-import { useStore } from '../../store/count'
-import { socket } from '../../hooks/socket/socket'
-import { goToPersonalCenterHook } from "../../hooks/goToPersonalCenter/goToPersonalCenter";
+import { ChatLog, ChatLogBox } from '@/hooks/Types/types'
+import { useStore } from '@/store/count'
+import { socket } from '@/hooks/socket/socket'
+import { goToPersonalCenterHook } from "@/hooks/goToPersonalCenter/goToPersonalCenter";
 import { useRoute } from 'vue-router'
 const route = useRoute()
 const pinia = useStore()

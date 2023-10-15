@@ -33,10 +33,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import useAxios from '../../hooks/axios/axios';
-import { useStore } from '../../store/count'
+import useAxios from '@/hooks/axios/axios';
+import { useStore } from '@/store/count'
 import { ElMessage } from 'element-plus'
-import { goToPersonalCenterHook } from '../../hooks/goToPersonalCenter/goToPersonalCenter'
+import { goToPersonalCenterHook } from '@/hooks/goToPersonalCenter/goToPersonalCenter'
 
 const pinia = useStore()
 const root = ref(false)
@@ -53,7 +53,6 @@ type Props = {
     item: Message
 }
 const props = defineProps<Props>()
-
 
 //请求此条留言对应account的信息
 const { data: res } = await useAxios.get('/userinfo', {
