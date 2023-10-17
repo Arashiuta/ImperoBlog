@@ -85,7 +85,7 @@ const goBrowse = (id: number) => {
     })
 }
 
-const sliceTextCount = 150  //截取的长度
+const sliceTextCount = 125  //截取的长度
 const reContent = extractMarkdownText(info.content)
 if (reContent.length > sliceTextCount) {
     info.content = reContent.slice(0, sliceTextCount) + '...'  //展示部分正文内容，并且过滤掉md文档的关键字

@@ -5,59 +5,44 @@
                 <div class="hedaImg">
                     <img :src="pinia.apiRoot + myInfo.headImg" alt="headImg">
                 </div>
-                <h2>{{ myInfo.nickName }}</h2>
-                <div>
-
-                </div>
+                <h1>你好</h1>
+                <h2>这里是{{ myInfo.nickName }}</h2>
             </div>
             <div class="info">
                 <!-- 随便写什么 -->
-                <p>相邀一个 黄昏晚风</p>
-                <p>弄堂青葱 正落幕中</p>
-                <p>鸽过芦丛 划破天空</p>
-                <p>岁月峥嵘 四季鱼虫</p>
-                <p>褪去懵懂 走过朦胧</p>
-                <p>繁华怂恿 去看星空</p>
-                <p>看鹊桥中 情有独钟</p>
-                <p>誓言庄重 刹那心动</p>
-                <p>划舟过洲 戏水小童</p>
-                <p>涟漪淙淙 云淡意浓</p>
-                <p>山水一重 星子坠梦</p>
-                <p>点点花灯 合手祈愿</p>
+                <p>欢迎光临我的博客网站,这里是49年入国军(转码)人</p>
+                <p>自学的半吊子前端,勉强能用</p>
+                <p>这个博客是学完vue3搞的,缺乏经验,算是第一个正经项目</p>
+                <p>修修补补,变成了现在这个样子</p>
+                <p>喜欢的话可以去github点个星星</p>
+                <p>希望明天能变好</p>
+                <p>greatings</p>
+            </div>
+            <div class="bottom">
+                <p>
+                    仓库地址: <a href="https://github.com/1209058433/ImperoBlog"
+                        target="_blank">https://github.com/1209058433/ImperoBlog</a>
+                </p>
                 <p>愿君颜悦 常健常见</p>
-                <p>共赏婵娟 放灯岸边</p>
-                <p>戏水涓涓 也如初见</p>
-                <p>笑闹间 谁正相恋相枕藉 正待明天</p>
+                <div class="image">
+                    <img src="@/imgs/kewei.jpg" alt="">
+                    <img src="@/imgs/laffy.jpg" alt="">
+                </div>
             </div>
         </div>
-        <Suspense>
-            <template #default>
-                <Right></Right>
-            </template>
-            <template #fallback>
-                <div class="window">
-                    <Loading class="winLoad"></Loading>
-                </div>
-            </template>
-        </Suspense>
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, defineAsyncComponent } from 'vue';
+import { onMounted } from 'vue';
 import gsap from 'gsap'
 import useAxios from '@/hooks/axios/axios'
 import { useStore } from '@/store/count'
-import Loading from "@/components/loading/loading2.vue";
-const Right = defineAsyncComponent(() => import('@/components/rightToolsBox/ArticleRight.vue'))
 
 const pinia = useStore()
 
 onMounted(() => {
-    gsap.from('p', {
-        y: 15,
-        duration: 0.4
-    })
+    gsapAnimation()
 })
 
 //请求自己的信息
@@ -67,6 +52,32 @@ const { data: res } = await useAxios.get('/userinfo', {
     }
 })
 const myInfo = res.data[0]
+
+const gsapAnimation = () => {
+    const tween = gsap.timeline()
+    tween.from('.hedaImg', {
+        scale: 1.5,
+        ease: "elastic.out(1.5,0.2)",
+        duration: 1.5
+    }).from('.hedaImg', {
+        y: 200,
+        duration: 0.3
+    }).from('.head h1', {
+        y: 20,
+        opacity: 0,
+    }).from('.head h2', {
+        y: 20,
+        opacity: 0,
+    }).from('.info p', {
+        y: 20,
+        stagger: 0.1,
+        opacity: 0,
+    }).from('.bottom', {
+        y: 20,
+        opacity: 0,
+        delay: 0.5
+    })
+}
 
 </script>
 
@@ -79,6 +90,7 @@ const myInfo = res.data[0]
     .middle {
         flex: 1;
         display: flex;
+        min-height: 100vh;
         flex-direction: column;
         border-radius: .6rem;
         background-color: #fff;
@@ -90,7 +102,6 @@ const myInfo = res.data[0]
             display: flex;
             flex-direction: column;
             align-items: center;
-            border-bottom: .2rem solid var(--gray-sahdow);
             padding: 2rem 0;
 
             .hedaImg {
@@ -104,19 +115,43 @@ const myInfo = res.data[0]
                 }
             }
 
-            h2 {
+            h1 {
                 font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+        }
+
+        .info {
+            p {
+                font-weight: 600;
+                font-size: 1.5rem;
+                text-align: center;
+            }
+        }
+
+        .bottom {
+            margin: 2rem;
+
+            p {
+                font-size: 1.5rem;
+                font-weight: 600;
+                text-align: center;
+                margin: 1rem;
+            }
+
+            .image {
+                display: flex;
+                justify-content: space-around;
+
+                img {
+                    width: 40rem;
+                }
             }
         }
     }
-
-    .right {
-        box-sizing: border-box;
-        padding: 1rem;
-        border-radius: .5rem;
-    }
-
-
 }
 
 @media only screen and (max-width: 1300px) {

@@ -47,6 +47,7 @@ import { useStore } from '@/store/count'
 import { socket } from '@/hooks/socket/socket'
 import { goToPersonalCenterHook } from "@/hooks/goToPersonalCenter/goToPersonalCenter";
 import { useRoute } from 'vue-router'
+import gsap from 'gsap'
 const route = useRoute()
 const pinia = useStore()
 
@@ -62,6 +63,7 @@ let chatLogBox = reactive({
 });
 
 onMounted(() => {
+    //把聊天窗口滚动到最底部
     const chatDom = chatMainWindow.value as HTMLElement
     const observer = new MutationObserver(mutationsList => {
         // 滚动到最底部
