@@ -45,25 +45,6 @@ const loadChatClient = () => {
 //   body.style.backgroundImage = `url(${pinia.apiRoot + res.data.coverUrl})`
 // })
 
-//网页彩蛋
-const easterKey = ['w', 'z', 'f'];  //彩蛋秘籍
-let easterArr = new Array<string>;  //存放按键记录
-window.addEventListener('keyup', key => {
-  if (easterKey.includes(key.key)) {  //按键属于目标字母
-    easterArr.push(key.key)  //存放
-    if (easterArr.length === easterKey.length) {  //字母到目标秘籍长度
-      let str = easterArr.join("") // 转为字符串
-      if (str === 'wzf') {
-        //召唤彩蛋！
-        alert("我超，丰😨");
-        easterArr = [] //清空
-      }
-    }
-  } else {
-    easterArr = []  //清空
-  }
-})
-
 </script>
 
 <style lang="less">

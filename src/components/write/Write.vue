@@ -41,14 +41,14 @@
             <div>
                 <el-upload class="upload-demo" :drag="true" :action="pinia.apiRoot + '/api/uploadarticlecover'" :limit="1"
                     :auto-upload="false" list-type="picture" ref="uploadCover" :on-success="successUpCover"
-                    :on-error="errorUpCover" :on-change="onChangeCover" :on-remove="onRemove" multiple
-                    :on-exceed="onExceed">
+                    :on-error="errorUpCover" :on-change="onChangeCover" :on-remove="onRemove" multiple :on-exceed="onExceed"
+                    :before-upload="beforeUpload">
                     <el-icon class="el-icon--upload">
                         <upload-filled />
                     </el-icon>
                     <div class="el-upload__text">
                         拖拽至此或者<em>点击上传</em>
-                        只能上传一张封面,支持(jpg/jepg/png/webp/gif)
+                        只能上传一张封面,支持(jpg/jpeg/png/webp)
                     </div>
                 </el-upload>
             </div>
@@ -83,8 +83,6 @@ const router = useRouter()
 //请求出完整的标签列表
 const { data: res } = await useAxios.get('/gettags')
 const allTags = res.data
-
-
 
 type ArticleWrite = {
     articleTitle: string
@@ -188,6 +186,15 @@ MdEditor.config({
 const ifUpload = ref(true)  //提交按钮点击后换位提交中的按钮
 const uploadCover = ref<UploadInstance>()
 const write = toRaw(articleWrite)
+let coverNum = 0  //选择上传的封面数量
+const biggerCover = ref(false)  //封面大小是否超出了限制
+const limitSize = 5 * 1024 * 1024   //封面大小限制5MB
+const coverTypeArr = [
+    'image/jpeg',
+    'image/jpg',
+    'image/png',
+    'image/webp',
+]
 
 //封面上传成功的钩子   先上传封面，再上传内容
 type Status = {
@@ -195,15 +202,7 @@ type Status = {
 }
 const successUpCover = (res: Status) => {
     setTimeout(() => {
-        useAxios.post('/uploadarticle', qs.stringify({
-            list: write
-        })).then((res) => {
-            alert('文章上传成功')
-            router.replace('/article')
-        }).catch(err => {
-            alert('出现错误:' + err)
-            ifUpload.value = true
-        })
+        uploadWrite()
     }, 0)
 }
 
@@ -212,22 +211,50 @@ const errorUpCover = () => {
     alert('封面上传失败')
 }
 
-let ifUpLoadCover = reactive({
-    boo: false
-})
-
 //封面超出上传限制
-const onExceed = () => {
+const onExceed = (e: any) => {
     alert('封面超出上传限制，上传失败')
 }
 
-//封面上传列表改变
-const onChangeCover = () => {
-    ifUpLoadCover.boo = true
+//文件状态改变时的钩子，添加文件、上传成功和上传失败时都会被调用
+const onChangeCover = (e: any) => {
+    if (!coverTypeArr.includes(e.raw.type)) {
+        ElMessage({
+            showClose: true,
+            message: '选择的文件格式错误，错误的格式将不会被上传',
+            type: 'error',
+        })
+        return
+    }
+    e.size > limitSize ? biggerCover.value = true : biggerCover.value = false
+    coverNum++
+}
+//文件列表移除文件时的钩子
+const onRemove = (e: any) => {
+    coverNum--
 }
 
-const onRemove = () => {
-    ifUpLoadCover.boo = false
+//上传前钩子
+const beforeUpload = (e: any) => {
+
+}
+
+//上传文章函数
+const uploadWrite = () => {
+    ifUpload.value = false
+    useAxios.post('/uploadarticle', qs.stringify({
+        list: write
+    })).then((res) => {
+        if (res.data.status === 0) {
+            alert('文章上传成功')
+            router.replace('/article')
+        } else {
+            alert('文章上传失败')
+        }
+    }).catch(err => {
+        alert('出现错误:' + err)
+        ifUpload.value = true
+    })
 }
 
 const uploadArticle = (articleWrite: ArticleWrite) => {
@@ -237,28 +264,35 @@ const uploadArticle = (articleWrite: ArticleWrite) => {
             message: '请检查标签或者标题、内容是否为空！',
             type: 'error',
         })
+        return
+    }
+
+    if (coverNum > 1) {
+        ElMessage({
+            showClose: true,
+            message: '封面数量超出限制',
+            type: 'error',
+        })
+        return
+    }
+
+    if (biggerCover.value) {
+        ElMessage({
+            showClose: true,
+            message: '封面大小超出限制',
+            type: 'error',
+        })
+        return
+    }
+
+    //更改按钮
+    if (coverNum === 1) {
+        ifUpload.value = false
+        //进行封面上传,会连文章一起上传
+        uploadCover.value!.submit()
     } else {
-        //更改按钮
-        if (ifUpLoadCover.boo) {
-            ifUpload.value = false
-            //进行封面上传
-            uploadCover.value!.submit()
-        } else {
-            ifUpload.value = false
-            useAxios.post('/uploadarticle', qs.stringify({
-                list: write
-            })).then((res) => {
-                if (res.data.status === 0) {
-                    alert('文章上传成功')
-                    router.replace('/article')
-                } else {
-                    alert('文章上传失败')
-                }
-            }).catch(err => {
-                alert('出现错误:' + err)
-                ifUpload.value = true
-            })
-        }
+        ifUpload.value = false
+        uploadWrite()
     }
 }
 
