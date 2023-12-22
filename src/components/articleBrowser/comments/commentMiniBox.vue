@@ -2,7 +2,7 @@
     <div class="commentMiniBox-container">
         <!-- 头像 -->
         <div class="headBox">
-            <img :src="pinia.apiRoot + userInfo.headImg" alt="head" @click="goToPersonalCenter(userInfo)">
+            <img :src="userInfo.headImg" alt="head" @click="goToPersonalCenter(userInfo)">
         </div>
         <!-- 内容 -->
         <div class="bodyBox">
@@ -59,7 +59,7 @@ const { data: res } = await useAxios.get('/userinfo', {
         account: reply.account
     }
 })
-const userInfo = res.data[0]
+const userInfo = res.data
 
 //请求回复(@) 的人的信息
 const { data: replyUser } = await useAxios.get('/userinfo', {
@@ -67,7 +67,7 @@ const { data: replyUser } = await useAxios.get('/userinfo', {
         account: reply.replyTo
     }
 })
-const replyInfo = replyUser.data[0]
+const replyInfo = replyUser.data
 
 const token = localStorage.getItem('userAccount')
 const goToPersonalCenter = (info: any) => {

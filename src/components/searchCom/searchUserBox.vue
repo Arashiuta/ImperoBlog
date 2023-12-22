@@ -1,7 +1,7 @@
 <template>
     <div class="searchUserBox-container" @click="goToPersonalCenter">
         <!-- 左侧头像 -->
-        <img class="headImage" :src="pinia.apiRoot + info.headImg" alt="">
+        <img class="headImage" :src="info.headImg" alt="">
         <!-- 右侧信息 -->
         <div class="userInfo">
             <!-- 昵称 -->

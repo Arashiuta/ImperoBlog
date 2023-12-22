@@ -2,7 +2,7 @@
     <div class="topArticleBox-container" @click="goBrowse(info.id)">
         <div class="leftSide">
             <!-- coverImage -->
-            <img :src="pinia.apiRoot + info.cover" alt="" class="coverImage">
+            <img :src="info.cover" alt="" class="coverImage">
             <div class="mask"></div>
         </div>
         <div class="rightSide">
@@ -21,7 +21,7 @@
                 <!-- 作者信息 -->
                 <div class="authorInfo">
                     <div class="head">
-                        <img :src="pinia.apiRoot + authorInfo.headImg" alt="head">
+                        <img :src="authorInfo.headImg" alt="head">
                     </div>
                     <div class="headRight">
                         <div class="nickName">{{ authorInfo.nickName }}</div>
@@ -73,7 +73,7 @@ const { data: res } = await useAxios.get('/userinfo', {
         account: info.author
     }
 })
-const authorInfo = res.data[0]
+const authorInfo = res.data
 
 //点击浏览文章
 const goBrowse = (id: number) => {

@@ -1,7 +1,7 @@
 <template>
     <div class="userHead">
         <div class="headBox">
-            <img :src="pinia.apiRoot + userInfo.headImg" alt="none" class="defaultHead">
+            <img :src="userInfo.headImg" alt="none" class="defaultHead">
         </div>
 
         <div class="infoBox" v-show="ifBox">
@@ -93,10 +93,8 @@ onMounted(async () => {
             account: sessionInfo.account
         }
     })
-    userInfo.value = res.data[0]
+    userInfo.value = res.data
 })
-
-
 
 const ifBox = ref(false)
 onMounted(() => {
@@ -146,7 +144,6 @@ const sendNewNickName = async () => {
                 nickName: newNickName.value,
             }
         })
-        console.log(res);
         if (res.status === 0) {
             alert('修改成功！')
             router.go(0)

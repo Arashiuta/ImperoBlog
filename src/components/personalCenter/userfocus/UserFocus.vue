@@ -2,10 +2,10 @@
     <div class="userfocus-container">
         <div class="unserInfoBox">
             <!-- 背景图 -->
-            <img :src="pinia.apiRoot + userInfo.personalCover" alt="">
+            <img :src="userInfo.personalCover" alt="">
             <div class="userInfo">
                 <!-- 头像 -->
-                <img :src="pinia.apiRoot + userInfo.headImg" alt="">
+                <img :src="userInfo.headImg" alt="">
                 <!-- 昵称和简介 -->
                 <div class="textInfo">
                     <span>{{ userInfo.nickName }}</span>
@@ -59,7 +59,7 @@ const { data: res } = await useAxios.get('/userinfo', {
         account: routeAccount
     }
 })
-const userInfo = res.data[0]
+const userInfo = res.data
 
 const staticText = reactive({
     focus: "我的关注",

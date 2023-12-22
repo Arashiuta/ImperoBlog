@@ -6,8 +6,7 @@
             <!-- 消息盒子 -->
             <div class="chatLogBox" v-for="item in chatLogBox.logInfo" :key="item.id">
                 <!-- 头像 -->
-                <img style="cursor: pointer;" :src="pinia.apiRoot + item.head" alt=""
-                    @click="goPersonalCenter(item.account)">
+                <img style="cursor: pointer;" :src="item.head" alt="" @click="goPersonalCenter(item.account)">
                 <!-- 右侧 -->
                 <div class="right">
                     <!-- 昵称和时间 -->
@@ -47,7 +46,6 @@ import { useStore } from '@/store/count'
 import { socket } from '@/hooks/socket/socket'
 import { goToPersonalCenterHook } from "@/hooks/goToPersonalCenter/goToPersonalCenter";
 import { useRoute } from 'vue-router'
-import gsap from 'gsap'
 const route = useRoute()
 const pinia = useStore()
 
@@ -78,8 +76,8 @@ const newChatLogInfo = async (newLog: ChatLog) => {
     const info: ChatLogBox = {
         id: newLog.id,
         account: newLog.account,
-        head: res.data[0].headImg,
-        nickName: res.data[0].nickName,
+        head: res.data.headImg,
+        nickName: res.data.nickName,
         time: newLog.time,
         content: newLog.content
     }
@@ -125,7 +123,7 @@ const sendChatLog = async () => {
     }
     const roomName = herfRoomName()
     const account = JSON.parse(window.atob(localStorage.getItem('userAccount')!))
-    const { data: getRoom } = await useAxios.get('getchatlog', { params: { name: roomName } })
+    const { data: getRoom } = await useAxios.get('/getchatlog', { params: { name: roomName } })
     const roomArr = getRoom.data
     let newId;
     if (!roomArr) return ElMessage.error(`你发送消息的房间 ${herfRoomName()} 已经被删除`)
@@ -137,11 +135,12 @@ const sendChatLog = async () => {
     //更新数据库的聊天记录
     const newLog = {
         id: newId,
-        room: roomName,
+        roomName: roomName,
         account: account.account,
         content: chatLogIpt.value,
     }
-    const { data: res } = await useAxios.post('setnewlog', qs.stringify(newLog))
+    const { data: res } = await useAxios.post('/setnewlog', newLog)
+
     switch (res.status) {
         case 0:
             ElMessage({

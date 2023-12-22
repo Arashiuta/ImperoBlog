@@ -33,12 +33,12 @@ const theEditor = reactive({
     mdContent: '',
 })
 //请求过来要修改的文章
-const { data: res } = await useAxios.get('/getidarticle', {
+const { data: resArticle } = await useAxios.get('/getidarticle', {
     params: {
         id: contentId
     }
 })
-theEditor.mdContent = res.data.content
+theEditor.mdContent = resArticle.data.content
 //md上传图片
 const onUploadImg = async (files: any, callback: any) => {
     const res = await Promise.all(
@@ -46,6 +46,7 @@ const onUploadImg = async (files: any, callback: any) => {
             return new Promise((rev, rej) => {
                 const form = new FormData();
                 form.append('file', file);
+                form.append("account", resArticle.data.author)
                 useAxios
                     .post(pinia.apiRoot + '/api/uploadmdimg', form, {
                         headers: {
@@ -57,7 +58,7 @@ const onUploadImg = async (files: any, callback: any) => {
             });
         })
     );
-    callback(res.map((item) => pinia.apiRoot + item.data.url));
+    callback(res.map((item) => pinia.apiRoot + item.data.data));
 };
 //发送修改的文章内容
 const sendEditor = async () => {

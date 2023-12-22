@@ -71,7 +71,6 @@ const ArticleRight = defineAsyncComponent(() => import('@/components/rightToolsB
 const topArticleBox = defineAsyncComponent(() => import('@/components/topArticleBox/topArticleBox.vue'))
 
 const router = useRouter()
-
 //请求文章列表
 const { data: res } = await useAxios.get('/getarticle')
 const list = res.data
@@ -87,7 +86,7 @@ const showList = reverseList.slice(0, 4) //限制主页显示的文章个数
 
 //请求置顶文章信息
 const { data: topRes } = await useAxios.get("/gettoparticle")
-const topArticleInfo = topRes.info[0]
+const topArticleInfo = topRes.data
 
 onMounted(() => {
     gsap.from('.middle', {

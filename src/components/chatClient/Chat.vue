@@ -2,33 +2,7 @@
     <div class="chat-container">
         <!-- 左侧公告和房间 -->
         <div class="rooms">
-            <div class="ground">
-                <div class="squareTip">
-                    <p>公告</p>
-                    <button @click="iptSquareTip">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-gonggao"></use>
-                        </svg>
-                    </button>
-                </div>
-                <div style="white-space: pre-line;">
-                    <p>
-                        {{ squareTip }}
-                    </p>
-                </div>
-            </div>
-            <!-- 修改公告的盒子 -->
-            <div v-if="squareTipShow">
-                <el-input v-model="squareTip" resize="none" :rows="6" type="textarea" placeholder="这里是公告栏..." />
-                <button
-                    style="box-sizing: border-box;padding: .2rem .5rem; margin: .5rem;cursor: pointer;border-radius: .5rem;"
-                    @click="cancelSquareIpt">取消</button>
-                <button
-                    style="box-sizing: border-box;padding: .2rem .5rem; margin: .5rem;cursor: pointer;background-color: #2486d6;color: #fff;border-radius: .5rem;"
-                    @click="setNewTip">确定</button>
-            </div>
             <!-- 分割线 -->
-            <span class="borderSpan"></span>
             <div class="roomsListBox">
                 <!-- 房间列表标题 -->
                 <div
@@ -73,8 +47,7 @@
         <div class="onlineList">
             <p>在线 - {{ onlineList.length }}</p>
             <div class="userList" v-for="item in onlineList" :key="item.id" @click="goPersonalCenter(item)">
-                <img style="width: 3.5rem;border-radius: 50%;margin: .2rem;margin-right: .5rem;"
-                    :src="pinia.apiRoot + item.headImg" alt="">
+                <img style="width: 3.5rem;border-radius: 50%;margin: .2rem;margin-right: .5rem;" :src="item.headImg" alt="">
                 <span style="font-size: 1.2rem;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;">{{
                     item.nickName }} <span v-if="item.root" style="color: red;">*</span>
                 </span>
@@ -91,7 +64,6 @@ import useAxios from '@/hooks/axios/axios';
 import { ElMessage } from 'element-plus'
 import ChatWindow from '@/components/chatClient/chatWindow.vue'
 import { ChatLog } from '@/hooks/Types/types'
-import qs from 'qs'
 import { goToPersonalCenterHook } from "@/hooks/goToPersonalCenter/goToPersonalCenter";
 import { useRoute, useRouter } from 'vue-router';
 const pinia = useStore()
@@ -104,8 +76,6 @@ const inputNewRoom = ref('')  //添加的新房间的名字
 const addNewRoom = ref(false)  //添加房间
 const uploadChatWindow = ref(0)  //刷新子组件
 let chatLogInfo = ref(new Array<ChatLog>); //消息记录，传给子组件
-const squareTip = ref('')  //公告内容
-const squareTipShow = ref(false)
 
 
 const userAccount = localStorage.getItem('userAccount')
@@ -121,15 +91,13 @@ onBeforeUnmount(() => {
     socket.disconnect()
 })
 
-//进入页面获取公告
-const { data: res } = await useAxios.get('/getchatsquaretip')
-const resTip = res.data[0]
-squareTip.value = resTip.tip
 
 //进入页面主动获取列表
 socket.emit('getUsers', 'getOnlineList', (res: any) => {
     onlineList.value = res
 })
+
+
 // 有人登录退出被动获取当前在线列表
 socket.on('loginUsers', (data) => {
     onlineList.value = data
@@ -144,7 +112,7 @@ socket.on('roomsChange', () => {
 })
 //进入页面获取房间列表
 const getAllRooms = async () => {
-    const { data: res } = await useAxios.get('/getallrooms')
+    const { data: res } = await useAxios.get('/getallroomsname')
     allRooms.value = res.data
     getRoomLog('默认房间')  //刚进入页面默认请求默认房间的消息记录
 }
@@ -152,7 +120,7 @@ getAllRooms()
 
 //请求对应的房间消息记录
 const getRoomLog = async (name: string) => {
-    const { data: res } = await useAxios.get('getchatlog', { params: { name: name } })
+    const { data: res } = await useAxios.get('/getchatlog', { params: { name: name } })
     if (res.status === 1) return alert('没有对应房间')
     chatLogInfo.value = res.data
     uploadChatWindow.value++
@@ -182,7 +150,7 @@ const cancleAddRoom = () => {
 //确定添加房间
 const setNewRoom = async () => {
     if (inputNewRoom.value === '') return alert('房间名不能为空')
-    const { data: res } = await useAxios.post('/setnewchatroom', qs.stringify({ name: inputNewRoom.value }))
+    const { data: res } = await useAxios.get('/setnewchatroom', { params: { name: inputNewRoom.value } })
     if (res.status === 1) {
         ElMessage({
             message: '房间名已存在或者房间数量已达上限',
@@ -205,7 +173,7 @@ const setNewRoom = async () => {
 //删除房间
 const delRoom = async (name: string) => {
 
-    const { data: res } = await useAxios.post('/delroom', qs.stringify({ name: name }))
+    const { data: res } = await useAxios.get('/delroom', { params: { name: name } })
     switch (res.status) {
         case 0:
             ElMessage({
@@ -226,42 +194,9 @@ const delRoom = async (name: string) => {
     }
 }
 
-//修改公告
-const iptSquareTip = () => {
-    const userInfo = JSON.parse(window.atob(localStorage.getItem('userAccount')!))
-    if (userInfo.root) {
-        squareTipShow.value = true
-    } else {
-        ElMessage.error('只有管理员可以修改公告')
-    }
-
-}
-
-//取消修改公告
-const cancelSquareIpt = () => {
-    squareTipShow.value = false
-}
-
 //点击头像去个人空间
 const goPersonalCenter = (item: any) => {
     goToPersonalCenterHook(item.account)
-}
-
-//确定修改公告
-const setNewTip = async () => {
-    const { data: res } = await useAxios.post('/setchatsquaretip', qs.stringify({
-        id: resTip._id,
-        tip: squareTip.value
-    }))
-    if (res.status === 0) {
-        ElMessage({
-            message: '修改成功',
-            type: 'success',
-        })
-        cancelSquareIpt()
-    } else {
-        ElMessage.error('出错啦')
-    }
 }
 
 </script>
@@ -280,51 +215,6 @@ const setNewTip = async () => {
 
     .rooms {
         width: 15rem;
-
-        .ground {
-            box-sizing: border-box;
-            padding: .5rem;
-
-            p {
-                text-align: center;
-                font-size: 1.2rem;
-                font-weight: 600;
-            }
-
-            div {
-                max-height: 10rem;
-                overflow-y: auto;
-                word-break: break-all;
-            }
-
-            .squareTip {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                &:hover {
-                    button {
-                        display: block;
-                    }
-                }
-
-                button {
-                    background-color: transparent;
-                    margin-left: .5rem;
-                    font-size: 1.2rem;
-                    cursor: pointer;
-                    display: none;
-                }
-            }
-        }
-
-        .borderSpan {
-            display: block;
-            width: 100%;
-            height: .5rem;
-            background-image: linear-gradient(to left, var(--gradient-start-one), var(--gradient-end-one));
-            border-radius: 1rem;
-        }
 
         .roomsListBox {
             display: flex;

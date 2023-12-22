@@ -77,7 +77,7 @@ const searchRes = reactive({  //搜索的结果
 const reqArticle = async () => {  //请求文章
     const { data: searchArticleRes } = await useAxios.get('/searcharticle', {
         params: {
-            str: searchInfo.value
+            title: searchInfo.value
         }
     })
     searchRes.article = searchArticleRes.data  //请求回来的文章搜索结果
@@ -85,7 +85,7 @@ const reqArticle = async () => {  //请求文章
 const reqUser = async () => {  //请求用户
     const { data: searchUserRes } = await useAxios.get('/searchuser', {
         params: {
-            str: searchInfo.value
+            account: searchInfo.value
         }
     })
     searchRes.user = searchUserRes.data  //请求回来的用户搜索结果

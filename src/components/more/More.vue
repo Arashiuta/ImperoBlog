@@ -3,7 +3,7 @@
         <div class="middle">
             <div class="head">
                 <div class="hedaImg">
-                    <img :src="pinia.apiRoot + myInfo.headImg" alt="headImg">
+                    <img :src="myInfo.headImg" alt="headImg">
                 </div>
                 <h1>你好</h1>
                 <h2>这里是{{ myInfo.nickName }}</h2>
@@ -51,7 +51,7 @@ const { data: res } = await useAxios.get('/userinfo', {
         account: 'admin123'
     }
 })
-const myInfo = res.data[0]
+const myInfo = res.data
 
 const gsapAnimation = () => {
     const tween = gsap.timeline()

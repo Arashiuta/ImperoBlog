@@ -2,7 +2,7 @@
     <div class="commentBox-container">
         <!-- 头像 -->
         <div class="headimg" @click="goToPersonalCenter">
-            <img :src="pinia.apiRoot + userInfo.headImg" alt="head">
+            <img :src="userInfo.headImg" alt="head">
         </div>
         <!-- 内容 -->
         <div class="contentBox">
@@ -88,7 +88,7 @@ const { data: res } = await useAxios.get('/userinfo', {
         account: commentInfo.account
     }
 })
-const userInfo = res.data[0]   //用户信息
+const userInfo = res.data   //用户信息
 if (userInfo.root === true) {
     root.value = true
 }

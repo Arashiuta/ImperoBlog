@@ -43,13 +43,14 @@
             </div>
             <div class="messageContent">
                 <miniMessage v-for="item in messageList" :key="item.id" :item="item"></miniMessage>
+
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from "vue-router";
 import useAxios from "@/hooks/axios/axios";
 import RandomArticle from '@/components/rightToolsBox/randomArticle.vue'
@@ -76,6 +77,7 @@ if (list.length > 4) {
 //请求所有标签
 const { data: tags } = await useAxios.get('/gettags')
 const allTags = tags.data
+
 //随机挑选5个文章出来组成数组用来循环随即文章组件
 let listArr = new Array  //准备一个存放文章的空数组
 let randomNum = new Array  //存放随机数的数组
@@ -108,8 +110,6 @@ const quickTag = (tag: Tag) => {
 const { data: message } = await useAxios.get('/getmessages')
 const messageLists = message.data
 const messageList = messageLists.reverse().slice(0, 7)  //展示七条留言
-
-
 
 </script>
 

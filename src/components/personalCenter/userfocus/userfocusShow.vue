@@ -42,7 +42,7 @@ const switchTag = async () => {
                     account: routeQuery.account
                 }
             })
-            showDate.data = focus.data[0].focus
+            showDate.data = focus.data.focus
             break;
         case '1':
             showDate.title = "全部粉丝"
@@ -53,7 +53,7 @@ const switchTag = async () => {
                     account: routeQuery.account
                 }
             })
-            showDate.data = fans.data[0].fans
+            showDate.data = fans.data.fans
             break;
         default:
             break;

@@ -10,7 +10,7 @@
             <div class="commentText">
                 <!-- 头像 -->
                 <div class="headimg">
-                    <img :src="pinia.apiRoot + commentHeadImg" alt="head">
+                    <img :src="commentHeadImg" alt="head">
                 </div>
                 <!-- input -->
                 <el-input v-model="commentTextInfo" maxlength="600" placeholder="输入一条留言吧" show-word-limit type="textarea"
@@ -62,7 +62,7 @@ if (!token) {  //如果没有登录展示默认头像
             account: userAccount.account
         }
     })
-    commentHeadImg.value = res.data[0].headImg
+    commentHeadImg.value = res.data.headImg
 }
 
 //输入内容区域

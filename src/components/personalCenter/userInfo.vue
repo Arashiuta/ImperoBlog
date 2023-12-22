@@ -2,7 +2,7 @@
     <div class="userInfo">
         <div class="userhead">
             <div class="headImg" @click="changeHeadImg">
-                <img :src="pinia.apiRoot + userInfo.headImg" alt="head">
+                <img :src="userInfo.headImg" alt="head">
                 <div class="mask">点击更换头像</div>
             </div>
             <Teleport to="body">
@@ -152,7 +152,7 @@ const { data: res } = await useAxios.get('/userinfo', {
         account: tokenInfo.account
     }
 })
-const userInfo = reactive(res.data[0])
+const userInfo = reactive(res.data)
 
 const ifChangePersonalDate = ref(false)  //是否更改个人资料
 const changePersonalDate = () => ifChangePersonalDate.value = !ifChangePersonalDate.value
@@ -169,15 +169,15 @@ const changePersonalIntroduce = async () => {
     if (!newIntroduce.introduce) {
         newIntroduce.introduce = "这个人很懒，什么也没有留下..."
     }
+
+
     //获取用户账号
     const token = JSON.parse(window.atob(localStorage.getItem('userAccount')!))
-
-    const { data: res } = await useAxios.get('/changepersonalintroduce', {
-        params: {
-            account: token.account,
-            data: newIntroduce
-        }
-    })
+    const changeIntroduceJson = {
+        account: token.account,
+        data: newIntroduce
+    }
+    const { data: res } = await useAxios.post('/changepersonalintroduce', changeIntroduceJson)
     const changeIntroduce = res.status
     if (changeIntroduce === 0) {
         ElMessage({

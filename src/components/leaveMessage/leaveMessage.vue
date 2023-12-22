@@ -2,7 +2,7 @@
     <div class="messageBox">
         <div class="headImg">
             <div class="mesageHead" @click="goToPersonalCenter">
-                <img :src="pinia.apiRoot + info.headImg" alt="head">
+                <img :src="info.headImg" alt="head">
             </div>
         </div>
         <div class="messageInfo">
@@ -60,7 +60,7 @@ const { data: res } = await useAxios.get('/userinfo', {
         account: props.item.account
     }
 })
-const info = res.data[0]
+const info = res.data
 if (info.root === true) {  //是否显示狗牌
     root.value = true
 }
@@ -102,7 +102,7 @@ const delMessageY = async (id: number) => {
                     id: id
                 }
             })
-            const getIdMessage = res.data[0]
+            const getIdMessage = res.data
             if (sessionInfo.account === getIdMessage.account) {  //留言是自己写的
                 //可以删除这个留言
                 const { data: res } = await useAxios.get('/delmessage', {
@@ -128,32 +128,6 @@ const delMessageY = async (id: number) => {
         ElMessage.error('没有登录，不可操作')
     }
 }
-
-/*
-const goToPersonalCenter = () => {
-    const token = localStorage.getItem('userAccount')
-    if (token) {
-        const tokenInfo = JSON.parse(window.atob(token))
-        if (tokenInfo.account === props.item.account) {   //如果点击的是自己的留言的头像，就跳转到自己的个人中心
-            router.push('/personalcenter')
-        } else {    //不是就正常跳转到别人的个人中心
-            router.push({
-                path: '/otherspersonalcenter',
-                query: {
-                    account: props.item.account
-                }
-            })
-        }
-    } else {    //未登录，直接跳转到别人的个人中心
-        router.push({
-            path: '/otherspersonalcenter',
-            query: {
-                account: props.item.account
-            }
-        })
-    }
-}
-*/
 
 const goToPersonalCenter = () => {
     goToPersonalCenterHook(props.item.account)

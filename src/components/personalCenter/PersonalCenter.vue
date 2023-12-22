@@ -1,7 +1,7 @@
 <template>
     <div class="personalCenrer">
         <div class="personalCoverImg">
-            <img :src="pinia.apiRoot + userInfo.personalCover" alt="personalCoverImg">
+            <img :src="userInfo.personalCover" alt="personalCoverImg">
         </div>
         <userInfoCom></userInfoCom>
         <div class="userFunction">
@@ -69,7 +69,7 @@ const { data: res } = await useAxios.get('/userinfo', {
         account: tokenInfo.account
     }
 })
-const userInfo = res.data[0]
+const userInfo = res.data
 
 
 //收藏卡片

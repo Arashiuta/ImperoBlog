@@ -12,7 +12,7 @@
                     <h5>登录</h5>
                     <p>Login to Impero's Blog</p>
                 </div>
-                <div class="box">
+                <form class="box">
                     <div class="iptUser">
                         <label for="username">用户名</label>
                         <el-input v-model.trim="logInfo.username" maxlength="16" placeholder="输入用户名" show-word-limit
@@ -23,7 +23,7 @@
                         <el-input v-model.trim="logInfo.password" maxlength="16" placeholder="输入密码" show-word-limit
                             type="text" name="password" :show-password="true" />
                     </div>
-                </div>
+                </form>
                 <div class="logBtn">
                     <div @click="login">登录</div>
                     <span @click="goRegister">没有账号？点击注册</span>
@@ -42,7 +42,7 @@
                     <p>Register to Impero's Blog</p>
                 </div>
                 <div v-if="name">
-                    <div class="box">
+                    <form class="box">
                         <div class="iptUser">
                             <label for="registerUsername">用户名</label>
                             <el-input v-model.trim="registerInfo.username" maxlength="16" placeholder="输入注册账号(这不是昵称)"
@@ -59,7 +59,7 @@
                             <el-input v-model.trim="registerInfo.againPassword" maxlength="16" placeholder="再次输入注册密码"
                                 show-word-limit type="text" name="registerPasswordAgain" :show-password="true" />
                         </div>
-                    </div>
+                    </form>
                     <div class="logBtn">
                         <div @click="register">注册</div>
                         <span @click="goLogin">已有账号，点击登录</span>
@@ -120,8 +120,8 @@ onMounted(() => {
 
 //登录信息
 const logInfo = reactive({
-    username: '',
-    password: '',
+    username: "",
+    password: "",
 })
 
 //注册信息
@@ -137,7 +137,7 @@ const nickname = ref()
 //点击登录
 const login = async () => {
     const userLogInfo = toRaw(logInfo)
-    const { data: res } = await useAxios.post('/login', qs.stringify(userLogInfo))
+    const { data: res } = await useAxios.post("/login", userLogInfo)
     if (res.status === 2) {
         alert('用户名不存在')
     } else if (res.status === 0) {
@@ -163,11 +163,12 @@ const login = async () => {
 //点击注册
 const register = async () => {
     const registerform = toRaw(registerInfo)
+
     if (registerform.password.length < 6 || registerform.username.length < 6) {
         alert('用户名和密码都不能小于6位')
     } else {
         if (registerform.password === registerform.againPassword) {
-            const { data: res } = await useAxios.post('/register', qs.stringify(registerform))
+            const { data: res } = await useAxios.post('/register', registerform)
             if (res.status === 0) {
                 alert('注册成功!')
                 name.value = false

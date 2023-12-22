@@ -1,12 +1,12 @@
 <template>
     <Transition @enter="gsapEnterCover" :css="false">
         <div class="coverImg" v-if="ifCover">
-            <el-image :src="pinia.apiRoot + browseArticle.cover" fit="cover" />
+            <el-image :src="browseArticle.cover" fit="cover" />
             <div class="mask">
                 <div class="title">{{ browseArticle.title }}</div>
                 <div class="author" @click="goToPersonalCenter">
                     <div class="head">
-                        <img :src="pinia.apiRoot + authorInfo.headImg" alt="head">
+                        <img :src="authorInfo.headImg" alt="head">
                     </div>
                     <div class="nickName">{{ authorInfo.nickName }}</div>
                 </div>
@@ -54,7 +54,7 @@
                         <div class="title">{{ browseArticle.title }}</div>
                         <div class="author" @click="goToPersonalCenter">
                             <div class="head">
-                                <img :src="pinia.apiRoot + authorInfo.headImg" alt="head">
+                                <img :src="authorInfo.headImg" alt="head">
                             </div>
                             <div class="nickName">{{ authorInfo.nickName }}</div>
                         </div>
@@ -142,7 +142,6 @@ const { data: res } = await useAxios.get('/getidarticle', {
         id: articleId
     }
 })
-
 const browseArticle = res.data  //拿到了相应的文章
 
 const commentsList = {
@@ -157,7 +156,7 @@ const { data: author } = await useAxios.get('/userinfo', {
         account: browseArticle.author
     }
 })
-const authorInfo = author.data[0]
+const authorInfo = author.data
 
 //编辑文章
 const openEditor = async () => {

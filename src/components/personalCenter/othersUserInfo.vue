@@ -2,7 +2,7 @@
     <div class="userInfo">
         <div class="userhead">
             <div class="headImg">
-                <img :src="pinia.apiRoot + userInfo.headImg" alt="head">
+                <img :src="userInfo.headImg" alt="head">
             </div>
             <div class="headMore">
                 <div class="headbottom">
@@ -97,14 +97,13 @@ const props = defineProps<Props>()
 
 const userPropsAccount = props.account
 
-
 //请求用户信息
 const { data: res } = await useAxios.get('/userinfo', {
     params: {
         account: userPropsAccount
     }
 })
-const userInfo = reactive(res.data[0])  //请求的用户的信息
+const userInfo = reactive(res.data)  //请求的用户的信息
 
 
 //请求自己的信息   进入页面先验证是否已经关注了这个人,异步验证
@@ -117,7 +116,7 @@ if (logToken) {  //如果登录了验证是否已经关注目标用户
             account: logTokenInfo.account
         }
     }).then((res) => {  //请求回执
-        const info = res.data.data[0]
+        const info = res.data.data
         if (info.focus.indexOf(userInfo.account) !== -1) {  //已经关注了
             ifFocus.value = true
         } else {
@@ -128,8 +127,7 @@ if (logToken) {  //如果登录了验证是否已经关注目标用户
 
 const ifFocus = ref(false)  //是否关注了
 const focusDialogVisible = ref(false)
-//点击关注按钮
-const addFocus = async () => {
+const focusReq = async () => {  //关注按钮和取消关注都会调用的请求方法
     const token = localStorage.getItem('userAccount')
     if (token) {
         const tokenInfo = JSON.parse(window.atob(token))   //拿到目前登录的账号的token，知道是谁点击了关注按钮
@@ -140,41 +138,34 @@ const addFocus = async () => {
                 ifFocus: ifFocus.value  //是否已经关注了
             }
         })
-        if (res.status === 0) {
-            ElMessage({
-                message: '添加关注成功',
-                type: 'success',
-            })
-            ifFocus.value = true
-        }
+        return res;
     } else {
         ElMessage.error('请先登录')
     }
 }
+//点击关注按钮
+const addFocus = async () => {
+    let res: any = await focusReq()
+    if (res.status === 0) {
+        ElMessage({
+            message: '添加关注成功',
+            type: 'success',
+        })
+        ifFocus.value = true
 
+    }
+}
 
 //已关注，再点击就取消关注了
 const delFocus = async () => {
-    const token = localStorage.getItem('userAccount')
-    if (token) {
-        const tokenInfo = JSON.parse(window.atob(token))   //拿到目前登录的账号的token，知道是谁点击了关注按钮
-        const { data: res } = await useAxios.get('/focususers', {
-            params: {
-                account: tokenInfo.account,  //谁要关注
-                focus: userPropsAccount,   //关注谁
-                ifFocus: ifFocus.value  //是否已经关注了
-            }
+    let res: any = await focusReq()
+    if (res.status === 1) {
+        ElMessage({
+            message: '取消关注成功',
+            type: 'warning',
         })
-        if (res.status === 1) {
-            ElMessage({
-                message: '取消关注成功',
-                type: 'warning',
-            })
-            ifFocus.value = false
-            focusDialogVisible.value = false
-        }
-    } else {
-        ElMessage.error('请先登录')
+        ifFocus.value = false
+        focusDialogVisible.value = false
     }
 }
 

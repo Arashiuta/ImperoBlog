@@ -7,7 +7,7 @@
             </div>
             <div class="writeMessage">
                 <div class="userHead">
-                    <img :src="pinia.apiRoot + messageHeadImg" alt="default">
+                    <img :src="messageHeadImg" alt="default">
                 </div>
                 <el-input v-model="writeMessage" :autosize="{ minRows: 3, maxRows: 6 }" type="textarea"
                     placeholder="写下一条留言吧" class="userWrite" resize="none" maxlength="120" show-word-limit />
@@ -77,7 +77,7 @@ if (!session) {   //如果没有登录选择默认头像展示
             account: userAccount.account
         }
     })
-    messageHeadImg.value = res.data[0].headImg
+    messageHeadImg.value = res.data.headImg
 }
 
 //请求留言列表

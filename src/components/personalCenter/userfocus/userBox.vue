@@ -4,7 +4,7 @@
         <div class="userInfo">
             <!-- 头像 -->
             <div class="headimg" @click="goToPersonalCenter">
-                <img :src="pinia.apiRoot + userInfo.headImg" alt="head">
+                <img :src="userInfo.headImg" alt="head">
             </div>
             <!-- 信息 -->
             <div class="info">
@@ -37,7 +37,7 @@ const { data: res } = await useAxios.get('userinfo', {
         account: props.account
     }
 })
-const userInfo = res.data[0]
+const userInfo = res.data
 
 const goToPersonalCenter = () => {
     const token = localStorage.getItem('userAccount')

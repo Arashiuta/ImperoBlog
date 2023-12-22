@@ -4,7 +4,7 @@
         <div class="headAndIpt">
             <!-- 头像 -->
             <div class="headBox">
-                <img :src="pinia.apiRoot + userInfo.headImg" alt="">
+                <img :src="userInfo.headImg" alt="">
             </div>
             <!-- 输入框 -->
             <el-input v-model="commentTextInfo.replyContent" maxlength="200" placeholder="输入回复信息" show-word-limit
@@ -40,7 +40,7 @@ const { data: res } = await useAxios.get('/userinfo', {
         account: tokenInfo.account
     }
 })
-const userInfo = res.data[0]
+const userInfo = res.data
 
 type Comments = {
     id: number,
@@ -72,11 +72,7 @@ const relpyComment = async () => {
         })
         return
     } else {
-        const { data: res } = await useAxios.get('/replycomment', {
-            params: {
-                data: commentTextInfo
-            }
-        })
+        const { data: res } = await useAxios.post('/replycomment', commentTextInfo)
         if (res.status === 0) {
             ElMessage({
                 message: '回复成功',

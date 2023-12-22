@@ -1,14 +1,11 @@
 import { io } from 'socket.io-client'
 import { ElMessage } from 'element-plus'
+import { useStore } from "@/store/count"
+const pinia = useStore()
 
 //连接服务器
-// const socket = io("http://127.0.0.1:3030", ({
-//     autoConnect: false,
-//     auth: {
-//         userInfo: window.atob(localStorage.getItem('userAccount')!)
-//     }
-// }))
-const socket = io("https://impero.top:3031", ({
+const socketHttpUrl = pinia.socketUrl
+const socket = io(socketHttpUrl, ({
     autoConnect: false,
     auth: {
         userInfo: window.atob(localStorage.getItem('userAccount')!)

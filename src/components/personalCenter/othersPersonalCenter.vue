@@ -1,7 +1,7 @@
 <template>
     <div class="personalCenrer">
         <div class="personalCoverImg">
-            <img :src="pinia.apiRoot + userInfo.personalCover" alt="personalCoverImg">
+            <img :src="userInfo.personalCover" alt="personalCoverImg">
         </div>
         <OthersUserInfoCom :account="watchAccount"></OthersUserInfoCom>
         <div class="userFunction">
@@ -23,8 +23,15 @@
                 <el-tab-pane label=" Ta的发布" name="second" class="list" :lazy="true">
                     <div class="ifHave">
                         <div class="boxex">
-                            <ArticleBox v-for="item in showPush.showArticle" :key="item.id" :info="item" class="comBoxex">
-                            </ArticleBox>
+                            <Suspense v-for="item in showPush.showArticle" :key="item.id">
+                                <template #default>
+                                    <ArticleBox :info="item" class="comBoxex">
+                                    </ArticleBox>
+                                </template>
+                                <template #fallback>
+                                    <Loading></Loading>
+                                </template>
+                            </Suspense>
                         </div>
                         <div class="pageInfo">
                             <div class="allPage">共有{{ pushArticleNum.length }}条数据</div>
@@ -43,6 +50,7 @@ import useAxios from '@/hooks/axios/axios';
 import { useStore } from "@/store/count";
 import { ref, watchEffect, reactive } from 'vue'
 import ArticleBox from '@/components/utils/articleBox.vue';
+import Loading from "@/components/loading/loading2.vue";
 import OthersUserInfoCom from '@/components/personalCenter/othersUserInfo.vue';
 import { useRoute } from "vue-router";
 
@@ -56,9 +64,7 @@ const { data: res } = await useAxios.get('/userinfo', {
         account: watchAccount
     }
 })
-const userInfo = res.data[0]
-
-
+const userInfo = res.data
 
 //收藏卡片
 const activeName = ref('first')
@@ -81,8 +87,8 @@ const { data: list } = await useAxios.get('/pusharticlenum', {
         account: userInfo.account
     }
 })
-const pushArticleNum = list.data
-
+let pushArticleNum = new Array
+pushArticleNum = [...list.data]
 
 //分页组件分页
 //请求收藏的文章列表(上面有了)

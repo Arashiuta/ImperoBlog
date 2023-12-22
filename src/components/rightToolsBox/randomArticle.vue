@@ -1,6 +1,6 @@
 <template>
     <div class="randomArticle-container" @click="goBrowse(article.id)">
-        <img :src="pinia.apiRoot + article.cover" alt="cover">
+        <img :src="article.cover" alt="cover">
         <div class="bgcolor">
             <div class="time">{{ article.time }}</div>
             <div class="title">{{ article.title }}</div>

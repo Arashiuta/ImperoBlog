@@ -1,5 +1,5 @@
 <template>
-    <div class="contaier">
+    <form class="contaier">
         <div class="page">
             <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-16"></use>
@@ -39,10 +39,10 @@
         <div class="uploadimg">
             <p>上传封面:</p>
             <div>
-                <el-upload class="upload-demo" :drag="true" :action="pinia.apiRoot + '/api/uploadarticlecover'" :limit="1"
+                <el-upload class="upload-demo" :drag="true" :action="pinia.apiRoot + '/api/uploadarticle'" :limit="1"
                     :auto-upload="false" list-type="picture" ref="uploadCover" :on-success="successUpCover"
                     :on-error="errorUpCover" :on-change="onChangeCover" :on-remove="onRemove" multiple :on-exceed="onExceed"
-                    :before-upload="beforeUpload">
+                    :before-upload="beforeUpload" :http-request="elUploadFunc">
                     <el-icon class="el-icon--upload">
                         <upload-filled />
                     </el-icon>
@@ -62,7 +62,7 @@
             <div @click="uploadArticle(articleWrite)" v-if="ifUpload">提交</div>
             <div v-else class="uploading">提交中</div>
         </div>
-    </div>
+    </form>
 </template>
 
 <script setup lang="ts">
@@ -73,7 +73,7 @@ import type { UploadInstance } from 'element-plus'
 import MdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import useAxios from '@/hooks/axios/axios'
-import qs from "qs";
+import { ArticleWrite } from "@/hooks/Types/types"
 import { useRouter } from "vue-router";
 import { useStore } from "@/store/count";
 
@@ -84,22 +84,16 @@ const router = useRouter()
 const { data: res } = await useAxios.get('/gettags')
 const allTags = res.data
 
-type ArticleWrite = {
-    articleTitle: string
-    articleText: string
-    articleTags: Array<string>
-    author: string
-}
 
-const session = window.atob(localStorage.getItem('userAccount')!)
-const sessionInfo = JSON.parse(session)
+const token = window.atob(localStorage.getItem('userAccount')!)
+const tokenInfo = JSON.parse(token)
 //编辑文章里面的文章内容
 const articleWrite: ArticleWrite = reactive({
     articleTitle: '',
     articleText: '',
     //已经选择的标签
     articleTags: [],
-    author: sessionInfo.account
+    author: tokenInfo.account
 })
 
 //选中筛选tag
@@ -153,7 +147,7 @@ const onUploadImg = async (files: any, callback: any) => {
             return new Promise((rev, rej) => {
                 const form = new FormData();
                 form.append('file', file);
-
+                form.append("account", tokenInfo.account)
                 useAxios
                     .post(pinia.apiRoot + '/api/uploadmdimg', form, {
                         headers: {
@@ -165,8 +159,7 @@ const onUploadImg = async (files: any, callback: any) => {
             });
         })
     );
-
-    callback(res.map((item) => pinia.apiRoot + item.data.url));
+    callback(res.map((item) => item.data.data));
 };
 
 //配置md编辑器
@@ -185,10 +178,10 @@ MdEditor.config({
 //提交文章
 const ifUpload = ref(true)  //提交按钮点击后换位提交中的按钮
 const uploadCover = ref<UploadInstance>()
-const write = toRaw(articleWrite)
 let coverNum = 0  //选择上传的封面数量
 const biggerCover = ref(false)  //封面大小是否超出了限制
 const limitSize = 5 * 1024 * 1024   //封面大小限制5MB
+let coverFile: any;
 const coverTypeArr = [
     'image/jpeg',
     'image/jpg',
@@ -196,14 +189,12 @@ const coverTypeArr = [
     'image/webp',
 ]
 
-//封面上传成功的钩子   先上传封面，再上传内容
+//封面上传成功的钩子
 type Status = {
     status: number
 }
 const successUpCover = (res: Status) => {
-    setTimeout(() => {
-        uploadWrite()
-    }, 0)
+
 }
 
 //封面上传失败的钩子
@@ -235,28 +226,9 @@ const onRemove = (e: any) => {
 }
 
 //上传前钩子
-const beforeUpload = (e: any) => {
+const beforeUpload = (e: any) => { }
 
-}
-
-//上传文章函数
-const uploadWrite = () => {
-    ifUpload.value = false
-    useAxios.post('/uploadarticle', qs.stringify({
-        list: write
-    })).then((res) => {
-        if (res.data.status === 0) {
-            alert('文章上传成功')
-            router.replace('/article')
-        } else {
-            alert('文章上传失败')
-        }
-    }).catch(err => {
-        alert('出现错误:' + err)
-        ifUpload.value = true
-    })
-}
-
+// 上传按钮
 const uploadArticle = (articleWrite: ArticleWrite) => {
     if (articleWrite.articleTags.length === 0 || articleWrite.articleTitle === '' || articleWrite.articleText === '') {
         ElMessage({
@@ -285,15 +257,45 @@ const uploadArticle = (articleWrite: ArticleWrite) => {
         return
     }
 
-    //更改按钮
-    if (coverNum === 1) {
-        ifUpload.value = false
-        //进行封面上传,会连文章一起上传
-        uploadCover.value!.submit()
+    // 上传文章
+    ifUpload.value = false
+    if (coverNum == 0) {
+        // 没有上传封面
+        const formArticle = new FormData();
+        formArticle.append("writeArticle", new Blob([JSON.stringify(articleWrite)], { type: 'application/json' }))
+        useAxios.post("/uploadarticle", formArticle).then((res) => {
+            if (res.data.status === 0) {
+                alert('文章上传成功')
+                router.replace('/article')
+            } else {
+                alert('文章上传失败')
+            }
+        }).catch(err => {
+            alert('出现错误:' + err)
+            ifUpload.value = true
+        })
     } else {
-        ifUpload.value = false
-        uploadWrite()
+        // 有封面
+        uploadCover.value!.submit()  //调用submit会自动调用http-request的函数(elUploadFunc)
     }
+
+}
+
+const elUploadFunc = (domParam: any) => {
+    const formArticle = new FormData();
+    formArticle.append("writeArticle", new Blob([JSON.stringify(articleWrite)], { type: 'application/json' }))
+    formArticle.append("file", domParam.file)
+    useAxios.post("/uploadarticle", formArticle).then((res) => {
+        if (res.data.status === 0) {
+            alert('文章上传成功')
+            router.replace('/article')
+        } else {
+            alert('文章上传失败')
+        }
+    }).catch(err => {
+        alert('出现错误:' + err)
+        ifUpload.value = true
+    })
 }
 
 </script>

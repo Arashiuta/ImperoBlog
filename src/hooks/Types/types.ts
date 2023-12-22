@@ -16,7 +16,28 @@ type ChatLogBox = {
     content: string
 }
 
+// 留言Message类型
+type Message = {
+    _id: Object
+    id: number
+    account: string
+    time: string
+    content: string
+}
+
+// 上传文章
+type ArticleWrite = {
+    articleTitle: string
+    articleText: string
+    articleTags: Array<string>
+    author: string,
+}
+
+
+
 export type {
     ChatLog,
-    ChatLogBox
+    ChatLogBox,
+    Message,
+    ArticleWrite
 }

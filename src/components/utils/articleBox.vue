@@ -1,7 +1,7 @@
 <template>
     <div class="articleBox-container" @click="goBrowse(info.id)">
         <div class="cover">
-            <img :src="pinia.apiRoot + info.cover" alt="cover" class="coverImg">
+            <img :src="info.cover" alt="cover" class="coverImg">
             <div class="mask">
                 <span v-for="tag in info.tag" :key="tag">#{{ tag }}</span>
             </div>
@@ -13,7 +13,7 @@
             </p>
             <div class="authorInfo">
                 <div class="head">
-                    <img :src="pinia.apiRoot + authorInfo.headImg" alt="head">
+                    <img :src="authorInfo.headImg" alt="head">
                 </div>
                 <div class="headRight">
                     <div class="nickName">{{ authorInfo.nickName }}</div>
@@ -62,7 +62,7 @@ const { data: res } = await useAxios.get('/userinfo', {
         account: props.info.author
     }
 })
-const authorInfo = res.data[0]
+const authorInfo = res.data
 
 
 //点击浏览文章
