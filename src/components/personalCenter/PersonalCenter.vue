@@ -84,7 +84,9 @@ collectionList.map(async (item: string) => {
             id: item
         }
     })
-    collectionArray.push(res.data)
+    if (res.status === 0) {  //如果status为1就是这个文章已经不存在了（被删除），就不添加到数组里面了，不然会报错
+        collectionArray.push(res.data)
+    }
 })
 
 //发布的文章
@@ -94,6 +96,7 @@ const { data: list } = await useAxios.get('/pusharticlenum', {
     }
 })
 const pushArticleNum = list.data
+
 
 
 //分页组件分页
