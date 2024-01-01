@@ -232,12 +232,18 @@ const updataPushPage = (val: number) => {
     }
 }
 
+@media screen and (max-width: 1050px) {
+    .personalCenrer {
+        width: 100%;
+        border: none;
+    }
+}
+
 @media screen and (max-width: 800px) {
     .personalCenrer {
         width: 100%;
         border: none;
     }
-
 
     .demo-tabs>.el-tabs__content {
         .list {

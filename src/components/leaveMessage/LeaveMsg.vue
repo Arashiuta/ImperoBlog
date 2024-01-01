@@ -27,16 +27,20 @@
                 </template>
             </Suspense>
         </div>
-        <Suspense>
-            <template #default>
-                <Right class="right"></Right>
-            </template>
-            <template #fallback>
-                <div class="window">
-                    <Loading class="winLoad"></Loading>
-                </div>
-            </template>
-        </Suspense>
+
+        <div class="rightBox">
+            <Suspense>
+                <template #default>
+                    <Right class="right"></Right>
+                </template>
+                <template #fallback>
+                    <div class="window">
+                        <Loading class="winLoad"></Loading>
+                    </div>
+                </template>
+            </Suspense>
+        </div>
+
     </div>
 </template>
 
@@ -143,6 +147,8 @@ watchEffect(async () => {
     .middle {
         box-sizing: border-box;
         min-height: 90rem;
+        max-height: 125rem;
+        overflow-y: scroll;
         flex: 1;
         padding: 1rem 2rem;
         background-color: var(--white-background-color);
@@ -223,26 +229,19 @@ watchEffect(async () => {
     }
 }
 
-@media only screen and (max-width: 1300px) {
+@media only screen and (max-width: 1200px) {
     .right {
         display: none;
     }
-
-    .container {
-        margin-top: 7rem;
-    }
-
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1200px) {
     .container {
         width: 100%;
-        margin-top: 6rem;
         border: none;
 
-        .archive {
-            margin: 0 auto;
-            padding: 5rem;
+        .rightBox {
+            display: none;
         }
     }
 

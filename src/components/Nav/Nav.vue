@@ -68,67 +68,24 @@
 
     <!-- v-else -->
     <div v-show="media2" class="media2">
-        <div class="moreMediaNav">
-            <p v-if="ifLog">Impero's Blog</p>
-            <NavUserInfo class="welcome" v-else></NavUserInfo>
-            <svg class="icon" aria-hidden="true" @click="drawer = true">
-                <use xlink:href="#icon-gengduo"></use>
-            </svg>
+        <div class="userHead">
+            <p v-if="ifLog" @click="clickLogo">帝国睡眼惺忪</p>
+            <NavUserInfo class="welcome" v-else @click="goPersonalCenter"></NavUserInfo>
         </div>
-        <el-drawer v-model="drawer" title="快捷导航" direction="ttb" size="50%">
-            <div class="openDrawer">
-                <div class="drawerBox">
-                    <router-link to="/index">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-shouye"></use>
-                        </svg>
-                        <span>首页</span>
-                    </router-link>
-                </div>
-                <div class="drawerBox">
-                    <router-link to="/article">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-wenzhang"></use>
-                        </svg>
-                        <span>文章</span>
-                    </router-link>
-                </div>
-                <div class="drawerBox">
-                    <router-link to="/leavemsg">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-rili2"></use>
-                        </svg>
-                        <span>留言</span>
-                    </router-link>
-                </div>
-                <div class="drawerBox">
-                    <router-link to="/write">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-shuxie"></use>
-                        </svg>
-                        <span>写文</span>
-                    </router-link>
-                </div>
-                <div class="drawerBox">
-                    <router-link to="/more">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-gengduo1"></use>
-                        </svg>
-                        <span>更多</span>
-                    </router-link>
-                </div>
-                <div class="drawerBox" v-if="ifLog">
-                    <router-link to="/login">
-                        <span>登录/注册</span>
-                    </router-link>
-                </div>
-                <div class="drawerBox" v-else>
-                    <router-link to="/personalcenter">
-                        <span>个人中心</span>
-                    </router-link>
-                </div>
-            </div>
-        </el-drawer>
+        <div @click="openDrawer">
+            <NavMore :key="navKey"></NavMore>
+        </div>
+
+        <div class="phoneNav">
+            <ul>
+                <li @click="goPage('/index')">⚘回到首页⚘</li>
+                <li @click="goPage('/article')">⚘文章列表⚘</li>
+                <li @click="goPage('/leavemsg')">⚘留言版⚘</li>
+                <li @click="goPage('/write')">⚘写文章⚘</li>
+                <li @click="goPage('/chat')">⚘聊天室⚘</li>
+                <li @click="goPage('/more')">⚘更多⚘</li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -137,6 +94,9 @@ import { ref, watchEffect, defineAsyncComponent } from 'vue'
 import { useStore } from '@/store/count'
 import { useRouter } from 'vue-router'
 import SearchInput from '@/components/searchCom/searchInput.vue'
+import NavMore from '@/components/utils/uiCopy/navMore.vue'
+import gsap from 'gsap'
+import { goToPersonalCenterHook } from '@/hooks/goToPersonalCenter/goToPersonalCenter'
 const NavUserInfo = defineAsyncComponent(() => import('@/components/Nav/navUserInfo.vue')) //要在组件里面使用useAxios要异步引入组件
 const router = useRouter()
 const pinia = useStore()
@@ -167,13 +127,48 @@ watchEffect(async () => {
     }
 })
 
+const goPersonalCenter = () => {
+    const token = JSON.parse(window.atob(localStorage.getItem("userAccount")!))
+    goToPersonalCenterHook(token.account)
+}
 
 //是否打开抽屉
-const drawer = ref(false)
+let drawer = false;
+//刷新dom的key
+const navKey = ref(0)
+
+//点击展开抽屉
+const openDrawer = () => {
+    drawer = !drawer
+    if (drawer) {
+        gsap.to('.phoneNav', {
+            height: 800,
+            duration: .3
+        })
+    } else {
+        gsap.to('.phoneNav', {
+            height: 0,
+            duration: .3
+        })
+    }
+}
+
+// 手机端点击导航区某个页面
+const goPage = (routerName: string) => {
+    if (routerName === "chat") {
+        router.push({ path: routerName, query: { name: "默认房间" } })
+        openDrawer()
+        navKey.value++
+        return
+    }
+    router.push(routerName)
+    openDrawer()
+    navKey.value++
+}
 
 //点击logo
 const clickLogo = () => {
-    router.push('/index')
+    router.push('/login')
 }
 
 </script>
@@ -278,61 +273,61 @@ const clickLogo = () => {
     }
 }
 
-
-
-
 .media2 {
-    :deep(.el-drawer__header) {
-        margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--white-font-color);
+    background-color: var(--nav-background-color);
+    padding: 0 2rem;
+    position: relative;
+    margin-bottom: 1rem;
+
+    .userHead {
+        margin: .2rem 0;
+
+        p {
+            font-size: 3rem;
+            margin: 1rem 0;
+        }
+
+        .welcome {
+            width: 6rem;
+            height: 6rem;
+        }
     }
 
-    .moreMediaNav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        overflow-x: hidden;
+    .phoneNav {
         position: absolute;
-        top: 0;
+        bottom: 0;
         left: 0;
-        width: 104%;
-        box-sizing: border-box;
-        padding: 1rem;
-        z-index: 3;
-        transition: all .5s;
-        font-size: 3rem;
+        transform: translateY(100%);
         color: var(--white-font-color);
+        font-size: 4rem;
         background-color: var(--nav-background-color);
-    }
+        width: 100%;
+        height: 0;
+        overflow: hidden;
+        z-index: 1;
 
+        ul {
+            margin-top: 1rem;
 
-    .openDrawer {
-        border-top: .1rem solid var(--gray-sahdow);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        .drawerBox {
-
-            border-bottom: .2rem dashed var(--special-font-color);
-            padding: 0 1rem;
-            height: 5rem;
-            font-size: 2rem;
-
-            a {
-                width: 100%;
-                height: 100%;
+            li {
                 display: flex;
-                align-items: flex-end;
-                color: var(--black-font-color);
+                justify-content: center;
+                align-items: center;
+                padding: 1.8rem 0;
+                width: 100%;
             }
         }
     }
 }
 
 @media screen and (max-width: 1200px) {
-    .moreMediaNav {
-        .icon {
-            margin-right: 8vw;
+    .nav {
+        .navList {
+            margin-left: 1rem;
         }
     }
 }

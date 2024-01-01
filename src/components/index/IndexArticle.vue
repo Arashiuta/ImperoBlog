@@ -43,19 +43,20 @@
             </div>
         </div>
 
-        <Suspense>
-            <template #default>
-                <ArticleRight></ArticleRight>
-            </template>
+        <div class="articleRight">
+            <Suspense>
+                <template #default>
+                    <ArticleRight></ArticleRight>
+                </template>
 
-            <!-- 加载完成前的载入动画 -->
-            <template #fallback>
-                <div class="window">
-                    <Loading class="winLoad"></Loading>
-                </div>
-            </template>
-        </Suspense>
-
+                <!-- 加载完成前的载入动画 -->
+                <template #fallback>
+                    <div class="window">
+                        <Loading class="winLoad"></Loading>
+                    </div>
+                </template>
+            </Suspense>
+        </div>
     </div>
 </template>
 
@@ -112,47 +113,47 @@ onMounted(() => {
         border-radius: .2rem;
         padding: 0 .5rem;
 
-        .title {
-            height: 3rem;
-            padding: 1rem 2rem;
-            margin-bottom: .8rem;
-            font-weight: 700;
-            font-size: 1.7rem;
-            box-shadow: 0 .1rem .5rem var(--gray-sahdow);
-            border-radius: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #fff;
+        // .title {
+        //     height: 3rem;
+        //     padding: 1rem 2rem;
+        //     margin-bottom: .8rem;
+        //     font-weight: 700;
+        //     font-size: 1.7rem;
+        //     box-shadow: 0 .1rem .5rem var(--gray-sahdow);
+        //     border-radius: 1rem;
+        //     display: flex;
+        //     justify-content: space-between;
+        //     align-items: center;
+        //     background-color: #fff;
 
-            .recently {
-                display: flex;
-                justify-self: center;
-                align-items: center;
-                // color: #fff;
+        //     .recently {
+        //         display: flex;
+        //         justify-self: center;
+        //         align-items: center;
+        //         // color: #fff;
 
-                .icon {
-                    font-size: 2.2rem;
-                    margin-right: .3rem;
-                }
-            }
+        //         .icon {
+        //             font-size: 2.2rem;
+        //             margin-right: .3rem;
+        //         }
+        //     }
 
-            .watchMore {
-                font-size: 1.1rem;
-                // border: .2rem solid rgb(47, 196, 255);
-                // padding: .6rem 1.4rem;
-                // border-radius: 5rem;
-                // font-size: 1.3rem;
-                // transition: all .2s;
+        //     .watchMore {
+        //         font-size: 1.1rem;
+        //         // border: .2rem solid rgb(47, 196, 255);
+        //         // padding: .6rem 1.4rem;
+        //         // border-radius: 5rem;
+        //         // font-size: 1.3rem;
+        //         // transition: all .2s;
 
-                // &:hover {
-                //     cursor: pointer;
-                //     background-color: rgb(54, 181, 255);
-                //     font-weight: 500;
-                //     color: #fff;
-                // }
-            }
-        }
+        //         // &:hover {
+        //         //     cursor: pointer;
+        //         //     background-color: rgb(54, 181, 255);
+        //         //     font-weight: 500;
+        //         //     color: #fff;
+        //         // }
+        //     }
+        // }
 
         .articleBoxes {
             display: grid;
@@ -168,21 +169,20 @@ onMounted(() => {
         }
 
     }
-
-
-
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1400px) {
     .middle {
         width: 90%;
 
         .leftFace {
-            margin-right: 2rem;
-
             .articleBoxes {
                 grid-template-columns: repeat(1, 1fr);
             }
+        }
+
+        .articleRight {
+            display: block;
         }
     }
 }
@@ -190,8 +190,10 @@ onMounted(() => {
 @media screen and (max-width: 800px) {
     .middle {
         width: 100%;
-        flex-direction: column;
-        margin-top: 6.5rem;
+
+        .articleRight {
+            display: none;
+        }
     }
 }
 </style>

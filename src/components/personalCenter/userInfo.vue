@@ -430,19 +430,20 @@ const fansList = (account: string, from: string) => {
     }
 
     .moreInfo {
-        flex: 1;
+        width: 100%;
         height: 100%;
         display: flex;
         flex-direction: column;
+        align-items: center;
 
         .title {
             font-size: 2.5rem;
-            border-bottom: .1rem solid var(--gray-light-sahdow);
             padding: 1rem 0;
         }
 
         .titleBottom {
-
+            width: 100%;
+            border-top: .1rem solid #000;
 
             .titleBottomDiv {
                 font-size: 1.4rem;
@@ -527,7 +528,7 @@ const fansList = (account: string, from: string) => {
     }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1200px) {
 
     .userInfo {
         flex-direction: column;
@@ -539,8 +540,7 @@ const fansList = (account: string, from: string) => {
     }
 }
 
-
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 800px) {
     .userInfo {
         .moreInfo {
             .title {

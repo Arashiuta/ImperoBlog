@@ -644,35 +644,31 @@ const topArticle = async () => {
 
 
 @media screen and (max-width: 1200px) {
+    .coverImg {
+        width: 90%;
+    }
 
     .articleMd {
-        margin: 0;
-        width: 100%;
+        margin: 0 auto;
+        width: 90%;
     }
 }
 
 
 @media screen and (max-width: 800px) {
+    .coverImg {
+        width: 100%;
+    }
 
     .articleMd {
-        margin: 0;
         width: 100%;
-
-
-        .catalog {
-            display: none;
-        }
 
         .contaier {
             width: 100%;
+        }
 
-            .mdTextTop {
-                width: 100%;
-            }
-
-            .editor {
-                margin-right: 3rem;
-            }
+        .catalog {
+            display: none;
         }
     }
 }

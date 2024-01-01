@@ -7,7 +7,7 @@
             <span>编辑文章</span>
         </div>
         <div class="ediotr">
-            <md-editor v-model="theEditor.mdContent" style="height: 80rem ;" @onUploadImg="onUploadImg" />
+            <md-editor v-model="theEditor.content" style="height: 80rem ;" @onUploadImg="onUploadImg" />
         </div>
         <div class="submit">
             <div @click="sendEditor">提交修改</div>
@@ -22,7 +22,6 @@ import MdEditor from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
 import useAxios from '@/hooks/axios/axios'
 import { useStore } from '@/store/count'
-import qs from "qs";
 const pinia = useStore()
 const route = useRoute()
 const router = useRouter()
@@ -30,7 +29,7 @@ const router = useRouter()
 const contentId = route.query.id
 //更新后的文章
 const theEditor = reactive({
-    mdContent: '',
+    content: '',
 })
 //请求过来要修改的文章
 const { data: resArticle } = await useAxios.get('/getidarticle', {
@@ -38,7 +37,7 @@ const { data: resArticle } = await useAxios.get('/getidarticle', {
         id: contentId
     }
 })
-theEditor.mdContent = resArticle.data.content
+theEditor.content = resArticle.data.content
 //md上传图片
 const onUploadImg = async (files: any, callback: any) => {
     const res = await Promise.all(
@@ -58,15 +57,16 @@ const onUploadImg = async (files: any, callback: any) => {
             });
         })
     );
-    callback(res.map((item) => pinia.apiRoot + item.data.data));
+    callback(res.map((item) => item.data.data));
 };
 //发送修改的文章内容
 const sendEditor = async () => {
     const sendEditro = toRaw(theEditor)
-    const { data: res } = await useAxios.post('/articleeditor', qs.stringify({
+    const postData = {
         id: contentId,
-        data: sendEditro
-    }))
+        info: sendEditro
+    }
+    const { data: res } = await useAxios.post('/articleeditor', postData)
     if (res.status === 0) {
         alert('修改成功')
         router.replace({
@@ -87,7 +87,7 @@ const sendEditor = async () => {
     margin: 0 auto;
     border: .1rem solid var(--gray-sahdow);
     border-radius: .5rem;
-    background-color: var(--backgeound-color);
+    background-color: var(--white-background-color);
 
     .title {
         font-size: 2.5rem;

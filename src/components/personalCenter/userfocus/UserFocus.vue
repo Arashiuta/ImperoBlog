@@ -276,11 +276,17 @@ const pushRoute = (tag: number) => {
     }
 }
 
-@media screen and (max-width: 800px) {
-
+@media screen and (max-width: 1050px) {
     .userfocus-container {
         width: 100%;
-        margin-top: 8rem;
+
+        .unserInfoBox {
+            width: 100%;
+        }
+
+        .listBox {
+            width: 100%;
+        }
     }
 }
 </style>

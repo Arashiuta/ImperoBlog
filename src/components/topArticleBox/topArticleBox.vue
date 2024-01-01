@@ -98,7 +98,6 @@ if (reContent.length > sliceTextCount) {
 
 <style scoped lang="less">
 .topArticleBox-container {
-    height: 35rem;
     display: flex;
     background-color: #84c4d4;
     margin-bottom: 1rem;
@@ -232,6 +231,13 @@ if (reContent.length > sliceTextCount) {
                 }
             }
         }
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .topArticleBox-container {
+        display: flex;
+        flex-direction: column;
     }
 }
 </style>

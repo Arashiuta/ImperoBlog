@@ -1,42 +1,40 @@
 <template>
     <div class="chat-container">
         <!-- 左侧公告和房间 -->
-        <div class="rooms">
-            <!-- 分割线 -->
-            <div class="roomsListBox">
-                <!-- 房间列表标题 -->
-                <div
-                    style="display: flex;justify-content: space-between;align-items: center;box-sizing: border-box;padding: 0 1rem;">
-                    <span style="font-size: 1.2rem;">房间列表</span>
-                    <span style="font-weight: 700;font-size: 1.5rem;cursor: pointer;" @click="addRoom">+</span>
-                </div>
-                <div v-if="addNewRoom" class="addRoomBox">
-                    <el-input v-model="inputNewRoom" size="small" maxlength="8" minlength="1"
-                        :input-style="{ marginBottom: '.2rem' }" placeholder="添加房间" :show-word-limit="true" />
-                    <button
-                        style="background-color: #fff; padding:  .1rem .8rem;cursor: pointer;margin-right: 1rem;border-radius: 1rem;"
-                        @click="cancleAddRoom">取消</button>
-                    <button
-                        style="background-color: var(--special-font-color);color: #fff;padding:.1rem .8rem;cursor: pointer;border-radius: 1rem;"
-                        @click="setNewRoom">确定</button>
-                </div>
-                <!-- 房间列表 -->
-                <div class="roomsList">
-                    <router-link :class="`roomsItem ${route.query.name === item.name ? 'routerLinkActive' : ''}`"
-                        v-for="item in allRooms" :key="item.id" :to="{ path: '/chat', query: { name: item.name } }"
-                        @click="clickRoomLog(item.name)">
-                        <span>{{ item.name }}</span>
-                        <el-popconfirm title="确定要删除房间？" @confirm="delRoom(item.name)">
-                            <template #reference>
-                                <button class="delBtn">
-                                    <svg class="icon" aria-hidden="true">
-                                        <use xlink:href="#icon-shanchu"></use>
-                                    </svg>
-                                </button>
-                            </template>
-                        </el-popconfirm>
-                    </router-link>
-                </div>
+        <!-- 分割线 -->
+        <div class="roomsListBox">
+            <!-- 房间列表标题 -->
+            <div
+                style="display: flex;justify-content: space-between;align-items: center;box-sizing: border-box;padding: 0 1rem;">
+                <span style="font-size: 1.2rem;">房间列表</span>
+                <span style="font-weight: 700;font-size: 1.5rem;cursor: pointer;" @click="addRoom">+</span>
+            </div>
+            <div v-if="addNewRoom" class="addRoomBox">
+                <el-input v-model="inputNewRoom" size="small" maxlength="8" minlength="1"
+                    :input-style="{ marginBottom: '.2rem' }" placeholder="添加房间" :show-word-limit="true" />
+                <button
+                    style="background-color: #fff; padding:  .1rem .8rem;cursor: pointer;margin-right: 1rem;border-radius: 1rem;"
+                    @click="cancleAddRoom">取消</button>
+                <button
+                    style="background-color: var(--special-font-color);color: #fff;padding:.1rem .8rem;cursor: pointer;border-radius: 1rem;"
+                    @click="setNewRoom">确定</button>
+            </div>
+            <!-- 房间列表 -->
+            <div class="roomsList">
+                <router-link :class="`roomsItem ${route.query.name === item.name ? 'routerLinkActive' : ''}`"
+                    v-for="item in allRooms" :key="item.id" :to="{ path: '/chat', query: { name: item.name } }"
+                    @click="clickRoomLog(item.name)">
+                    <span>{{ item.name }}</span>
+                    <el-popconfirm title="确定要删除房间？" @confirm="delRoom(item.name)">
+                        <template #reference>
+                            <button class="delBtn">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-shanchu"></use>
+                                </svg>
+                            </button>
+                        </template>
+                    </el-popconfirm>
+                </router-link>
             </div>
         </div>
         <!-- 中间聊天区域 -->
@@ -210,61 +208,60 @@ const goPersonalCenter = (item: any) => {
     margin: 0 auto;
     background-color: #2f3235;
     color: #fff;
-    display: flex;
+    display: grid;
+    grid-template-columns: 15rem 1fr 16rem;
     border-radius: 1rem;
 
-    .rooms {
-        width: 15rem;
 
-        .roomsListBox {
+    .roomsListBox {
+        display: flex;
+        flex-direction: column;
+
+        .roomsList {
             display: flex;
             flex-direction: column;
+            position: relative;
+            overflow-y: scroll;
 
-
-            .roomsList {
-                display: flex;
-                flex-direction: column;
+            .roomsItem {
+                box-sizing: border-box;
+                padding: .6rem;
+                margin: .2rem 0;
+                border-radius: .5rem;
+                transition: all .3s;
+                color: #fff;
                 position: relative;
 
-                .roomsItem {
-                    box-sizing: border-box;
-                    padding: .6rem;
-                    margin: .2rem 0;
-                    border-radius: .5rem;
-                    transition: all .3s;
+                &:hover {
+                    cursor: pointer;
+                    background-color: var(--chat-gray-back);
+                }
+
+                .delBtn {
+                    position: absolute;
+                    top: 50%;
+                    right: 5%;
+                    transform: translateY(-50%);
                     color: #fff;
-                    position: relative;
+                    background-color: transparent;
 
                     &:hover {
                         cursor: pointer;
-                        background-color: var(--chat-gray-back);
-                    }
-
-                    .delBtn {
-                        position: absolute;
-                        top: 50%;
-                        right: 5%;
-                        transform: translateY(-50%);
-                        color: #fff;
-                        background-color: transparent;
-
-                        &:hover {
-                            cursor: pointer;
-                            color: red;
-                        }
+                        color: red;
                     }
                 }
-
             }
+
         }
     }
 
+
     .main {
-        flex: 1;
+        overflow-y: scroll;
+        height: 100%;
     }
 
     .onlineList {
-        width: 16rem;
         overflow-y: auto;
         box-sizing: border-box;
         padding: .5rem;
@@ -285,5 +282,27 @@ const goPersonalCenter = (item: any) => {
 
 .routerLinkActive {
     background-color: var(--chat-gray-back);
+}
+
+@media screen and (max-width: 1050px) {
+    .chat-container {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .chat-container {
+        grid-template-columns: none;
+        grid-template-rows: 10rem 1fr;
+
+        .roomsListBox {
+            overflow-y: scroll;
+        }
+
+        .onlineList {
+            display: none;
+        }
+    }
+
 }
 </style>

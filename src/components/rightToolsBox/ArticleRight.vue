@@ -2,15 +2,15 @@
     <div class="articleRight">
         <div class="randomArticle">
             <div class="randomArticleTitle">
-                <div class="title">
+                <div class="title" @click="refreshRandomArticle">
                     <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-suiji"></use>
+                        <use xlink:href="#icon-shuaxin"></use>
                     </svg>
                     <div>随机文章</div>
                 </div>
                 <span></span>
             </div>
-            <div class="randomArticleContent">
+            <div class="randomArticleContent" :key="refreshDom">
                 <RandomArticle v-for="item in listArr" :key="item.id" :article="item" class="randomArticlerrr">
                 </RandomArticle>
             </div>
@@ -79,16 +79,26 @@ const { data: tags } = await useAxios.get('/gettags')
 const allTags = tags.data
 
 //随机挑选5个文章出来组成数组用来循环随即文章组件
-let listArr = new Array  //准备一个存放文章的空数组
+const refreshDom = ref(0)  //刷新dom
+let listArr = ref(new Array)  //准备一个存放文章的空数组
 let randomNum = new Array  //存放随机数的数组
-while (listArr.length < randomNunMin) {
-    const getNum = Math.floor(Math.random() * list.length)
-    if (randomNum.indexOf(getNum) === -1) { //如果抽出来的数字在随机数数组里面不存在
-        randomNum.push(getNum)  //放到随机数数组里面
-        listArr.push(list[getNum])  //拿到那个随机数的对应的文章
-    } else {
-        continue
+const getRandomList = () => {
+    while (listArr.value.length < randomNunMin) {
+        const getNum = Math.floor(Math.random() * list.length)
+        if (randomNum.indexOf(getNum) === -1) { //如果抽出来的数字在随机数数组里面不存在
+            randomNum.push(getNum)  //放到随机数数组里面
+            listArr.value.push(list[getNum])  //拿到那个随机数的对应的文章
+        } else {
+            continue
+        }
     }
+}
+getRandomList()
+// 刷新随机文章
+const refreshRandomArticle = () => {
+    listArr.value = []
+    randomNum = []
+    getRandomList()
 }
 
 type Tag = {
@@ -110,6 +120,9 @@ const quickTag = (tag: Tag) => {
 const { data: message } = await useAxios.get('/getmessages')
 const messageLists = message.data
 const messageList = messageLists.reverse().slice(0, 7)  //展示七条留言
+
+
+
 
 </script>
 
@@ -256,10 +269,28 @@ const messageList = messageLists.reverse().slice(0, 7)  //展示七条留言
         font-size: 1.8rem;
 
         .title {
+            &:hover {
+                cursor: pointer;
+
+                .icon {
+                    transition: all .5s;
+                    transform: rotateZ(360deg);
+                    color: var(--special-font-color);
+                }
+            }
+        }
+
+
+
+        .title {
             display: flex;
             align-items: center;
             justify-content: flex-start;
             margin-bottom: .5rem;
+
+            .icon {
+                font-size: 2.5rem;
+            }
 
             div {
                 margin-left: .5rem;

@@ -198,7 +198,7 @@ const updataPushPage = (val: number) => {
 
 .personalCenrer {
     width: 70%;
-    margin: 4.8rem auto;
+    margin: 0 auto;
     border-radius: 1rem;
     overflow: hidden;
     background-color: var(--white-background-color);
@@ -220,6 +220,13 @@ const updataPushPage = (val: number) => {
     .userFunction {
         box-sizing: border-box;
         padding: 1rem;
+    }
+}
+
+@media screen and (max-width: 1050px) {
+    .personalCenrer {
+        width: 100%;
+        border: none;
     }
 }
 

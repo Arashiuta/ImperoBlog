@@ -40,7 +40,6 @@
 import { ref, toRaw, reactive, onMounted } from 'vue'
 import useAxios from '@/hooks/axios/axios'
 import { ElMessage } from 'element-plus'
-import qs from 'qs'
 import { ChatLog, ChatLogBox } from '@/hooks/Types/types'
 import { useStore } from '@/store/count'
 import { socket } from '@/hooks/socket/socket'
@@ -249,6 +248,12 @@ const goPersonalCenter = (account: any) => {
                 background-color: var(--special-font-color);
             }
         }
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .el-divider--horizontal {
+        display: none;
     }
 }
 </style>

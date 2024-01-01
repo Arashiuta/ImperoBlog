@@ -1,33 +1,31 @@
 <template>
     <div class="container-more">
-        <div class="middle">
-            <div class="head">
-                <div class="hedaImg">
-                    <img :src="myInfo.headImg" alt="headImg">
-                </div>
-                <h1>你好</h1>
-                <h2>这里是{{ myInfo.nickName }}</h2>
+        <div class="head">
+            <div class="hedaImg">
+                <img :src="myInfo.headImg" alt="headImg">
             </div>
-            <div class="info">
-                <!-- 随便写什么 -->
-                <p>欢迎光临我的博客网站,这里是49年入国军(转码)人</p>
-                <p>自学的半吊子前端,勉强能用</p>
-                <p>这个博客是学完vue3搞的,缺乏经验,算是第一个正经项目</p>
-                <p>修修补补,变成了现在这个样子</p>
-                <p>喜欢的话可以去github点个星星</p>
-                <p>希望明天能变好</p>
-                <p>greatings</p>
-            </div>
-            <div class="bottom">
-                <p>
-                    仓库地址: <a href="https://github.com/1209058433/ImperoBlog"
-                        target="_blank">https://github.com/1209058433/ImperoBlog</a>
-                </p>
-                <p>愿君颜悦 常健常见</p>
-                <div class="image">
-                    <img src="@/imgs/kewei.jpg" alt="">
-                    <img src="@/imgs/laffy.jpg" alt="">
-                </div>
+            <h1>你好</h1>
+            <h2>这里是{{ myInfo.nickName }}</h2>
+        </div>
+        <div class="info">
+            <!-- 随便写什么 -->
+            <p>欢迎光临我的博客网站,这里是49年入国军(转码)人</p>
+            <p>自学的半吊子前端,勉强能用</p>
+            <p>这个博客是学完vue3搞的,缺乏经验,算是第一个正经项目</p>
+            <p>修修补补,变成了现在这个样子</p>
+            <p>喜欢的话可以去github点个星星</p>
+            <p>希望明天能变好</p>
+            <p>greatings</p>
+        </div>
+        <div class="bottom">
+            <p>
+                仓库地址: <a href="https://github.com/1209058433/ImperoBlog"
+                    target="_blank">https://github.com/1209058433/ImperoBlog</a>
+            </p>
+            <p>愿君颜悦 常健常见</p>
+            <div class="image">
+                <img src="@/imgs/kewei.jpg" alt="">
+                <img src="@/imgs/laffy.jpg" alt="">
             </div>
         </div>
     </div>
@@ -102,81 +100,79 @@ window.addEventListener('keyup', key => {
 
 <style scoped lang="less">
 .container-more {
-    width: 70%;
-    margin: 1rem auto;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+    min-height: 100vh;
+    margin: 0 auto;
+    border-radius: .6rem;
+    background-color: #fff;
+    border-radius: 1rem;
 
-    .middle {
-        flex: 1;
+
+    .head {
+        width: 100%;
         display: flex;
-        min-height: 100vh;
         flex-direction: column;
-        border-radius: .6rem;
-        background-color: #fff;
-        border-radius: 1rem;
-        margin-right: 1rem;
+        align-items: center;
+        padding: 2rem 0;
 
-        .head {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem 0;
+        .hedaImg {
+            width: 15rem;
+            height: 15rem;
+            overflow: hidden;
+            border-radius: 50%;
 
-            .hedaImg {
-                width: 15rem;
-                height: 15rem;
-                overflow: hidden;
-                border-radius: 50%;
-
-                img {
-                    width: 100%;
-                }
-            }
-
-            h1 {
-                font-size: 3rem;
-            }
-
-            h2 {
-                font-size: 2rem;
+            img {
+                width: 100%;
             }
         }
 
-        .info {
-            p {
-                font-weight: 600;
-                font-size: 1.5rem;
-                text-align: center;
-            }
+        h1 {
+            font-size: 3rem;
         }
 
-        .bottom {
-            margin: 2rem;
-
-            p {
-                font-size: 1.5rem;
-                font-weight: 600;
-                text-align: center;
-                margin: 1rem;
-            }
-
-            .image {
-                display: flex;
-                justify-content: space-around;
-
-                img {
-                    width: 40rem;
-                }
-            }
+        h2 {
+            font-size: 2rem;
         }
     }
+
+    .info {
+        p {
+            font-weight: 600;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+    }
+
+    .bottom {
+        margin: 2rem;
+
+        p {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            margin: 1rem;
+        }
+
+        .image {
+            width: 100%;
+            display: flex;
+
+            img {
+                width: 45%;
+                flex: 1;
+            }
+
+        }
+    }
+
 }
 
-@media only screen and (max-width: 1300px) {
+@media only screen and (max-width: 1050px) {
     .container-more {
         width: 100%;
-        border: none;
     }
 }
 </style>
