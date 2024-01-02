@@ -3,9 +3,6 @@
     <!-- 导航栏 -->
     <Nav></Nav>
     <router-view></router-view>
-    <!-- <BtnBox @click="loadChatClient"></BtnBox>
-    <div class="chatMask" v-if="openChat"></div>
-    <Chatclient v-if="openChat"></Chatclient> -->
     <Foot></Foot>
   </div>
 </template>
@@ -16,7 +13,8 @@ import { ref, onMounted } from 'vue'
 import Nav from "@/components/Nav/Nav.vue";
 import { useStore } from './store/count'
 import Foot from '@/components/foot/foot.vue'
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const pinia = useStore()
 
 onMounted(() => {
@@ -37,13 +35,18 @@ const loadChatClient = () => {
   openChat.value = !openChat.value
 }
 
-//随机图片背景（已弃用）
-//这个时候使用封装过的useAxios会报错pinia未安装，所以使用未封装的axios发送请求
-// 不过可以使用pinia的baseurl，并没有多出一个步骤来，没有不良影响
-// axios.get(`${pinia.apiRoot}/api/getcover`).then((res) => {
-//   const body = document.querySelector('body') as HTMLElement
-//   body.style.backgroundImage = `url(${pinia.apiRoot + res.data.coverUrl})`
-// })
+//判断登录凭证
+const tokenPwd = localStorage.getItem('userAccount')
+if (tokenPwd) {
+  const token = JSON.parse(window.atob(tokenPwd))
+  const nowTime = Math.floor(new Date().getTime() / 1000 / 60 / 60)  //现在的时间戳（对应token中存的格式，要换成小时）
+  const tokenTime = token.time
+  if (!token.time || nowTime - tokenTime > 3) {  //时间大于3小时，就算过期了
+    alert("登录凭证过期，请重新登录")
+    localStorage.removeItem('userAccount')
+    pinia.sessionInfo = ''
+  }
+}
 
 </script>
 

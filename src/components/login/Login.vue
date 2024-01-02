@@ -141,10 +141,12 @@ const login = async () => {
     if (res.status === 2) {
         alert('用户名不存在')
     } else if (res.status === 0) {
-        //session里面存上登录的account
+        //token里面存上登录的account
+        const time = Math.floor(new Date().getTime() / 1000 / 60 / 60)  //现在登录的时间的时间戳(小时)
         const accountInfo = {
             account: res.data.account,
             root: res.data.root,
+            time: time
         }
         // sessionStorage
         localStorage.setItem('userAccount', window.btoa(JSON.stringify(accountInfo)))
