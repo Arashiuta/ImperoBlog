@@ -2,7 +2,7 @@
     <div class="container">
         <div class="loginImgBox">
             <div class="loginImg">
-                <img src="@/imgs/loginBg.webp" alt="loginImg">
+                <img src="@/imgs/loginBg.jpg" alt="loginImg">
             </div>
         </div>
 
@@ -31,7 +31,8 @@
             </div>
             <div class="message">
                 <div>登录后可在留言板块发布留言</div>
-                <img src="@/imgs/logo.png" alt="logo">
+                <div>可以发布文章</div>
+                <div>可加入在线聊天室</div>
             </div>
         </div>
 
@@ -82,7 +83,6 @@
                 <div>用户名只能输入小写字母和数字</div>
                 <div>密码只能输入大小写字母、数字、下划线</div>
                 <div>用户名和密码都要至少6位</div>
-                <img src="@/imgs/logo.png" alt="logo">
             </div>
         </div>
     </div>
@@ -245,7 +245,14 @@ const updateNickName = async () => {
         align-items: center;
 
         .loginImg {
+            margin-top: 2rem;
+            width: 80vw;
+            height: 80vh;
+
             img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
                 border-radius: 2rem;
             }
         }

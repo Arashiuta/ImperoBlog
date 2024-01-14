@@ -69,7 +69,8 @@
     <!-- v-else -->
     <div v-show="media2" class="media2">
         <div class="userHead">
-            <p v-if="ifLog" @click="clickLogo">帝国睡眼惺忪</p>
+            <!-- <p v-if="ifLog" @click="clickLogoPhone">帝国睡眼惺忪</p> -->
+            <img src="@/imgs/logo.png" alt="" v-if="ifLog" @click="clickLogoPhone">
             <NavUserInfo class="welcome" v-else @click="goPersonalCenter"></NavUserInfo>
         </div>
         <div @click="openDrawer">
@@ -168,6 +169,9 @@ const goPage = (routerName: string) => {
 
 //点击logo
 const clickLogo = () => {
+    router.push('/index')
+}
+const clickLogoPhone = () => {
     router.push('/login')
 }
 
@@ -202,7 +206,8 @@ const clickLogo = () => {
                 align-items: center;
                 width: 15rem;
                 height: 4.5rem;
-                margin-right: 2rem;
+                margin-right: 1rem;
+                margin-top: 1rem;
                 cursor: pointer;
 
                 img {
@@ -294,6 +299,11 @@ const clickLogo = () => {
         .welcome {
             width: 6rem;
             height: 6rem;
+        }
+
+        img {
+            margin-top: .5rem;
+            height: 5rem;
         }
     }
 

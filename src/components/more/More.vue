@@ -4,17 +4,16 @@
             <div class="hedaImg">
                 <img :src="myInfo.headImg" alt="headImg">
             </div>
-            <h1>你好</h1>
-            <h2>这里是{{ myInfo.nickName }}</h2>
+            <h1>你好呀</h1>
         </div>
         <div class="info">
             <!-- 随便写什么 -->
-            <p>欢迎光临我的博客网站,这里是49年入国军(转码)人</p>
-            <p>自学的半吊子前端,勉强能用</p>
+            <p>欢迎光临我的博客网站</p>
+            <p>这是vue3 + springboot全栈项目</p>
             <p>这个博客是学完vue3搞的,缺乏经验,算是第一个正经项目</p>
             <p>修修补补,变成了现在这个样子</p>
             <p>喜欢的话可以去github点个星星</p>
-            <p>希望明天能变好</p>
+            <p>希望明天能更好</p>
             <p>greatings</p>
         </div>
         <div class="bottom">
@@ -63,9 +62,6 @@ const gsapAnimation = () => {
     }).from('.head h1', {
         y: 20,
         opacity: 0,
-    }).from('.head h2', {
-        y: 20,
-        opacity: 0,
     }).from('.info p', {
         y: 20,
         stagger: 0.1,
@@ -73,7 +69,7 @@ const gsapAnimation = () => {
     }).from('.bottom', {
         y: 20,
         opacity: 0,
-        delay: 0.5
+        delay: 0.3
     })
 }
 
@@ -116,7 +112,7 @@ window.addEventListener('keyup', key => {
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 2rem 0;
+        margin-top: 2rem;
 
         .hedaImg {
             width: 15rem;
@@ -131,10 +127,6 @@ window.addEventListener('keyup', key => {
 
         h1 {
             font-size: 3rem;
-        }
-
-        h2 {
-            font-size: 2rem;
         }
     }
 
