@@ -206,11 +206,11 @@ const clickLogoPhone = () => {
                 align-items: center;
                 width: 15rem;
                 height: 4.5rem;
-                margin-right: 1rem;
                 margin-top: 1rem;
                 cursor: pointer;
 
                 img {
+                    transform: scale(0.8);
                     width: 100%;
                     object-fit: cover;
                 }
