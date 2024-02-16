@@ -11,12 +11,12 @@
         </div>
         <div class="title">
             <label for="title">标题:</label>
-            <el-input maxlength="30" v-model="articleWrite.articleTitle" placeholder="输入文章标题" show-word-limit type="text"
-                name="title" />
+            <el-input @input="saveEditor" maxlength="30" v-model="articleWrite.articleTitle" placeholder="输入文章标题"
+                show-word-limit type="text" name="title" />
         </div>
         <div class="tag">
             <p>选择标签:</p>
-            <div>
+            <div @click="saveEditor">
                 <span class="labelTag no-choose" @click="chooseTag(tag.content)" v-for="tag in allTags" :key="tag.id">{{
                     tag.content
                 }}</span>
@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="article">
-            <md-editor v-model="articleWrite.articleText" :showToolbarName="true" style="height:60rem"
+            <md-editor @input="saveEditor" v-model="articleWrite.articleText" :showToolbarName="true" style="height:60rem"
                 @onUploadImg="onUploadImg" :preview="false" :showCodeRowNumber="true" placeholder="在这里输入...">
             </md-editor>
         </div>
@@ -76,6 +76,7 @@ import useAxios from '@/hooks/axios/axios'
 import { ArticleWrite } from "@/hooks/Types/types"
 import { useRouter } from "vue-router";
 import { useStore } from "@/store/count";
+import { debonce } from '@/hooks/debonceAndThrottle/debonceAndThrottle'
 
 const pinia = useStore()
 const router = useRouter()
@@ -84,17 +85,28 @@ const router = useRouter()
 const { data: res } = await useAxios.get('/gettags')
 const allTags = res.data
 
-
 const token = window.atob(localStorage.getItem('userAccount')!)
 const tokenInfo = JSON.parse(token)
 //编辑文章里面的文章内容
-const articleWrite: ArticleWrite = reactive({
+let articleWrite: ArticleWrite = reactive({
     articleTitle: '',
     articleText: '',
     //已经选择的标签
     articleTags: [],
     author: tokenInfo.account
 })
+
+
+// 如果有草稿就同步一下草稿
+const session = sessionStorage.getItem('articleDraft')
+if (session) {
+    const draft = JSON.parse(session)
+    articleWrite.articleTitle = draft.articleTitle
+    articleWrite.articleText = draft.articleText
+    articleWrite.articleTags = draft.articleTags
+    articleWrite.author = draft.author
+}
+
 
 //选中筛选tag
 const chooseTag = (tagName: string) => {
@@ -117,6 +129,7 @@ const InputRef = ref<InstanceType<typeof ElInput>>()
 
 const handleClose = (tag: string) => {
     articleWrite.articleTags.splice(articleWrite.articleTags.indexOf(tag), 1)
+    saveEditor()
 }
 
 const showInput = () => {
@@ -135,6 +148,7 @@ const handleInputConfirm = () => {
             alert('标签数量达到上限')
         }
     }
+    saveEditor()
     inputVisible.value = false
     inputValue.value = ''
 }
@@ -180,7 +194,7 @@ const ifUpload = ref(true)  //提交按钮点击后换位提交中的按钮
 const uploadCover = ref<UploadInstance>()
 let coverNum = 0  //选择上传的封面数量
 const biggerCover = ref(false)  //封面大小是否超出了限制
-const limitSize = 5 * 1024 * 1024   //封面大小限制5MB
+const limitSize = 3 * 1024 * 1024   //封面大小限制3MB
 let coverFile: any;
 const coverTypeArr = [
     'image/jpeg',
@@ -188,6 +202,12 @@ const coverTypeArr = [
     'image/png',
     'image/webp',
 ]
+
+//保存草稿（防抖,避免一直触发）
+const saveEditor = debonce(() => {
+    const draft = JSON.stringify(articleWrite)
+    sessionStorage.setItem('articleDraft', draft)
+}, 500)
 
 //封面上传成功的钩子
 type Status = {
@@ -297,6 +317,7 @@ const elUploadFunc = (domParam: any) => {
         ifUpload.value = true
     })
 }
+
 
 </script>
 

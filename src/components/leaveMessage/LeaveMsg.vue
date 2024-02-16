@@ -9,7 +9,7 @@
                 <div class="userHead">
                     <img :src="messageHeadImg" alt="default">
                 </div>
-                <el-input v-model="writeMessage" :autosize="{ minRows: 3, maxRows: 6 }" type="textarea"
+                <el-input @input="saveEditor" v-model="writeMessage" :autosize="{ minRows: 3, maxRows: 6 }" type="textarea"
                     placeholder="写下一条留言吧" class="userWrite" resize="none" maxlength="120" show-word-limit />
                 <div class="sendBtn" @click="sendMessage">
                     <span>发布</span>
@@ -51,6 +51,7 @@ import { useStore } from '@/store/count'
 import { ElMessage } from 'element-plus'
 import Loading from "@/components/loading/loading2.vue";
 import gsap from 'gsap'
+import { debonce } from '@/hooks/debonceAndThrottle/debonceAndThrottle'
 
 const leaveMessage = defineAsyncComponent(() => import('@/components/leaveMessage/leaveMessage.vue'))
 const Right = defineAsyncComponent(() => import('@/components/rightToolsBox/ArticleRight.vue'))
@@ -65,6 +66,18 @@ onMounted(() => {
         x: -100
     })
 })
+
+// 如果有草稿就同步一下草稿
+const leaveMessageDraftSession = sessionStorage.getItem('leaveMessageDraft')
+if (leaveMessageDraftSession) {
+    writeMessage.value = leaveMessageDraftSession
+}
+
+//保存草稿（防抖,避免一直触发）
+const saveEditor = debonce(() => {
+    const draft = writeMessage.value
+    sessionStorage.setItem('leaveMessageDraft', draft)
+}, 500)
 
 let messageHeadImg = ref()
 //检查是否登录

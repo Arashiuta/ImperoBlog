@@ -250,9 +250,9 @@ const handleClose = (tagName: string) => {
                 .searchIpt {
                     box-sizing: border-box;
                     padding: .5rem;
-                    border: 2px solid #000;
+                    border: .2rem solid #919191;
                     outline: none;
-                    border-radius: 1rem;
+                    border-radius: .6rem;
                     font-size: 1.2rem;
                 }
 
@@ -264,7 +264,7 @@ const handleClose = (tagName: string) => {
                     align-items: center;
                     font-size: 1.2rem;
                     color: #fff;
-                    border-radius: 1rem;
+                    border-radius: .6rem;
                     margin-left: .5rem;
                     background-color: var(--special-font-color);
                     cursor: pointer;
