@@ -1,7 +1,7 @@
 <template>
     <Transition @enter="gsapEnterCover" :css="false">
         <div class="coverImg" v-if="ifCover">
-            <el-image :src="browseArticle.cover" fit="cover" />
+            <img :src="browseArticle.cover" alt="">
             <div class="mask">
                 <div class="title">{{ browseArticle.title }}</div>
                 <div class="author" @click="goToPersonalCenter">
@@ -23,60 +23,25 @@
     <div class="articleMd">
         <div class="contaier">
             <div class="mdTextTop">
-                <div class="info">
-                    <div class="editor">
-                        <svg class="icon" aria-hidden="true" @click="ifEditor = !ifEditor">
-                            <use xlink:href="#icon-gengduo2"></use>
-                        </svg>
-                        <div class="moreEditor" v-if="ifEditor">
-                            <div class="moreEditor2"></div>
-                            <ul>
-                                <li @click="topArticle">置顶</li>
-                                <li @click="openEditor">编辑</li>
-                                <li @click="openDel">删除</li>
-                            </ul>
-                        </div>
-                        <Teleport to="body">
-                            <el-dialog v-model="dialogFormVisible" title="删除文章">
-                                <div style="margin-bottom: 2rem ;">如果要删除此文章，请输入以下验证码数字：{{ randomNum }}</div>
-                                <el-input v-model="code" placeholder="Please input" />
-                                <template #footer>
-                                    <span class="dialog-footer">
-                                        <el-button type="primary" @click="dialogFormVisible = false">取消</el-button>
-                                        <el-button @click="trueDel">确定</el-button>
-                                    </span>
-                                </template>
-                            </el-dialog>
-                        </Teleport>
+                <div class="editor">
+                    <button class="option" @click="expandEdiorBox">编辑</button>
+                    <div class="ediorBox">
+                        <button @click="topArticle">置顶</button>
+                        <button @click="openEditor">编辑</button>
+                        <button @click="openDel">删除</button>
                     </div>
-                    <!-- 如果没有封面 -->
-                    <div class="noCover" v-if="!ifCover">
-                        <div class="title">{{ browseArticle.title }}</div>
-                        <div class="author" @click="goToPersonalCenter">
-                            <div class="head">
-                                <img :src="authorInfo.headImg" alt="head">
-                            </div>
-                            <div class="nickName">{{ authorInfo.nickName }}</div>
-                        </div>
-                        <div class="time">
-                            <svg class="icon" aria-hidden="true">
-                                <use xlink:href="#icon-rili"></use>
-                            </svg>
-                            <span>{{ browseArticle.time }}</span>
-                            <span class="lastUpdataTime"><span>最后修改:</span>{{ browseArticle.lastUpdataTime }}</span>
-                        </div>
-                        <div>
-                            <span class="labelTag" v-for="tag in browseArticle.tag" :key="tag">{{ tag }}</span>
-                        </div>
-                    </div>
-                    <!--  -->
-                    <div class="oneSentence">
-                        <div class="introduction">
-                            <p>引言:</p>
-                            <span>{{ browseArticle.oneSentence }}</span>
-                        </div>
-                        <div class="border"></div>
-                    </div>
+                    <Teleport to="body">
+                        <el-dialog v-model="dialogFormVisible" title="删除文章">
+                            <div style="margin-bottom: 2rem ;">如果要删除此文章，请输入以下验证码数字：{{ randomNum }}</div>
+                            <el-input v-model="code" placeholder="Please input" />
+                            <template #footer>
+                                <span class="dialog-footer">
+                                    <el-button type="primary" @click="dialogFormVisible = false">取消</el-button>
+                                    <el-button @click="trueDel">确定</el-button>
+                                </span>
+                            </template>
+                        </el-dialog>
+                    </Teleport>
                 </div>
                 <div class="articleIndex">
                     <md-editor :showCodeRowNumber="true" editor-id="articleBrowse" v-model="browseArticle.content"
@@ -158,6 +123,24 @@ const { data: author } = await useAxios.get('/userinfo', {
 })
 const authorInfo = author.data
 
+
+//这里是文章顶部的编辑按钮，点击展开下面的抽屉
+let showEditorBox = false
+const expandEdiorBox = () => {
+    showEditorBox = !showEditorBox
+    if (showEditorBox === true) {
+        gsap.to('.ediorBox', {
+            duration: .3,
+            height: 80
+        })
+    } else {
+        gsap.to('.ediorBox', {
+            duration: .3,
+            height: 0
+        })
+    }
+}
+
 //编辑文章
 const openEditor = async () => {
     const session = localStorage.getItem('userAccount')
@@ -223,8 +206,6 @@ onMounted(() => {
 })
 
 
-//是否展开编辑
-const ifEditor = ref(false)
 //删除文章的弹出框
 const dialogFormVisible = ref(false)
 const randomNum = ref<string>()
@@ -317,7 +298,6 @@ const topArticle = async () => {
                     message: '置顶成功',
                     type: 'success',
                 })
-                ifEditor.value = !ifEditor
             } else {
                 ElMessage.error('网络错误！')
             }
@@ -332,16 +312,6 @@ const topArticle = async () => {
 </script>
 
 <style scoped lang="less">
-@keyframes ifEditor {
-    0% {
-        opacity: 0.2;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
 .coverImg {
     width: 80%;
     margin: 0 auto;
@@ -352,8 +322,10 @@ const topArticle = async () => {
     border-radius: 1rem;
     overflow: hidden;
 
-    .el-image {
+    img {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .mask {
@@ -444,149 +416,57 @@ const topArticle = async () => {
             border-radius: .5rem;
             box-shadow: .1rem .1rem .5rem var(--gray-sahdow);
 
-            .info {
-                display: flex;
-                flex-direction: column;
+            .editor {
+                .option {
+                    background-color: #f8f8f8;
+                    color: #cecece;
+                    border-radius: 10rem;
+                    width: 100%;
+                    height: 2rem;
+                    cursor: pointer;
+                    transition: all .5s;
 
-                .noCover {
-                    font-size: 1.6rem;
+                    &:hover {
+                        background-color: #f0f0f0;
+                        color: #646464;
+                    }
+                }
+
+                .ediorBox {
                     display: flex;
-                    flex-direction: column;
                     justify-content: center;
                     align-items: center;
+                    overflow: hidden;
+                    margin-top: .5rem;
+                    width: 100%;
+                    height: 0;
 
-                    .author {
-                        display: flex;
-                        align-items: center;
-                        font-size: 1.5rem;
-                        padding: 1rem 0;
+                    button {
+                        width: 9rem;
+                        height: 3rem;
+                        border-radius: .8rem;
+                        margin: 0 1rem;
+                        border: .2rem solid var(--border-line);
+                        background-color: transparent;
+                        cursor: pointer;
+                        transition: all .3s;
 
                         &:hover {
-                            cursor: pointer;
-                        }
-
-
-                        .head {
-                            width: 3.5rem;
-                            height: 3.5rem;
-                            border-radius: 50%;
-                            overflow: hidden;
-                            margin-right: 1rem;
-
-                            img {
-                                width: 100%;
-                                height: 100%;
-                                object-fit: cover;
-                            }
+                            box-shadow: 0 0 10px 0 var(--border-line);
                         }
                     }
 
-                    .title {
-                        font-size: 3rem;
-                        font-weight: 500;
-                    }
+                    :nth-child(3) {
+                        border: .2rem solid red;
 
-                    .time {
-                        margin-top: 1rem;
-                        margin-bottom: 1rem;
-
-                        .lastUpdataTime {
-                            margin-left: 2rem;
-
-                            span {
-                                color: var(--special-font-color);
-                            }
+                        &:hover {
+                            box-shadow: 0 0 10px 0 red;
                         }
                     }
                 }
 
-                .editor {
-                    position: relative;
-                    align-self: flex-end;
-                    font-size: 2.5rem;
-                    color: var(--border-line);
-                    cursor: pointer;
-                    transform-style: preserve-3d;
-
-                    .moreEditor {
-                        position: absolute;
-                        top: 3rem;
-                        left: -1rem;
-                        width: 4.5rem;
-                        background-color: rgb(231, 235, 238);
-                        border-radius: .5rem;
-                        animation: ifEditor .3s;
-
-                        .moreEditor2 {
-                            position: absolute;
-                            top: -.5rem;
-                            left: 50%;
-                            width: 1rem;
-                            height: 1rem;
-                            transform: translateX(-50%) rotateZ(45deg) translateZ(-1rem);
-                            background-color: rgb(231, 235, 238);
-                        }
-
-                        ul {
-                            width: 100%;
-                            height: 100%;
-                            display: flex;
-                            flex-direction: column;
-                            justify-content: center;
-                            align-items: center;
-
-                            li {
-                                font-size: 1.4rem;
-                                width: 100%;
-                                padding: .2rem 0;
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                transition: all .2s;
-
-
-                                &:hover {
-                                    background-color: var(--special-font-color);
-                                    color: #fff;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                .oneSentence {
-                    width: 100%;
-                    font-size: 1.4rem;
-                    padding: 2rem 0;
-
-                    .introduction {
-                        display: flex;
-                        margin-bottom: 2rem;
-
-                        p {
-                            width: 5rem;
-                            padding: 0;
-                            color: var(--special-font-color);
-                            font-size: 1.8rem;
-                            font-weight: 600;
-                        }
-
-                        span {
-                            flex: 1;
-                            padding: 0;
-                            margin-left: 1rem;
-                            font-size: 1.6rem;
-                        }
-                    }
-
-                    .border {
-                        width: 100%;
-                        height: .5rem;
-                        border-radius: 10rem;
-                        background-image: linear-gradient(to left, var(--gradient-start-one), var(--gradient-end-one));
-                    }
-                }
             }
+
         }
 
 
@@ -596,10 +476,6 @@ const topArticle = async () => {
             .mdText {
                 background-color: transparent;
             }
-        }
-
-        .mdTextBottom {
-            background-color: aquamarine;
         }
     }
 

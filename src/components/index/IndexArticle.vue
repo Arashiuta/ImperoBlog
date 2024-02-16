@@ -1,15 +1,6 @@
 <template>
     <div class="middle">
         <div class="leftFace">
-            <!-- <div class="title">
-                <div class="recently">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-zuijin"></use>
-                    </svg>
-                    <div>最近更新</div>
-                </div>
-                <BtnLearnMore class="watchMore" @click="goArticle"></BtnLearnMore>
-            </div> -->
             <!-- 置顶文章盒子 -->
             <div>
                 <Suspense>
@@ -78,12 +69,7 @@ const list = res.data
 
 //新文章在上，所以要先反过来
 const reverseList = list.reverse()
-const showList = reverseList.slice(0, 4) //限制主页显示的文章个数
-
-//查看更多文章
-// const goArticle = () => {
-//     router.push('/article')
-// }
+const showList = reverseList.slice(0, 6) //限制主页显示的文章个数
 
 //请求置顶文章信息
 const { data: topRes } = await useAxios.get("/gettoparticle")

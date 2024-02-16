@@ -33,11 +33,29 @@ type ArticleWrite = {
     author: string,
 }
 
+//请求过来的文章的类型
+type Article = {
+    author: string
+    collections: Array<string>
+    comments: Array<Message>
+    content: string
+    cover: string
+    coverName: string
+    id: number
+    lastUpdataTime: string
+    mdImgName: string
+    parise: Array<string>
+    tag: Array<string>
+    time: string
+    title: string
+}
+
 
 
 export type {
     ChatLog,
     ChatLogBox,
     Message,
-    ArticleWrite
+    ArticleWrite,
+    Article
 }

@@ -159,7 +159,7 @@ const changePersonalDate = () => ifChangePersonalDate.value = !ifChangePersonalD
 //修改个人资料
 const changePersonalIntroduce = async () => {
     const newIntroduce = {
-        nickNane: userInfo.nickName ? userInfo.nickName : '',
+        nickName: userInfo.nickName ? userInfo.nickName : '',
         sex: userInfo.sex,
         eMail: userInfo.eMail ? userInfo.eMail : '',
         personalWeb: userInfo.personalWeb ? userInfo.personalWeb : '',
@@ -169,7 +169,6 @@ const changePersonalIntroduce = async () => {
     if (!newIntroduce.introduce) {
         newIntroduce.introduce = "这个人很懒，什么也没有留下..."
     }
-
 
     //获取用户账号
     const token = JSON.parse(window.atob(localStorage.getItem('userAccount')!))

@@ -59,6 +59,7 @@ import { useStore } from "@/store/count";
 import { ref, watchEffect, reactive, defineAsyncComponent } from 'vue'
 import userInfoCom from '@/components/personalCenter/userInfo.vue';
 import Loading from "@/components/loading/loading2.vue";
+import { Article } from '@/hooks/Types/types'
 const ArticleBox = defineAsyncComponent(() => import('@/components/utils/articleBox.vue'))
 
 const pinia = useStore()
@@ -77,7 +78,7 @@ const activeName = ref('first')
 //用户收藏的文章列表
 const collectionList = userInfo.collectionArticles
 //要传给articlebox组件的文章列表信息数组  收藏文章的列表
-const collectionArray = new Array
+let collectionArray: Array<Article> = new Array
 collectionList.map(async (item: string) => {
     const { data: res } = await useAxios.get('/getidarticle', {
         params: {
@@ -88,6 +89,7 @@ collectionList.map(async (item: string) => {
         collectionArray.push(res.data)
     }
 })
+collectionArray = collectionArray.reverse()
 
 //发布的文章
 const { data: list } = await useAxios.get('/pusharticlenum', {
@@ -95,8 +97,7 @@ const { data: list } = await useAxios.get('/pusharticlenum', {
         account: userInfo.account
     }
 })
-const pushArticleNum = list.data
-
+const pushArticleNum: Array<Article> = list.data.reverse()
 
 
 //分页组件分页

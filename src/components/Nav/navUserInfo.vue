@@ -172,6 +172,7 @@ const sendNewNickName = async () => {
         height: 100%;
         border-radius: 50%;
         overflow: hidden;
+        cursor: pointer;
 
         .defaultHead {
             width: 100%;

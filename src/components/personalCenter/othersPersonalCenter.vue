@@ -9,8 +9,7 @@
                 <el-tab-pane label="Ta的收藏" name="first" class="list" :lazy="true">
                     <div class="ifHave">
                         <div class="boxex">
-                            <ArticleBox v-for="item in showArticles.showArticle" :key="item.id" :info="item"
-                                class="comBoxex">
+                            <ArticleBox v-for="item in showArticles" :key="item.id" :info="item" class="comBoxex">
                             </ArticleBox>
                         </div>
                         <div class="pageInfo">
@@ -53,6 +52,7 @@ import ArticleBox from '@/components/utils/articleBox.vue';
 import Loading from "@/components/loading/loading2.vue";
 import OthersUserInfoCom from '@/components/personalCenter/othersUserInfo.vue';
 import { useRoute } from "vue-router";
+import { Article } from '@/hooks/Types/types';
 
 const pinia = useStore()
 const route = useRoute()
@@ -71,7 +71,7 @@ const activeName = ref('first')
 //用户收藏的文章列表
 const collectionList = userInfo.collectionArticles
 //要传给articlebox组件的文章列表信息数组  收藏文章的列表
-const collectionArray = new Array
+let collectionArray: Array<Article> = new Array
 collectionList.map(async (item: string) => {
     const { data: res } = await useAxios.get('/getidarticle', {
         params: {
@@ -80,6 +80,7 @@ collectionList.map(async (item: string) => {
     })
     collectionArray.push(res.data)
 })
+collectionArray = collectionArray.reverse()
 
 //发布的文章
 const { data: list } = await useAxios.get('/pusharticlenum', {
@@ -88,7 +89,7 @@ const { data: list } = await useAxios.get('/pusharticlenum', {
     }
 })
 let pushArticleNum = new Array
-pushArticleNum = [...list.data]
+pushArticleNum = [...list.data].reverse()
 
 //分页组件分页
 //请求收藏的文章列表(上面有了)
@@ -105,9 +106,7 @@ let pages = reactive<Page>({
 })
 // 当前展示页
 //不能使用let来定义reactive，这样在重新赋值的时候内存地址会变，无法实现响应式
-const showArticles = reactive({
-    showArticle: collectionArray.slice(6 * (pages.nowPage - 1), 6 * (pages.nowPage - 1) + 6)
-})
+let showArticles = ref(collectionArray.slice(6 * (pages.nowPage - 1), 6 * (pages.nowPage - 1) + 6))
 watchEffect(() => {
     //先清空一下数组，再计算页数
     pages.page = []
@@ -120,8 +119,7 @@ watchEffect(() => {
             pages.page.push(i + 1)
         }
     }
-
-    showArticles.showArticle = collectionArray.slice(6 * (pages.nowPage - 1), 6 * (pages.nowPage - 1) + 6)  //页码更新后更新显示的文章内容
+    showArticles.value = collectionArray.slice(6 * (pages.nowPage - 1), 6 * (pages.nowPage - 1) + 6)  //页码更新后更新显示的文章内容
 })
 const updataCollectionPage = (val: number) => {
     pages.nowPage = val
