@@ -7,7 +7,9 @@
             <span>编辑文章</span>
         </div>
         <div class="ediotr">
-            <md-editor v-model="theEditor.content" style="height: 80rem ;" @onUploadImg="onUploadImg" />
+            <md-editor v-model="theEditor.content" :toolbarsExclude="['quote', 'save', 'htmlPreview',]"
+                style="height: 80rem ;" @onUploadImg="onUploadImg" :showToolbarName="true" :preview="false"
+                :showCodeRowNumber="true" />
         </div>
         <div class="submit">
             <div @click="sendEditor">提交修改</div>
@@ -46,6 +48,7 @@ const onUploadImg = async (files: any, callback: any) => {
                 const form = new FormData();
                 form.append('file', file);
                 form.append("account", resArticle.data.author)
+                form.append('id', String(contentId))
                 useAxios
                     .post(pinia.apiRoot + '/api/uploadmdimg', form, {
                         headers: {
@@ -53,7 +56,9 @@ const onUploadImg = async (files: any, callback: any) => {
                         }
                     })
                     .then((res) => rev(res))
-                    .catch((error) => rej(error));
+                    .catch((error) => {
+                        alert("图片太大了")
+                    });
             });
         })
     );

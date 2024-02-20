@@ -54,7 +54,8 @@
             </div>
         </div>
         <div class="article">
-            <md-editor @input="saveEditor" v-model="articleWrite.articleText" :showToolbarName="true" style="height:60rem"
+            <md-editor @input="saveEditor" v-model="articleWrite.articleText"
+                :toolbarsExclude="['quote', 'save', 'htmlPreview',]" :showToolbarName="true" style="height:60rem"
                 @onUploadImg="onUploadImg" :preview="false" :showCodeRowNumber="true" placeholder="在这里输入...">
             </md-editor>
         </div>
@@ -169,7 +170,9 @@ const onUploadImg = async (files: any, callback: any) => {
                         }
                     })
                     .then((res) => rev(res))
-                    .catch((error) => rej(error));
+                    .catch((error) => {
+                        alert("图片太大了")
+                    });
             });
         })
     );
