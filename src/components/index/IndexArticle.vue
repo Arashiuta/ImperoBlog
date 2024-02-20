@@ -93,8 +93,6 @@ onMounted(() => {
 
 //随机诗词
 const { data: poetry } = await axios.get('https://v1.jinrishici.com/all.json')
-console.log(poetry);
-
 
 </script>
 
