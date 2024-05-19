@@ -101,7 +101,12 @@ onMounted(() => {
 });
 
 //随机诗词
+<<<<<<< HEAD
 const { data: poetry } = await axios.get("https://v1.jinrishici.com/all.json");
+=======
+const { data: poetry } = await axios.get('https://v1.jinrishici.com/all.json')
+
+>>>>>>> 67495b80a9c9bb2033bacfc1013a9a7fef8a310c
 </script>
 
 <style scoped lang="less">
