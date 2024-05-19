@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useStore = defineStore('piniaStore', {
     state: () => {
         return {
-            // apiRoot: 'http://127.0.0.1:3030',
+            // apiRoot: 'http://localhost:8080',
             // socketUrl: 'http://127.0.0.1:3032',
             apiRoot: 'https://www.impero.top:3030',
             socketUrl: 'https://www.impero.top:3031',
