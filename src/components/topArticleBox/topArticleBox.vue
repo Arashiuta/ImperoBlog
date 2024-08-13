@@ -1,5 +1,9 @@
 <template>
-  <div class="topArticleBox-container" @click="goBrowse(info.id)">
+  <div
+    class="topArticleBox-container"
+    ref="containerDom"
+    @click="goBrowse(info.id)"
+  >
     <div class="leftSide">
       <!-- coverImage -->
       <img :src="info.cover" alt="" class="coverImage" />
@@ -53,6 +57,7 @@ import { UserApi } from "@/api/index";
 import { useStore } from "@/store/count";
 import { useRouter } from "vue-router";
 import { extractMarkdownText } from "@/hooks/extractMarkdownText/extractMarkdownText";
+import { onMounted, ref } from "vue";
 
 const router = useRouter();
 const pinia = useStore();
@@ -87,6 +92,11 @@ if (reContent.length > sliceTextCount) {
 } else {
   info.content = reContent.slice(0, sliceTextCount);
 }
+
+const containerDom = ref();
+onMounted(() => {
+  containerDom.value.classList.add("enterAni");
+});
 </script>
 
 <style scoped lang="less">
@@ -234,6 +244,21 @@ if (reContent.length > sliceTextCount) {
   .topArticleBox-container {
     display: flex;
     flex-direction: column;
+  }
+}
+
+.enterAni {
+  animation: bottomToTop 0.5s ease;
+}
+
+@keyframes bottomToTop {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 </style>

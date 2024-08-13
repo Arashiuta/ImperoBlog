@@ -37,46 +37,26 @@
     </div>
 
     <div class="rightBox">
-      <Suspense>
-        <template #default>
-          <Right class="right"></Right>
-        </template>
-        <template #fallback>
-          <div class="window">
-            <Loading class="winLoad"></Loading>
-          </div>
-        </template>
-      </Suspense>
+      <Right class="right"></Right>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, defineAsyncComponent, watchEffect, onMounted } from "vue";
+import { ref, defineAsyncComponent, watchEffect } from "vue";
 import { UserApi, MessageApi } from "@/api/index";
 import { useStore } from "@/store/count";
 import { ElMessage } from "element-plus";
 import Loading from "@/components/loading/loading2.vue";
-import gsap from "gsap";
 import { debonce } from "@/hooks/debonceAndThrottle/debonceAndThrottle";
+import Right from "@/components/rightToolsBox/ArticleRight.vue";
 
 const leaveMessage = defineAsyncComponent(
   () => import("@/components/leaveMessage/leaveMessage.vue")
 );
-const Right = defineAsyncComponent(
-  () => import("@/components/rightToolsBox/ArticleRight.vue")
-);
 
 const writeMessage = ref(""); //写下的留言
 const pinia = useStore();
-
-onMounted(() => {
-  gsap.from(".container", {
-    duration: 0.5,
-    opacity: 0.2,
-    x: -100,
-  });
-});
 
 // 如果有草稿就同步一下草稿
 const leaveMessageDraftSession = sessionStorage.getItem("leaveMessageDraft");

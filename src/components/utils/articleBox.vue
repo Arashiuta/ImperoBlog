@@ -1,5 +1,9 @@
 <template>
-  <div class="articleBox-container" @click="goBrowse(info.id)">
+  <div
+    class="articleBox-container"
+    ref="containerDom"
+    @click="goBrowse(info.id)"
+  >
     <div class="cover">
       <img :src="info.cover" alt="cover" class="coverImg" />
       <div class="mask">
@@ -39,12 +43,12 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from "@/store/count";
 import { useRouter } from "vue-router";
 import { UserApi } from "@/api/index";
 import { extractMarkdownText } from "@/hooks/extractMarkdownText/extractMarkdownText";
+import { onMounted, ref } from "vue";
+
 const router = useRouter();
-const pinia = useStore();
 
 type Props = {
   info: any;
@@ -77,6 +81,11 @@ if (reContent.length > sliceTextCount) {
 } else {
   info.content = reContent.slice(0, sliceTextCount);
 }
+
+const containerDom = ref();
+onMounted(() => {
+  containerDom.value.classList.add("enterAni");
+});
 </script>
 
 <style scoped lang="less">
@@ -94,6 +103,7 @@ if (reContent.length > sliceTextCount) {
   &:hover {
     cursor: pointer;
     transform: translateY(-0.3rem);
+    box-shadow: 0.3rem 0.3rem 1rem var(--gray-light-sahdow);
   }
 
   .cover {
@@ -198,6 +208,21 @@ if (reContent.length > sliceTextCount) {
         margin-left: 1rem;
       }
     }
+  }
+}
+
+.enterAni {
+  animation: bottomToTop 0.5s ease;
+}
+
+@keyframes bottomToTop {
+  0% {
+    transform: translateY(50px);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 </style>

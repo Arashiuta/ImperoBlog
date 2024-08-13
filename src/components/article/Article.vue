@@ -107,18 +107,13 @@ const showArticle = articles.reverse();
 
 onMounted(() => {
   gsap.from(".title", {
-    duration: 0.3,
-    x: -100,
+    duration: 0.5,
+    y: -50,
     opacity: 0.2,
   });
   gsap.from(".funnel", {
-    duration: 0.3,
-    x: 100,
-    opacity: 0.2,
-  });
-  gsap.from(".list", {
-    duration: 0.3,
-    y: 100,
+    duration: 0.5,
+    y: -50,
     opacity: 0.2,
   });
 });

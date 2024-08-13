@@ -19,13 +19,6 @@
           </template>
         </Suspense>
       </div>
-      <div class="title">
-        <div class="poetry">
-          <span>{{ poetry.content }}</span>
-          &nbsp;&nbsp;
-          <span>{{ `——${poetry.author}《${poetry.origin}》` }}</span>
-        </div>
-      </div>
       <!-- 首页文章盒子 -->
       <div class="articleBoxes">
         <!-- 使用了异步加载并且加上了加载动画的文章盒子 -->
@@ -45,18 +38,7 @@
     </div>
 
     <div class="articleRight">
-      <Suspense>
-        <template #default>
-          <ArticleRight></ArticleRight>
-        </template>
-
-        <!-- 加载完成前的载入动画 -->
-        <template #fallback>
-          <div class="window">
-            <Loading class="winLoad"></Loading>
-          </div>
-        </template>
-      </Suspense>
+      <ArticleRight></ArticleRight>
     </div>
   </div>
 </template>
@@ -66,14 +48,10 @@ import { defineAsyncComponent, onMounted } from "vue";
 import { ArticleApi } from "@/api/index";
 import { useRouter } from "vue-router";
 import Loading from "@/components/loading/loading2.vue";
-import gsap from "gsap";
+import ArticleRight from "@/components/rightToolsBox/ArticleRight.vue";
 import axios from "axios";
-// import BtnLearnMore from "@/components/UIVerse/btn-learnMore.vue";
 const ArticleBox = defineAsyncComponent(
   () => import("@/components/utils/articleBox.vue")
-);
-const ArticleRight = defineAsyncComponent(
-  () => import("@/components/rightToolsBox/ArticleRight.vue")
 );
 const topArticleBox = defineAsyncComponent(
   () => import("@/components/topArticleBox/topArticleBox.vue")
@@ -92,21 +70,7 @@ const showList = reverseList.slice(0, 4); //限制主页显示的文章个数
 const topRes = await ArticleApi.getTopArticle();
 const topArticleInfo = topRes.data;
 
-onMounted(() => {
-  gsap.from(".middle", {
-    duration: 0.3,
-    x: -100,
-    opacity: 0.2,
-  });
-});
-
-//随机诗词
-<<<<<<< HEAD
-const { data: poetry } = await axios.get("https://v1.jinrishici.com/all.json");
-=======
-const { data: poetry } = await axios.get('https://v1.jinrishici.com/all.json')
-
->>>>>>> 67495b80a9c9bb2033bacfc1013a9a7fef8a310c
+onMounted(() => {});
 </script>
 
 <style scoped lang="less">

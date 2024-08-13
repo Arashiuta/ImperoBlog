@@ -1,5 +1,5 @@
 <template>
-  <div class="messageBox">
+  <div class="messageBox" ref="container">
     <div class="headImg">
       <div class="mesageHead" @click="goToPersonalCenter">
         <img :src="info.headImg" alt="head" />
@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { MessageApi, UserApi } from "@/api/index";
 import { useStore } from "@/store/count";
 import { ElMessage } from "element-plus";
@@ -119,6 +119,11 @@ const delMessageY = async (id: number) => {
 const goToPersonalCenter = () => {
   goToPersonalCenterHook(props.item.account);
 };
+
+const container = ref();
+onMounted(() => {
+  container.value.classList.add("enterAni");
+});
 </script>
 
 <style scoped lang="less">
@@ -132,6 +137,7 @@ const goToPersonalCenter = () => {
   border-radius: 1rem;
   padding: 0 1rem;
   box-sizing: border-box;
+  transition: all 0.3s;
 
   .delMessage {
     display: none;
@@ -215,6 +221,21 @@ const goToPersonalCenter = () => {
       color: rgb(126, 126, 126);
       font-size: 1.2rem;
     }
+  }
+}
+
+.enterAni {
+  animation: identifier 0.5s ease;
+}
+
+@keyframes identifier {
+  0% {
+    transform: translateX(-1000px) scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
   }
 }
 </style>

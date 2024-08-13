@@ -11,12 +11,7 @@
         <span></span>
       </div>
       <div class="randomArticleContent" :key="refreshDom">
-        <RandomArticle
-          v-for="item in listArr"
-          :key="item.id"
-          :article="item"
-          class="randomArticlerrr"
-        >
+        <RandomArticle v-for="item in listArr" :key="item.id" :article="item">
         </RandomArticle>
       </div>
     </div>
@@ -26,7 +21,7 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-24gl-tags3"></use>
           </svg>
-          <div>所有标签</div>
+          <div>最新标签</div>
         </div>
         <span></span>
       </div>
@@ -67,17 +62,8 @@ import { useRouter } from "vue-router";
 import { ArticleApi, TagApi, MessageApi } from "@/api/index";
 import RandomArticle from "@/components/rightToolsBox/randomArticle.vue";
 import miniMessage from "@/components/rightToolsBox/miniMessage.vue";
-import gsap from "gsap";
 
 const router = useRouter();
-
-onMounted(() => {
-  gsap.from(".articleRight", {
-    duration: 0.5,
-    x: 50,
-    opacity: 0.2,
-  });
-});
 
 // //请求文章列表
 const res = await ArticleApi.getArticlList();
@@ -88,7 +74,7 @@ if (list.length > 4) {
 }
 //请求所有标签
 const tags = await TagApi.getAllTag();
-const allTags = tags.data;
+const allTags = tags.data.reverse().slice(0, 22); //展示前20个tag
 
 //随机挑选5个文章出来组成数组用来循环随即文章组件
 const refreshDom = ref(0); //刷新dom
@@ -133,6 +119,13 @@ const quickTag = (tag: Tag) => {
 const message = await MessageApi.getAllMessage();
 const messageLists = message.data;
 const messageList = messageLists.reverse().slice(0, 7); //展示七条留言
+
+onMounted(() => {
+  const tagDomArr = document.querySelectorAll(".labelTag");
+  for (let i = 0; i < tagDomArr.length; i++) {
+    tagDomArr[i].classList.add("tagAni");
+  }
+});
 </script>
 
 <style scoped lang="less">
@@ -257,6 +250,12 @@ const messageList = messageLists.reverse().slice(0, 7); //展示七条留言
       display: flex;
       flex-wrap: wrap;
       padding: 1rem;
+      height: calc(50vh - 180px);
+      overflow: scroll;
+
+      .tag-enter-active {
+        animation: bottomToTop 0.5s ease;
+      }
     }
   }
 }
@@ -336,6 +335,19 @@ const messageList = messageLists.reverse().slice(0, 7); //展示七条留言
     width: 80%;
     margin: 0 auto;
     margin-top: 2rem;
+  }
+}
+
+.tagAni {
+  animation: scaleTo 0.5s ease;
+}
+
+@keyframes scaleTo {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>
