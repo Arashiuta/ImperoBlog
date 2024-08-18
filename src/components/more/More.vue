@@ -19,8 +19,8 @@
     <div class="bottom">
       <p>
         仓库地址:
-        <a href="https://github.com/1209058433/ImperoBlog" target="_blank"
-          >https://github.com/1209058433/ImperoBlog</a
+        <a href="https://github.com/Noctisla/ImperoBlog" target="_blank"
+          >https://github.com/Noctisla/ImperoBlog</a
         >
       </p>
       <p>愿君颜悦 常健常见</p>
