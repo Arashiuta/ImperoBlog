@@ -52,11 +52,12 @@ const onUploadImg = async (files: any, callback: any) => {
         form.append("account", resArticle.data.author);
         form.append("id", String(contentId));
         ArticleApi.mdImgUpload(form)
-          .then((res:any) => {
+          .then((res: any) => {
             rev(res);
           })
-          .catch((err:any) => {
+          .catch((err: any) => {
             alert("图片太大了");
+            console.log(err);
           });
       });
     })
