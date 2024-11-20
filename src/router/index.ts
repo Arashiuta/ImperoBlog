@@ -9,7 +9,7 @@ const routes = [
   {
     path: "/index",
     name: "index",
-    component: () => import("@/view/Index.vue"),
+    component: () => import("@/view/Index/index.vue"),
     meta: {
       title: "首页|天降冰红茶",
     },
@@ -17,7 +17,7 @@ const routes = [
   {
     path: "/articlebrowse",
     name: "articlebrowse",
-    component: () => import("@/view/ArticleBrowse.vue"),
+    component: () => import("@/view/ArticleBrowse/index.vue"),
     meta: {
       title: "浏览文章|天降冰红茶",
     },
@@ -25,7 +25,7 @@ const routes = [
   {
     path: "/article",
     name: "article",
-    component: () => import("@/view/Article.vue"),
+    component: () => import("@/view/Article/index.vue"),
     meta: {
       title: "文章列表|天降冰红茶",
     },
@@ -33,7 +33,7 @@ const routes = [
   {
     path: "/write",
     name: "write",
-    component: () => import("@/view/Write.vue"),
+    component: () => import("@/view/Write/index.vue"),
     meta: {
       title: "写作|天降冰红茶",
     },
@@ -41,7 +41,7 @@ const routes = [
   {
     path: "/leavemsg",
     name: "leavemsg",
-    component: () => import("@/view/LeaveMsg.vue"),
+    component: () => import("@/view/LeaveMsg/index.vue"),
     meta: {
       title: "留言板|天降冰红茶",
     },
@@ -49,7 +49,7 @@ const routes = [
   {
     path: "/login",
     name: "login",
-    component: () => import("@/view/Login.vue"),
+    component: () => import("@/view/Login/index.vue"),
     meta: {
       title: "登录|天降冰红茶",
     },
@@ -57,7 +57,7 @@ const routes = [
   {
     path: "/more",
     name: "more",
-    component: () => import("@/view/More.vue"),
+    component: () => import("@/view/More/index.vue"),
     meta: {
       title: "更多|天降冰红茶",
     },
@@ -65,7 +65,7 @@ const routes = [
   {
     path: "/articleeditor",
     name: "articleeditor",
-    component: () => import("@/view/Editor.vue"),
+    component: () => import("@/view/Editor/index.vue"),
     meta: {
       title: "编辑文章|天降冰红茶",
     },
@@ -73,7 +73,7 @@ const routes = [
   {
     path: "/personalcenter",
     name: "personalcenter",
-    component: () => import("@/view/PersonalCenter.vue"),
+    component: () => import("@/view/PersonalCenter/index.vue"),
     meta: {
       title: "个人中心|天降冰红茶",
     },
@@ -81,7 +81,7 @@ const routes = [
   {
     path: "/otherspersonalcenter",
     name: "otherspersonalcenter",
-    component: () => import("@/view/OthersPersonalCenter.vue"),
+    component: () => import("@/view/OthersPersonalCenter/index.vue"),
     meta: {
       title: "个人中心|天降冰红茶",
     },
@@ -89,7 +89,7 @@ const routes = [
   {
     path: "/userfocus",
     name: "userfocus",
-    component: () => import("@/view/UserFocus.vue"),
+    component: () => import("@/view/UserFocus/index.vue"),
     meta: {
       title: "关注列表|天降冰红茶",
     },
@@ -111,7 +111,7 @@ const routes = [
   {
     path: "/search",
     name: "search",
-    component: () => import("@/view/Search.vue"),
+    component: () => import("@/view/Search/index.vue"),
     meta: {
       title: "搜索|天降冰红茶",
     },
@@ -119,7 +119,7 @@ const routes = [
   {
     path: "/chat",
     name: "chat",
-    component: () => import("@/view/Chat.vue"),
+    component: () => import("@/view/Chat/index.vue"),
     meta: {
       title: "聊天室|天降冰红茶",
     },

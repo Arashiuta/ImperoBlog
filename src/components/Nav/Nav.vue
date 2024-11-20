@@ -98,7 +98,7 @@
 import { ref, watchEffect, defineAsyncComponent } from "vue";
 import { useStore } from "@/store/count";
 import { useRouter } from "vue-router";
-import SearchInput from "@/components/searchCom/searchInput.vue";
+import SearchInput from "@/components/searchInput/index.vue";
 import NavMore from "@/components/utils/uiCopy/navMore.vue";
 import gsap from "gsap";
 import { goToPersonalCenterHook } from "@/hooks/goToPersonalCenter/goToPersonalCenter";
